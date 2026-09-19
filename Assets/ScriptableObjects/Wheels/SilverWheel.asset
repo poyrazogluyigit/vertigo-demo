@@ -10,8 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ecf0768e0a24d1e4e8422daa7bbf2564, type: 3}
-  m_Name: GoldWheel
+  m_Name: SilverWheel
   m_EditorClassIdentifier: 
-  WheelBase: {fileID: 0}
-  Indicator: {fileID: 0}
-  button: {fileID: 0}
+  WheelBase: {fileID: 21300000, guid: 3934ce76cc28d3e4dab55bb4018d7e14, type: 3}
+  Indicator: {fileID: 21300000, guid: c23f3f989221a794ba7c1fca9b24b691, type: 3}
