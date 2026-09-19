@@ -41,7 +41,7 @@ public class LevelManager : MonoBehaviour
 #if UNITY_EDITOR
     void OnValidate()
     {
-        
+        wheel.Draw(wheelTypes[1], rewards);
     }
 #endif
 }

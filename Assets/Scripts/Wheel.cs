@@ -1,24 +1,49 @@
+using System.Xml.Serialization;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Wheel : MonoBehaviour
 {
+    [SerializeField] private Image wheelBase;
+    [SerializeField] private Image indicator;
+    [SerializeField] private Image[] sliceRenderers = new Image[8];
+
     void Start()
     {
-        
+        ArrangeSlices();
     }
     public void Draw(WheelSO wheelType, RewardSO[] rewards)
     {
-        
+        wheelBase.sprite = wheelType.WheelBase;
+        indicator.sprite = wheelType.Indicator;
+        for (int i = 0; i < 8; i++)
+            sliceRenderers[i].sprite = rewards[i].sprite;
     }
     public void Spin()
     {
         
     }
 
+    private void ArrangeSlices()
+    {
+        float step = 360f / sliceRenderers.Length;
+        float radius = 10f;
+        // TODO radius should be calculated
+        for (int i = 0; i < sliceRenderers.Length; i++)
+        {
+            float angle = i * step; // + whatever offset aligns slot 0 with your indicator
+            float rad = angle * Mathf.Deg2Rad;
+            Vector2 pos = new Vector2(Mathf.Sin(rad), Mathf.Cos(rad)) * 30;
+            var rt = sliceRenderers[i].rectTransform;
+            rt.anchoredPosition = pos;
+            rt.localRotation = Quaternion.Euler(0, 0, -angle); // only if icons should rotate radially — optional
+        }
+    }
+
 #if UNITY_EDITOR
     void OnValidate()
     {
-        
+        ArrangeSlices();
     }
 #endif
 }
