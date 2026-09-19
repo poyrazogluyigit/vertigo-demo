@@ -1,7 +1,25 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private LevelManager _lm;
-    // Start is called before the first frame update
+    [SerializeField] private Button _button;
+    [SerializeField] private int _currentLevel = 1;
+    [SerializeField] private RewardsManager _rewardsManager;
+
+    void Start()
+    {
+        _lm.SetLevel(_currentLevel);
+        _button.onClick.AddListener(RunLevel);
+    }
+    void RunLevel()
+    {
+        RewardSO reward =_lm.Play();
+        // (if reward is bomb) GameOver();
+        _rewardsManager.AddReward(reward, 1);
+
+    }
+
+
 }

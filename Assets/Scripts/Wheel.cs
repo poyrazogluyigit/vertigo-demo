@@ -21,7 +21,7 @@ public class Wheel : MonoBehaviour
     }
     public void Spin(int position)
     {
-        if (_isUsed) return;
+        // if (_isUsed) return;
         Vector3 rot = new Vector3(0, 0, 45 * position + 360 * 3);
         transform.DORotate(rot, 4f, RotateMode.FastBeyond360);
         _isUsed = true;
