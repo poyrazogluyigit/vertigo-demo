@@ -1,12 +1,12 @@
-using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.UI;
-
+using DG.Tweening;
 public class Wheel : MonoBehaviour
 {
     [SerializeField] private Image wheelBase;
     [SerializeField] private Image indicator;
     [SerializeField] private Image[] sliceRenderers = new Image[8];
+    [SerializeField] private bool _isUsed = false;
 
     void Start()
     {
@@ -19,9 +19,12 @@ public class Wheel : MonoBehaviour
         for (int i = 0; i < 8; i++)
             sliceRenderers[i].sprite = rewards[i].sprite;
     }
-    public void Spin()
+    public void Spin(int position)
     {
-        
+        if (_isUsed) return;
+        Vector3 rot = new Vector3(0, 0, 45 * position + 360 * 3);
+        transform.DORotate(rot, 4f, RotateMode.FastBeyond360);
+        _isUsed = true;
     }
 
     private void ArrangeSlices()
@@ -34,16 +37,14 @@ public class Wheel : MonoBehaviour
             float angle = i * step; // + whatever offset aligns slot 0 with your indicator
             float rad = angle * Mathf.Deg2Rad;
             Vector2 pos = new Vector2(Mathf.Sin(rad), Mathf.Cos(rad)) * 30;
+            if (sliceRenderers[i] == null)
+        {
+            Debug.LogError($"sliceRenderers[{i}] is null on {name}", this);
+            continue;
+        }
             var rt = sliceRenderers[i].rectTransform;
             rt.anchoredPosition = pos;
             rt.localRotation = Quaternion.Euler(0, 0, -angle); // only if icons should rotate radially — optional
         }
     }
-
-#if UNITY_EDITOR
-    void OnValidate()
-    {
-        ArrangeSlices();
-    }
-#endif
 }
