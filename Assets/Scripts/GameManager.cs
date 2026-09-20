@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Button _button;
     [SerializeField] private int _currentLevel = 1;
     [SerializeField] private RewardsManager _rewardsManager;
+    [SerializeField] private RewardSO _superReward;
 
     void Start()
     {

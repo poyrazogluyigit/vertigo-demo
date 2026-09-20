@@ -10,6 +10,6 @@ public class RewardCard : MonoBehaviour
     public void Display(RewardSO reward)
     {
         rewardImage.sprite = reward.sprite;
-        amountDisplay.text = amount.ToString();
+        amountDisplay.text = "x" + amount;
     }
 }

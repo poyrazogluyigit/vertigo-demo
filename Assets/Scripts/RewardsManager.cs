@@ -5,6 +5,7 @@ public class RewardsManager : MonoBehaviour
 {
     public Dictionary<RewardSO, RewardCard> rewards = new Dictionary<RewardSO, RewardCard>();
     [SerializeField] private Button _exitButton;
+    [SerializeField] private Transform _contentContainer; 
     [SerializeField] private RewardCard _rcPrefab;
     public void AddReward(RewardSO reward, int amt)
     {
@@ -12,7 +13,7 @@ public class RewardsManager : MonoBehaviour
             rewards[reward].amount += amt;
         else
         {
-            var rewardCard = Instantiate(_rcPrefab, transform);
+            var rewardCard = Instantiate(_rcPrefab, _contentContainer);
             rewardCard.amount = amt;
             rewards[reward] = rewardCard;
         }
