@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using System.Threading.Tasks;
+using UnityEditor;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,17 +12,23 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform _levelCounter;
     [SerializeField] private RewardsManager _rewardsManager;
     [SerializeField] private RewardSO _superReward;
+    private bool _isActive = false;
+    private Vector3 _initialPosition;
 
     async void Start()
     {
+        _initialPosition = _levelCounter.position;
         await SetLevel(1);
     }
     async void RunLevel()
     {
+        if (_isActive) return;
+        _isActive = true;
         RewardSO reward = await _lm.Play();
         // (if reward is bomb) GameOver();
         _rewardsManager.AddReward(reward, 1);
         await SetLevel(++_currentLevel);
+        _isActive = false;
 
     }
 
@@ -37,7 +44,7 @@ public class GameManager : MonoBehaviour
         // calculate position based on level
         // initial position fixed for now, maybe automated later
         Vector3 xOffset = new Vector3(-(level - 1) * 46, 0, 0);
-        Vector3 endPos = _levelCounter.position + xOffset;
+        Vector3 endPos = _initialPosition + xOffset;
         await _levelCounter.DOMove(endPos, 1f).AsyncWaitForCompletion();
     }
 

@@ -8,7 +8,6 @@ public class Wheel : MonoBehaviour
     [SerializeField] private Image wheelBase;
     [SerializeField] private Image indicator;
     [SerializeField] private Image[] sliceRenderers = new Image[8];
-    [SerializeField] private bool _isUsed = false;
 
     void Start()
     {
@@ -23,9 +22,7 @@ public class Wheel : MonoBehaviour
     }
     public async Task Spin(int position)
     {
-        // if (_isUsed) return;
         Vector3 rot = new Vector3(0, 0, 45 * position + 360 * 3);
-        _isUsed = true;
         await transform.DORotate(rot, 4f, RotateMode.FastBeyond360)
         .AsyncWaitForCompletion();
     }
