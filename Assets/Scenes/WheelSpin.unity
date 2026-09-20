@@ -421,7 +421,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d52f170452013c842b96f629d9991e23, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ea42892ad884b3f42877dab6e1cfd85e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -496,7 +496,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8f40addf29151154e953be6a8b633d85, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 50836d8f07ff9c945a13ee9ddab9fe35, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -571,7 +571,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d4105fd59a9a12c4a8ea2703ffca4f0c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8f4aff80a10dc4241bebf7cc2354d898, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -589,6 +589,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 203121500}
   m_CullTransparentMesh: 1
+--- !u!1 &244875472
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 244875474}
+  - component: {fileID: 244875473}
+  m_Layer: 0
+  m_Name: RewardsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &244875473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 244875472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f5bd4ecb8a35a4e8eb1073f8ebd260, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _exitButton: {fileID: 822685390}
+  _rcPrefab: {fileID: 0}
+--- !u!4 &244875474
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 244875472}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 125.03497, y: 224.6309, z: -292.36972}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &278894261
 GameObject:
   m_ObjectHideFlags: 0
@@ -804,7 +849,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d6a681e740616b8489138c59c73b7b83, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8301ea9f5e841284e92a9af303f6364e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1442,7 +1487,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bab238a7e4bce8646a2fed0ecefd7bd8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dbda59c34db320a448197766ac77e311, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1490,6 +1535,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lm: {fileID: 1681950905}
+  _button: {fileID: 718867960}
+  _currentLevel: 1
+  _rewardsManager: {fileID: 244875473}
 --- !u!4 &861563880
 Transform:
   m_ObjectHideFlags: 0
@@ -1604,7 +1652,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 92af54b590c95b44586fa237aaab7f60, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 884469e762c8cd34197c12df515a24d9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1679,7 +1727,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bd77ebf902955974da118462bc1821de, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bab238a7e4bce8646a2fed0ecefd7bd8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1818,7 +1866,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9908c1d016ded134dacb1442b672d23d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9f240bb0c69c5fa46ad17578b4cf7124, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1886,16 +1934,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 00ad9a3b6511361498396110b42b8d17, type: 2}
   - {fileID: 11400000, guid: 02105c611fc3b0a48a6d0a1b0eb516e9, type: 2}
   _wheel: {fileID: 56017338}
-  _button: {fileID: 718867960}
-  rewards:
-  - {fileID: 11400000, guid: e145b6a1c8f84adb90e77f2867003c44, type: 2}
-  - {fileID: 11400000, guid: a2887117ecc74c00af01b2f8582319f5, type: 2}
-  - {fileID: 11400000, guid: 3441db25e6f74c11bbf0cebe83d93996, type: 2}
+  _possibleRewards:
+  - {fileID: 11400000, guid: d89e17009f874a6bb7c8073f39d314a9, type: 2}
   - {fileID: 11400000, guid: 6ab2dc81423a416b96f2283658c20319, type: 2}
-  - {fileID: 11400000, guid: c02deae4749f49e399f7d9d1ccad1b8d, type: 2}
-  - {fileID: 11400000, guid: 3c432ca70dd94716aff26059f84c8930, type: 2}
-  - {fileID: 11400000, guid: c8b08a7b644e408b944cd36c2bdf7343, type: 2}
-  - {fileID: 11400000, guid: e0d7088c507d4c3e905caf2494a2660c, type: 2}
+  - {fileID: 11400000, guid: 4e7814ee54804d6d9d5ad4a7f06a69ad, type: 2}
+  - {fileID: 11400000, guid: 3aa110841e4440439405fdaa7d448efd, type: 2}
+  - {fileID: 11400000, guid: ffe5d851d74b4a0e9178533f1ac3d532, type: 2}
+  - {fileID: 11400000, guid: f942198f37494541841c323140e09eb7, type: 2}
+  - {fileID: 11400000, guid: 30fa95df03b74a9993f2d2620d22fdc3, type: 2}
+  - {fileID: 11400000, guid: bd1efc6377f54f65a6375c906f441a70, type: 2}
 --- !u!114 &1681950906
 MonoBehaviour:
   m_ObjectHideFlags: 0

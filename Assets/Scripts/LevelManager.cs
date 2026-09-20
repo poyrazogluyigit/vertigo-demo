@@ -17,6 +17,7 @@ public class LevelManager : MonoBehaviour
     public RewardSO Play()
     {
         _currentReward = Random.Range(0, _possibleRewards.Length);
+        Debug.Log($"Chosen index: {_currentReward} -> {_possibleRewards[_currentReward].rewardName}");
         _wheel.Spin(_currentReward);
         return _possibleRewards[_currentReward];
     }
