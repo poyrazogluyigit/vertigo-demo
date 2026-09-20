@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System;
+using System.Threading.Tasks;
 public class Wheel : MonoBehaviour
 {
     [SerializeField] private Image wheelBase;
@@ -19,12 +21,13 @@ public class Wheel : MonoBehaviour
         for (int i = 0; i < 8; i++)
             sliceRenderers[i].sprite = rewards[i].sprite;
     }
-    public void Spin(int position)
+    public async Task Spin(int position)
     {
         // if (_isUsed) return;
         Vector3 rot = new Vector3(0, 0, 45 * position + 360 * 3);
-        transform.DORotate(rot, 4f, RotateMode.FastBeyond360);
         _isUsed = true;
+        await transform.DORotate(rot, 4f, RotateMode.FastBeyond360)
+        .AsyncWaitForCompletion();
     }
 
     private void ArrangeSlices()

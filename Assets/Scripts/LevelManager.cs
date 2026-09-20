@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,11 +15,11 @@ public class LevelManager : MonoBehaviour
         // to be implemented later
     }
 
-    public RewardSO Play()
+    public async Task<RewardSO> Play()
     {
         _currentReward = Random.Range(0, _possibleRewards.Length);
         Debug.Log($"Chosen index: {_currentReward} -> {_possibleRewards[_currentReward].rewardName}");
-        _wheel.Spin(_currentReward);
+        await _wheel.Spin(_currentReward);
         return _possibleRewards[_currentReward];
     }
 

@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,9 +15,9 @@ public class GameManager : MonoBehaviour
         _lm.SetLevel(_currentLevel);
         _button.onClick.AddListener(RunLevel);
     }
-    void RunLevel()
+    async void RunLevel()
     {
-        RewardSO reward =_lm.Play();
+        RewardSO reward = await _lm.Play();
         // (if reward is bomb) GameOver();
         _rewardsManager.AddReward(reward, 1);
 

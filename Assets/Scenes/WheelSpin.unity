@@ -511,7 +511,7 @@ MonoBehaviour:
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
+  m_ChildControlWidth: 1
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
@@ -1991,6 +1991,7 @@ MonoBehaviour:
   _button: {fileID: 718867960}
   _currentLevel: 1
   _rewardsManager: {fileID: 1576380807}
+  _superReward: {fileID: 11400000, guid: ecd86dff4e894d61844753fd93e1ca68, type: 2}
 --- !u!4 &861563880
 Transform:
   m_ObjectHideFlags: 0
