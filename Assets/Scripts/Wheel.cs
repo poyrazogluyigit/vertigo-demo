@@ -8,6 +8,7 @@ public class Wheel : MonoBehaviour
     [SerializeField] private Image wheelBase;
     [SerializeField] private Image indicator;
     [SerializeField] private Image[] sliceRenderers = new Image[8];
+    [SerializeField] private int _radius = 42;
 
     void Start()
     {
@@ -30,13 +31,12 @@ public class Wheel : MonoBehaviour
     private void ArrangeSlices()
     {
         float step = 360f / sliceRenderers.Length;
-        float radius = 10f;
         // TODO radius should be calculated
         for (int i = 0; i < sliceRenderers.Length; i++)
         {
             float angle = i * step; // + whatever offset aligns slot 0 with your indicator
             float rad = angle * Mathf.Deg2Rad;
-            Vector2 pos = new Vector2(Mathf.Sin(rad), Mathf.Cos(rad)) * 30;
+            Vector2 pos = new Vector2(Mathf.Sin(rad), Mathf.Cos(rad)) * _radius;
             if (sliceRenderers[i] == null)
         {
             Debug.LogError($"sliceRenderers[{i}] is null on {name}", this);
@@ -46,5 +46,10 @@ public class Wheel : MonoBehaviour
             rt.anchoredPosition = pos;
             rt.localRotation = Quaternion.Euler(0, 0, -angle); // only if icons should rotate radially — optional
         }
+    }
+
+    void OnValidate()
+    {
+        ArrangeSlices();
     }
 }
