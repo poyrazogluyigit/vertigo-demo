@@ -17,7 +17,8 @@ public class GameManager : MonoBehaviour
 
     async void Start()
     {
-        _initialPosition = _levelCounter.position;
+        var rt = _levelCounter.GetComponent<RectTransform>();
+        _initialPosition = rt.anchoredPosition;
         await SetLevel(1);
     }
     async void RunLevel()
@@ -41,11 +42,11 @@ public class GameManager : MonoBehaviour
 
     async Task MoveLevelIndicator(int level)
     {
-        // calculate position based on level
-        // initial position fixed for now, maybe automated later
-        Vector3 xOffset = new Vector3(-(level - 1) * 46, 0, 0);
-        Vector3 endPos = _initialPosition + xOffset;
-        await _levelCounter.DOMove(endPos, 1f).AsyncWaitForCompletion();
+        var rt = _levelCounter.GetComponent<RectTransform>();
+        float xDelta = 135;
+        Vector3 target = _initialPosition + new Vector3(-(level - 1) * xDelta, 0, 0);
+        Debug.Log(target);
+        await rt.DOAnchorPos(target, 1f).AsyncWaitForCompletion();
     }
 
 
