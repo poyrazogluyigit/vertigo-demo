@@ -11,5 +11,5 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36cc891823b9474da969beaa6074251f, type: 3}
   m_Name: Reward_Bomb
-  m_EditorClassIdentifier:
-  sprite: {fileID: 0}
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: 6fb7f58597d2e294a8d453f9215672ab, type: 3}

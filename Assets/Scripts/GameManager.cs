@@ -24,11 +24,20 @@ public class GameManager : MonoBehaviour
     {
         _button.interactable = false;
         RewardType reward = await _lm.Play();
+        if (reward.IsBomb())
+        {
+            GameOver(); return;
+        }
         // (if reward is bomb) GameOver();
         _rewardsManager.AddReward(reward, 1);
         await SetLevel(_currentLevel + 1);
         _button.interactable = true;
 
+    }
+
+    private void GameOver()
+    {
+        Debug.Log("Game Over!");
     }
 
     async Task SetLevel(int level)

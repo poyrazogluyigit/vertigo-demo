@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
 
 [RequireComponent(typeof(Wheel))]
 public class LevelManager : MonoBehaviour
