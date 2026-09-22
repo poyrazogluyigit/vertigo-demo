@@ -18,12 +18,12 @@ public class Wheel : MonoBehaviour
     {
         wheelBase.sprite = wheelType.WheelBase;
         indicator.sprite = wheelType.Indicator;
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < sliceRenderers.Length; i++)
             sliceRenderers[i].sprite = rewards[i].sprite;
     }
     public async Task Spin(int position)
     {
-        Vector3 rot = new Vector3(0, 0, 45 * position + 360 * 3);
+        Vector3 rot = new Vector3(0, 0, 360f / sliceRenderers.Length * position + 360 * 3);
         await transform.DORotate(rot, 4f, RotateMode.FastBeyond360)
         .AsyncWaitForCompletion();
     }
@@ -46,10 +46,5 @@ public class Wheel : MonoBehaviour
             rt.anchoredPosition = pos;
             rt.localRotation = Quaternion.Euler(0, 0, -angle); // only if icons should rotate radially — optional
         }
-    }
-
-    void OnValidate()
-    {
-        ArrangeSlices();
     }
 }

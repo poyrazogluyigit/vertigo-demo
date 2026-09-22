@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using System.Threading.Tasks;
-using UnityEditor;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,32 +11,31 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform _levelCounter;
     [SerializeField] private RewardsManager _rewardsManager;
     [SerializeField] private RewardSO _superReward;
-    private bool _isActive = false;
     private Vector3 _initialPosition;
 
     async void Start()
     {
         var rt = _levelCounter.GetComponent<RectTransform>();
         _initialPosition = rt.anchoredPosition;
+        _button.onClick.AddListener(RunLevel);
         await SetLevel(1);
     }
     async void RunLevel()
     {
-        if (_isActive) return;
-        _isActive = true;
+        _button.interactable = false;
         RewardSO reward = await _lm.Play();
         // (if reward is bomb) GameOver();
         _rewardsManager.AddReward(reward, 1);
-        await SetLevel(++_currentLevel);
-        _isActive = false;
+        await SetLevel(_currentLevel + 1);
+        _button.interactable = true;
 
     }
 
     async Task SetLevel(int level)
     {
         await MoveLevelIndicator(level);
+        _currentLevel = level;
         _lm.SetLevel(_currentLevel);
-        _button.onClick.AddListener(RunLevel);
     }
 
     async Task MoveLevelIndicator(int level)

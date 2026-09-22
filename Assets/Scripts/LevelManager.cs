@@ -8,7 +8,6 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private WheelSO[] wheelTypes;
     [SerializeField] private Wheel _wheel;
     [SerializeField] private RewardSO[] _possibleRewards;
-    private int _currentReward;
 
     void generateRewards(bool isSafe, bool isSuper)
     {
@@ -17,7 +16,7 @@ public class LevelManager : MonoBehaviour
 
     public async Task<RewardSO> Play()
     {
-        _currentReward = Random.Range(0, _possibleRewards.Length);
+       int  _currentReward = Random.Range(0, _possibleRewards.Length);
         Debug.Log($"Chosen index: {_currentReward} -> {_possibleRewards[_currentReward].rewardName}");
         await _wheel.Spin(_currentReward);
         return _possibleRewards[_currentReward];
