@@ -3458,7 +3458,6 @@ MonoBehaviour:
   _currentLevel: 1
   _levelCounter: {fileID: 896877780}
   _rewardsManager: {fileID: 1576380807}
-  _superReward: {fileID: 11400000, guid: ecd86dff4e894d61844753fd93e1ca68, type: 2}
 --- !u!4 &861563880
 Transform:
   m_ObjectHideFlags: 0
@@ -6098,20 +6097,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24b109abc8dc8424ba71f500e3b22244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wheelTypes:
-  - {fileID: 11400000, guid: 07a50b37b0bc44045acb573d38d857ea, type: 2}
-  - {fileID: 11400000, guid: 00ad9a3b6511361498396110b42b8d17, type: 2}
-  - {fileID: 11400000, guid: 02105c611fc3b0a48a6d0a1b0eb516e9, type: 2}
+  safeWheel: {fileID: 11400000, guid: 00ad9a3b6511361498396110b42b8d17, type: 2}
+  normalWheel: {fileID: 11400000, guid: 07a50b37b0bc44045acb573d38d857ea, type: 2}
+  superWheel: {fileID: 11400000, guid: 02105c611fc3b0a48a6d0a1b0eb516e9, type: 2}
   _wheel: {fileID: 56017338}
-  _possibleRewards:
-  - {fileID: 11400000, guid: d89e17009f874a6bb7c8073f39d314a9, type: 2}
-  - {fileID: 11400000, guid: 6ab2dc81423a416b96f2283658c20319, type: 2}
-  - {fileID: 11400000, guid: c4e02bb845664ada8bea95211c8e7611, type: 2}
-  - {fileID: 11400000, guid: 3aa110841e4440439405fdaa7d448efd, type: 2}
-  - {fileID: 11400000, guid: ffe5d851d74b4a0e9178533f1ac3d532, type: 2}
-  - {fileID: 11400000, guid: f942198f37494541841c323140e09eb7, type: 2}
-  - {fileID: 11400000, guid: 30fa95df03b74a9993f2d2620d22fdc3, type: 2}
-  - {fileID: 11400000, guid: bd1efc6377f54f65a6375c906f441a70, type: 2}
+  _rewardPool: {fileID: 11400000, guid: f5186f75ef4842b8849ec9ad01cb6ad2, type: 2}
+  _hazardReward: {fileID: 11400000, guid: c4e02bb845664ada8bea95211c8e7611, type: 2}
 --- !u!114 &1681950906
 MonoBehaviour:
   m_ObjectHideFlags: 0

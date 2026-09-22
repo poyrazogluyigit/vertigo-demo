@@ -14,12 +14,12 @@ public class Wheel : MonoBehaviour
     {
         ArrangeSlices();
     }
-    public void Draw(WheelSO wheelType, RewardType[] rewards)
+    public void Draw(WheelSO wheelType, RewardData[] rewards)
     {
         wheelBase.sprite = wheelType.WheelBase;
         indicator.sprite = wheelType.Indicator;
         for (int i = 0; i < sliceRenderers.Length; i++)
-            sliceRenderers[i].sprite = rewards[i].sprite;
+            sliceRenderers[i].sprite = i < rewards.Length ? rewards[i]?.sprite : null;
     }
     public async Task Spin(int position)
     {

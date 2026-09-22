@@ -3,12 +3,13 @@ using UnityEngine;
 using UnityEngine.UI;
 public class RewardsManager : MonoBehaviour
 {
-    private Dictionary<RewardType, RewardCard> rewards = new Dictionary<RewardType, RewardCard>();
+    private Dictionary<RewardData, RewardCard> rewards = new Dictionary<RewardData, RewardCard>();
     [SerializeField] private Button _exitButton;
     [SerializeField] private Transform _contentContainer;
     [SerializeField] private RewardCard _rcPrefab;
-    public void AddReward(RewardType reward, int amt)
+    public void AddReward(RewardData reward, int amt)
     {
+        if (reward == null) return;
         if (!rewards.ContainsKey(reward))
             rewards[reward] = Instantiate(_rcPrefab, _contentContainer);
         rewards[reward].AddAmount(amt);

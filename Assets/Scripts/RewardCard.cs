@@ -7,7 +7,7 @@ public class RewardCard : MonoBehaviour
     [SerializeField] private Image rewardImage;
     [SerializeField] private TextMeshProUGUI amountDisplay;
     private int _amount = 0;
-    public void Display(RewardType reward)
+    public void Display(RewardData reward)
     {
         rewardImage.sprite = reward.sprite;
         amountDisplay.text = "x" + _amount;
