@@ -103,20 +103,30 @@ public class LevelManager : MonoBehaviour
     {
         _currentLevel = level;
         GenerateRewards(level);
-
-        WheelSO wheelSkin = GetLevelType(level) switch
-        {
-            LevelType.Safe => safeWheel,
-            LevelType.Super => superWheel,
-            _ => normalWheel,
-        };
-        _wheel.Draw(wheelSkin, _currentSlots);
+        _wheel.Draw(GetWheelSkin(level), _currentSlots);
     }
+
+    private WheelSO GetWheelSkin(int level) => GetLevelType(level) switch
+    {
+        LevelType.Safe => safeWheel,
+        LevelType.Super => superWheel,
+        _ => normalWheel,
+    };
+
 #if UNITY_EDITOR
+    [Header("Editor Preview")]
+    [Tooltip("Level used to preview the wheel in edit mode. Re-rolls on every Inspector change.")]
+    [SerializeField, Range(1, MaxLevel)] private int _previewLevel = 1;
+
     void OnValidate()
     {
-        if (_wheel != null && normalWheel != null)
-            _wheel.Draw(normalWheel, _currentSlots);
+        // Never touch runtime state while actually playing — this is an edit-mode-only preview.
+        if (Application.isPlaying || _wheel == null)
+            return;
+
+        int level = Mathf.Clamp(_previewLevel, 1, MaxLevel);
+        GenerateRewards(level);
+        _wheel.Draw(GetWheelSkin(level), _currentSlots);
     }
 #endif
 }

@@ -14,12 +14,29 @@ public class Wheel : MonoBehaviour
     {
         ArrangeSlices();
     }
+
+#if UNITY_EDITOR
+    void OnValidate()
+    {
+        // Keep slice layout (radius, array size) previewing live in edit mode without waiting for Play.
+        if (!Application.isPlaying)
+            ArrangeSlices();
+    }
+#endif
+
     public void Draw(WheelSO wheelType, RewardData[] rewards)
     {
-        wheelBase.sprite = wheelType.WheelBase;
-        indicator.sprite = wheelType.Indicator;
+        if (wheelType != null)
+        {
+            wheelBase.sprite = wheelType.WheelBase;
+            indicator.sprite = wheelType.Indicator;
+        }
         for (int i = 0; i < sliceRenderers.Length; i++)
-            sliceRenderers[i].sprite = i < rewards.Length ? rewards[i]?.sprite : null;
+        {
+            if (sliceRenderers[i] == null)
+                continue;
+            sliceRenderers[i].sprite = rewards != null && i < rewards.Length ? rewards[i]?.sprite : null;
+        }
     }
     public async Task Spin(int position)
     {
