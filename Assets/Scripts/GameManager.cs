@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int _currentLevel = 1;
     [SerializeField] private Transform _levelCounter;
     [SerializeField] private RewardsManager _rewardsManager;
-    [SerializeField] private RewardSO _superReward;
+    [SerializeField] private RewardType _superReward;
     private Vector3 _initialPosition;
 
     async void Start()
@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     async void RunLevel()
     {
         _button.interactable = false;
-        RewardSO reward = await _lm.Play();
+        RewardType reward = await _lm.Play();
         // (if reward is bomb) GameOver();
         _rewardsManager.AddReward(reward, 1);
         await SetLevel(_currentLevel + 1);

@@ -14,7 +14,7 @@ public class Wheel : MonoBehaviour
     {
         ArrangeSlices();
     }
-    public void Draw(WheelSO wheelType, RewardSO[] rewards)
+    public void Draw(WheelSO wheelType, RewardType[] rewards)
     {
         wheelBase.sprite = wheelType.WheelBase;
         indicator.sprite = wheelType.Indicator;
