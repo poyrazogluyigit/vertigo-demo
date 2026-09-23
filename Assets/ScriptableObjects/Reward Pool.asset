@@ -13,46 +13,181 @@ MonoBehaviour:
   m_Name: Reward Pool
   m_EditorClassIdentifier: 
   rewards:
-  - {fileID: 11400000, guid: e145b6a1c8f84adb90e77f2867003c44, type: 2}
-  - {fileID: 11400000, guid: 92fd1748581d49cf9d7f57b14d439d41, type: 2}
-  - {fileID: 11400000, guid: 7b96cce3886f44f4bf56e209a5bff5a7, type: 2}
-  - {fileID: 11400000, guid: d89e17009f874a6bb7c8073f39d314a9, type: 2}
-  - {fileID: 11400000, guid: c4e02bb845664ada8bea95211c8e7611, type: 2}
-  - {fileID: 11400000, guid: 47564fc85b534c80bc4690b5a80c14b5, type: 2}
-  - {fileID: 11400000, guid: d886ef247c854efab9eab316cf0549e2, type: 2}
-  - {fileID: 11400000, guid: 9243eb8d47cb4551a7238d61fca12fa4, type: 2}
-  - {fileID: 11400000, guid: e031644b588542439bb2f93b5e064342, type: 2}
-  - {fileID: 11400000, guid: a2887117ecc74c00af01b2f8582319f5, type: 2}
-  - {fileID: 11400000, guid: 336e7a531f954874ad3ccff15fc891a5, type: 2}
-  - {fileID: 11400000, guid: 3441db25e6f74c11bbf0cebe83d93996, type: 2}
-  - {fileID: 11400000, guid: 4e7814ee54804d6d9d5ad4a7f06a69ad, type: 2}
-  - {fileID: 11400000, guid: e0d7088c507d4c3e905caf2494a2660c, type: 2}
-  - {fileID: 11400000, guid: c02deae4749f49e399f7d9d1ccad1b8d, type: 2}
-  - {fileID: 11400000, guid: c8b08a7b644e408b944cd36c2bdf7343, type: 2}
-  - {fileID: 11400000, guid: a5cb0fdfb1074c79a5bf633c62f7a2d3, type: 2}
-  - {fileID: 11400000, guid: 6ab2dc81423a416b96f2283658c20319, type: 2}
-  - {fileID: 11400000, guid: 3c432ca70dd94716aff26059f84c8930, type: 2}
-  - {fileID: 11400000, guid: ffe5d851d74b4a0e9178533f1ac3d532, type: 2}
-  - {fileID: 11400000, guid: 38ca41d72c8e4aecb9ea3f7421f409bc, type: 2}
-  - {fileID: 11400000, guid: 2fa5c7e8cfa44019b1abc6d792d9ce41, type: 2}
-  - {fileID: 11400000, guid: efe834d9de624205ae55131556540a6f, type: 2}
-  - {fileID: 11400000, guid: 3fc6430d9f584ea8877df16c6343111b, type: 2}
-  - {fileID: 11400000, guid: 9705db5158284bb886c3770a6a79a797, type: 2}
-  - {fileID: 11400000, guid: 850d084df2274db691af9c74b60ac9e3, type: 2}
-  - {fileID: 11400000, guid: 11e542330b8149319f1a832915f3a987, type: 2}
-  - {fileID: 11400000, guid: 3aa110841e4440439405fdaa7d448efd, type: 2}
-  - {fileID: 11400000, guid: 26efe316aef844799d9cd0e2b0b171b1, type: 2}
-  - {fileID: 11400000, guid: 7d9816cc62b642e0a669093f7aacd1a4, type: 2}
-  - {fileID: 11400000, guid: 30fa95df03b74a9993f2d2620d22fdc3, type: 2}
-  - {fileID: 11400000, guid: bd1efc6377f54f65a6375c906f441a70, type: 2}
-  - {fileID: 11400000, guid: ecd86dff4e894d61844753fd93e1ca68, type: 2}
-  - {fileID: 11400000, guid: 949b75bd48f14bc4993bde6cf4a211a4, type: 2}
-  - {fileID: 11400000, guid: f942198f37494541841c323140e09eb7, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - id: 0
+    rewardName: ArmorPoints
+    baseAmount: 5
+    weight: 8
+    isBomb: 0
+  - id: 1
+    rewardName: AviatorGlasses
+    baseAmount: 1
+    weight: 8
+    isBomb: 0
+  - id: 2
+    rewardName: BaseballCap
+    baseAmount: 1
+    weight: 8
+    isBomb: 0
+  - id: 3
+    rewardName: BigChest
+    baseAmount: 1
+    weight: 5
+    isBomb: 0
+  - id: 4
+    rewardName: Bomb
+    baseAmount: 1
+    weight: 1
+    isBomb: 1
+  - id: 5
+    rewardName: BronzeChest
+    baseAmount: 1
+    weight: 8
+    isBomb: 0
+  - id: 6
+    rewardName: Cash
+    baseAmount: 10
+    weight: 10
+    isBomb: 0
+  - id: 7
+    rewardName: EasterBayonet
+    baseAmount: 1
+    weight: 5
+    isBomb: 0
+  - id: 8
+    rewardName: Gold
+    baseAmount: 10
+    weight: 10
+    isBomb: 0
+  - id: 9
+    rewardName: GoldChest
+    baseAmount: 1
+    weight: 2
+    isBomb: 0
+  - id: 10
+    rewardName: KnifePoints
+    baseAmount: 5
+    weight: 8
+    isBomb: 0
+  - id: 11
+    rewardName: M26Grenade
+    baseAmount: 1
+    weight: 6
+    isBomb: 0
+  - id: 12
+    rewardName: M67Grenade
+    baseAmount: 1
+    weight: 6
+    isBomb: 0
+  - id: 13
+    rewardName: Molotov
+    baseAmount: 1
+    weight: 6
+    isBomb: 0
+  - id: 14
+    rewardName: NeurostimHealthshot
+    baseAmount: 1
+    weight: 6
+    isBomb: 0
+  - id: 15
+    rewardName: PistolPoints
+    baseAmount: 5
+    weight: 8
+    isBomb: 0
+  - id: 16
+    rewardName: PumpkinHelmet
+    baseAmount: 1
+    weight: 5
+    isBomb: 0
+  - id: 17
+    rewardName: RegeneratorHealthshot
+    baseAmount: 1
+    weight: 6
+    isBomb: 0
+  - id: 18
+    rewardName: RiflePoints
+    baseAmount: 5
+    weight: 8
+    isBomb: 0
+  - id: 19
+    rewardName: ShotgunPoints
+    baseAmount: 5
+    weight: 8
+    isBomb: 0
+  - id: 20
+    rewardName: SilverChest
+    baseAmount: 1
+    weight: 5
+    isBomb: 0
+  - id: 21
+    rewardName: SmallChest
+    baseAmount: 1
+    weight: 10
+    isBomb: 0
+  - id: 22
+    rewardName: SMGPoints
+    baseAmount: 5
+    weight: 8
+    isBomb: 0
+  - id: 23
+    rewardName: SniperPoints
+    baseAmount: 5
+    weight: 8
+    isBomb: 0
+  - id: 24
+    rewardName: StandardChest
+    baseAmount: 1
+    weight: 8
+    isBomb: 0
+  - id: 25
+    rewardName: SubmachinePoints
+    baseAmount: 5
+    weight: 8
+    isBomb: 0
+  - id: 26
+    rewardName: SummerViceBayonet
+    baseAmount: 1
+    weight: 2
+    isBomb: 0
+  - id: 27
+    rewardName: SuperChest
+    baseAmount: 1
+    weight: 1
+    isBomb: 0
+  - id: 28
+    rewardName: Tier1Shotgun
+    baseAmount: 1
+    weight: 10
+    isBomb: 0
+  - id: 29
+    rewardName: Tier2Melee
+    baseAmount: 1
+    weight: 5
+    isBomb: 0
+  - id: 30
+    rewardName: Tier2Rifle
+    baseAmount: 1
+    weight: 5
+    isBomb: 0
+  - id: 31
+    rewardName: Tier3Shotgun
+    baseAmount: 1
+    weight: 2
+    isBomb: 0
+  - id: 32
+    rewardName: Tier3SMG
+    baseAmount: 1
+    weight: 2
+    isBomb: 0
+  - id: 33
+    rewardName: Tier3Sniper
+    baseAmount: 1
+    weight: 2
+    isBomb: 0
+  - id: 34
+    rewardName: VestPoints
+    baseAmount: 5
+    weight: 8
+    isBomb: 0
   amountCurve:
     serializedVersion: 2
     m_Curve:

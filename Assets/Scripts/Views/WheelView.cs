@@ -1,19 +1,23 @@
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-using System.Threading.Tasks;
-using UnityEngine.Assertions;
 public class WheelView : MonoBehaviour
 {
     public enum WheelType {BRONZE, SILVER, GOLD}
     [SerializeField] public WheelSO[] wheels;
     [SerializeField] private Image wheelBase;
     [SerializeField] private Image indicator;
-    [SerializeField] private WheelRewardView[] slots = new WheelRewardView[8];
+    [SerializeField] private RewardView[] slots = new RewardView[8];
+    [SerializeField] private RewardIconLibrary iconLibrary;
     [SerializeField] private int _radius = 42;
 
     [SerializeField] private Button _spinButton;
     public static event System.Action SpinButtonClicked;
+
+    void Awake()
+    {
+        _spinButton.onClick.AddListener(() => SpinButtonClicked?.Invoke());
+    }
 
     void OnEnable()
     {
@@ -26,19 +30,34 @@ public class WheelView : MonoBehaviour
         RewardsManager.RewardsGenerated -= DrawRewards;
     }
 
-    void DrawWheel(int wheelType)
+    // Every 30th level is a gold wheel, every 5th a silver one.
+    static WheelType TypeForLevel(int level)
     {
-        wheelBase.sprite = wheels[wheelType].WheelBase;
-        indicator.sprite = wheels[wheelType].Indicator;
+        if (level % 30 == 0) return WheelType.GOLD;
+        if (level % 5 == 0) return WheelType.SILVER;
+        return WheelType.BRONZE;
     }
-    // TODO make sure rewards and slots length matches
+
+    void DrawWheel(int level)
+    {
+        WheelSO wheel = wheels[(int)TypeForLevel(level)];
+        wheelBase.sprite = wheel.WheelBase;
+        indicator.sprite = wheel.Indicator;
+    }
+
     public void DrawRewards(Reward[] rewards)
     {
+        if (rewards.Length != slots.Length)
+            Debug.LogWarning($"WheelView: {rewards.Length} rewards for {slots.Length} slots", this);
+
         for (int i = 0; i < slots.Length; i++)
         {
             if (slots[i] == null)
                 continue;
-            slots[i].SetReward(rewards[i].Data, rewards[i].Amount);
+            bool hasReward = i < rewards.Length;
+            slots[i].gameObject.SetActive(hasReward);
+            if (hasReward)
+                slots[i].Display(iconLibrary.GetSprite(rewards[i].Id), rewards[i].Amount);
         }
     }
     public void Spin(int position)

@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private int _currentLevel = 1;
@@ -8,23 +7,17 @@ public class GameManager : MonoBehaviour
 
     void OnEnable()
     {
-        WheelView.SpinButtonClicked += Play;
         RewardsManager.RewardPicked += EndLevel;
     }
 
     void OnDisable()
     {
-        WheelView.SpinButtonClicked -= Play;
         RewardsManager.RewardPicked -= EndLevel;
     }
 
     void Start()
     {
         SetLevel(1);
-    }
-    void Play()
-    {
-        SetLevel(_currentLevel + 1);
     }
 
     void EndLevel(bool isBomb)
@@ -41,7 +34,7 @@ public class GameManager : MonoBehaviour
     void SetLevel(int level)
     {
         _currentLevel = level;
-        LevelChanged.Invoke(_currentLevel);
+        LevelChanged?.Invoke(_currentLevel);
     }
 
 }

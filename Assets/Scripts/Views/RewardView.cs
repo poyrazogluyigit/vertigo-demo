@@ -4,12 +4,12 @@ using UnityEngine.UI;
 
 public class RewardView : MonoBehaviour
 {
-    [SerializeField] private Image rewardImage;
-    [SerializeField] private TextMeshProUGUI amountDisplay;
-    private int _amount = 0;
-    public void Display(RewardData reward)
+    [SerializeField] private Image icon;
+    [SerializeField] private TextMeshProUGUI amountText;
+
+    public void Display(Sprite sprite, int amount)
     {
-        rewardImage.sprite = reward.sprite;
-        amountDisplay.text = "x" + _amount;
+        icon.sprite = sprite;
+        amountText.text = "x" + amount;
     }
 }
