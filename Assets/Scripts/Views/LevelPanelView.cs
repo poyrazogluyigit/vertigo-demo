@@ -21,7 +21,6 @@ public class LevelPanelView : MonoBehaviour
 
     void MoveLevelIndicator(int level)
     {
-        var rt = gameObject.GetComponent<RectTransform>();
         float xDelta = 135;
         Vector3 target = _initialPosition + new Vector3(-(level - 1) * xDelta, 0, 0);
         Debug.Log(target);
