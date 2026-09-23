@@ -31,6 +31,10 @@ public class RewardsManager : MonoBehaviour
             int rewardId = rewardIds[i];
             rewards[i] = new Reward(rewardId, rewardPool.CalculateAmount(rewardId, level));
         }
+        if (level % 5 != 0)
+        {
+            rewards[0] = new Reward(rewardPool.BombId, 0);
+        }
         PossibleRewards = rewards;
         RewardsGenerated?.Invoke(PossibleRewards);
     }

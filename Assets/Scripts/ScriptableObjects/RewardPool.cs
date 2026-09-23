@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [System.Serializable]
@@ -20,6 +21,7 @@ public class RewardPool : ScriptableObject
     [SerializeField] private List<RewardBase> rewards  = new List<RewardBase>();
     [SerializeField] private AnimationCurve amountCurve = AnimationCurve.Linear(0f, 1f, 1f, 1f);
     [SerializeField] private int maxLevel = 30;
+    [SerializeField] public int BombId = 4;
 
     private Dictionary<int, RewardBase> _byId;
     public IReadOnlyList<RewardBase> Rewards => rewards;

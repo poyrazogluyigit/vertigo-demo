@@ -10,6 +10,7 @@ public class RewardView : MonoBehaviour
     public void Display(Sprite sprite, int amount)
     {
         icon.sprite = sprite;
-        amountText.text = "x" + amount;
+        if (amount == 0) amountText.text = "";
+        else amountText.text = "x" + amount;
     }
 }
