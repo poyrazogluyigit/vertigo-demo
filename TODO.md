@@ -1,0 +1,4 @@
+- game over screen
+- exit screen/button
+- exit/spin buttons should not work when game is over
+- ui polish

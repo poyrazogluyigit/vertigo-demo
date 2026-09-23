@@ -1,36 +1,47 @@
 using UnityEngine;
-using UnityEngine.UI;
-using DG.Tweening;
-using System.Threading.Tasks;
-
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private LevelManager _lm;
-    [SerializeField] private Button _button;
     [SerializeField] private int _currentLevel = 1;
-    [SerializeField] private Transform _levelCounter;
     [SerializeField] private RewardsManager _rewardsManager;
-    private Vector3 _initialPosition;
+    public static event System.Action<int> LevelChanged;
+    public static event System.Action<int> SpinStarted;
+    public static event System.Action<SpinResult> RoundResolved;
 
-    async void Start()
+    private bool _spinning;
+    private SpinResult _pending;
+
+    void OnEnable()
     {
-        var rt = _levelCounter.GetComponent<RectTransform>();
-        _initialPosition = rt.anchoredPosition;
-        _button.onClick.AddListener(RunLevel);
-        await SetLevel(1);
+        WheelView.SpinButtonClicked += OnSpinClicked;
+        WheelView.SpinAnimationComplete += OnSpinAnimationComplete;
     }
-    async void RunLevel()
-    {
-        _button.interactable = false;
-        SpinResult result = await _lm.Play();
-        if (result.Reward != null && result.Reward.isHazard)
-        {
-            GameOver(); return;
-        }
-        _rewardsManager.AddReward(result.Reward, result.Amount);
-        await SetLevel(_currentLevel + 1);
-        _button.interactable = true;
 
+    void OnDisable()
+    {
+        WheelView.SpinButtonClicked -= OnSpinClicked;
+        WheelView.SpinAnimationComplete -= OnSpinAnimationComplete;
+    }
+
+    void Start()
+    {
+        SetLevel(1);
+    }
+
+    void OnSpinClicked()
+    {
+        if (_spinning) return;
+        _spinning = true;
+        _pending = _rewardsManager.Pick();      // data committed now
+        SpinStarted?.Invoke(_pending.Slot);     // presentation starts
+    }
+
+    void OnSpinAnimationComplete()
+    {
+        if (!_spinning) return;
+        _spinning = false;
+        RoundResolved?.Invoke(_pending);
+        if (_pending.IsBomb) GameOver();
+        else SetLevel(_currentLevel + 1);
     }
 
     private void GameOver()
@@ -38,21 +49,10 @@ public class GameManager : MonoBehaviour
         Debug.Log("Game Over!");
     }
 
-    async Task SetLevel(int level)
+    void SetLevel(int level)
     {
-        await MoveLevelIndicator(level);
         _currentLevel = level;
-        _lm.SetLevel(_currentLevel);
+        LevelChanged?.Invoke(_currentLevel);
     }
-
-    async Task MoveLevelIndicator(int level)
-    {
-        var rt = _levelCounter.GetComponent<RectTransform>();
-        float xDelta = 135;
-        Vector3 target = _initialPosition + new Vector3(-(level - 1) * xDelta, 0, 0);
-        Debug.Log(target);
-        await rt.DOAnchorPos(target, 1f).AsyncWaitForCompletion();
-    }
-
 
 }
