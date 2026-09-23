@@ -7,12 +7,14 @@ public class WheelView : MonoBehaviour
     [SerializeField] public WheelSO[] wheels;
     [SerializeField] private Image wheelBase;
     [SerializeField] private Image indicator;
+    [SerializeField] private Transform SpinningPart;
     [SerializeField] private RewardView[] slots = new RewardView[8];
     [SerializeField] private RewardIconLibrary iconLibrary;
     [SerializeField] private int _radius = 42;
 
     [SerializeField] private Button _spinButton;
     public static event System.Action SpinButtonClicked;
+    public static event System.Action SpinAnimationComplete;
 
     void Awake()
     {
@@ -23,20 +25,20 @@ public class WheelView : MonoBehaviour
     {
         GameManager.LevelChanged += DrawWheel;
         RewardsManager.RewardsGenerated += DrawRewards;
-        RewardsManager.RewardPicked += Spin;
+        GameManager.SpinStarted += Spin;
     }
     void OnDisable()
     {
         GameManager.LevelChanged -= DrawWheel;
         RewardsManager.RewardsGenerated -= DrawRewards;
-        RewardsManager.RewardPicked -= Spin;
+        GameManager.SpinStarted -= Spin;
     }
 
     // Every 30th level is a gold wheel, every 5th a silver one.
     static WheelType TypeForLevel(int level)
     {
         if (level % 30 == 0) return WheelType.GOLD;
-        if (level % 5 == 0) return WheelType.SILVER;
+        if (level % 5 == 0 || level == 1) return WheelType.SILVER;
         return WheelType.BRONZE;
     }
 
@@ -65,6 +67,12 @@ public class WheelView : MonoBehaviour
     public void Spin(int position)
     {
         Vector3 rot = new Vector3(0, 0, 360f / slots.Length * position + 360 * 3);
-        transform.DORotate(rot, 4f, RotateMode.FastBeyond360);
+        _spinButton.interactable = false;
+        SpinningPart.DORotate(rot, 4f, RotateMode.FastBeyond360)
+            .OnComplete(() =>
+            {
+                _spinButton.interactable = true;
+                SpinAnimationComplete?.Invoke();
+            });
     }
 }

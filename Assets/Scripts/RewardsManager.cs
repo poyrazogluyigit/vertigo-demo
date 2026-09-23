@@ -11,20 +11,15 @@ public class RewardsManager : MonoBehaviour
     public IReadOnlyDictionary<int, int> EarnedRewards => _earnedRewards;
 
     public static event System.Action<Reward[]> RewardsGenerated;
-    public static event System.Action<IReadOnlyDictionary<int, int>> EarnedRewardsChanged;
-    public static event System.Action<int> RewardPicked;
-    public static event System.Action<bool> BombHit;
 
     void OnEnable()
     {
         GameManager.LevelChanged += GenerateRewards;
-        WheelView.SpinButtonClicked += PickReward;
     }
 
     void OnDisable()
     {
         GameManager.LevelChanged -= GenerateRewards;
-        WheelView.SpinButtonClicked -= PickReward;
     }
 
     public void GenerateRewards(int level)
@@ -40,14 +35,20 @@ public class RewardsManager : MonoBehaviour
         RewardsGenerated?.Invoke(PossibleRewards);
     }
 
-    private void PickReward()
+    // Decides and commits the outcome immediately; presentation happens later.
+    public SpinResult Pick()
     {
-        Reward result = PossibleRewards[Random.Range(0, PossibleRewards.Length)];
-        _earnedRewards.TryGetValue(result.Id, out int earned);
-        _earnedRewards[result.Id] = earned + result.Amount;
-        EarnedRewardsChanged?.Invoke(_earnedRewards);
-        RewardPicked?.Invoke(result.Id);
-        BombHit?.Invoke(rewardPool.isBomb(result.Id));
+        int slot = Random.Range(0, PossibleRewards.Length);
+        Reward reward = PossibleRewards[slot];
+        bool isBomb = rewardPool.isBomb(reward.Id);
+
+        _earnedRewards.TryGetValue(reward.Id, out int earned);
+        if (!isBomb)
+        {
+            earned += reward.Amount;
+            _earnedRewards[reward.Id] = earned;
+        }
+        return new SpinResult(slot, reward, isBomb, earned);
     }
 
     private int[] GetRandomRewards()

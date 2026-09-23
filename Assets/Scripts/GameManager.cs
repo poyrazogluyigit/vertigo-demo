@@ -4,15 +4,22 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int _currentLevel = 1;
     [SerializeField] private RewardsManager _rewardsManager;
     public static event System.Action<int> LevelChanged;
+    public static event System.Action<int> SpinStarted;
+    public static event System.Action<SpinResult> RoundResolved;
+
+    private bool _spinning;
+    private SpinResult _pending;
 
     void OnEnable()
     {
-        RewardsManager.BombHit += EndLevel;
+        WheelView.SpinButtonClicked += OnSpinClicked;
+        WheelView.SpinAnimationComplete += OnSpinAnimationComplete;
     }
 
     void OnDisable()
     {
-        RewardsManager.BombHit -= EndLevel;
+        WheelView.SpinButtonClicked -= OnSpinClicked;
+        WheelView.SpinAnimationComplete -= OnSpinAnimationComplete;
     }
 
     void Start()
@@ -20,9 +27,20 @@ public class GameManager : MonoBehaviour
         SetLevel(1);
     }
 
-    void EndLevel(bool isBomb)
+    void OnSpinClicked()
     {
-        if (isBomb) GameOver();
+        if (_spinning) return;
+        _spinning = true;
+        _pending = _rewardsManager.Pick();      // data committed now
+        SpinStarted?.Invoke(_pending.Slot);     // presentation starts
+    }
+
+    void OnSpinAnimationComplete()
+    {
+        if (!_spinning) return;
+        _spinning = false;
+        RoundResolved?.Invoke(_pending);
+        if (_pending.IsBomb) GameOver();
         else SetLevel(_currentLevel + 1);
     }
 

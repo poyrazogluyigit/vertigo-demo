@@ -274,7 +274,7 @@ GameObject:
   m_Component:
   - component: {fileID: 56017337}
   m_Layer: 0
-  m_Name: Wheel
+  m_Name: SpinningPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -358,6 +358,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 02105c611fc3b0a48a6d0a1b0eb516e9, type: 2}
   wheelBase: {fileID: 278894263}
   indicator: {fileID: 3394379}
+  SpinningPart: {fileID: 56017337}
   slots:
   - {fileID: 1096087836}
   - {fileID: 360831087}

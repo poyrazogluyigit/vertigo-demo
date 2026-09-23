@@ -6,7 +6,7 @@ public class RewardPanelView : MonoBehaviour
 {
     [SerializeField] private RewardView _rcPrefab;
     [SerializeField] private RewardIconLibrary _iconLibrary;
-
+    [SerializeField] private Transform scrollViewContent;
     [SerializeField] private Button _exitButton;
     public static event System.Action ExitButtonClicked;
 
@@ -19,21 +19,24 @@ public class RewardPanelView : MonoBehaviour
 
     void OnEnable()
     {
-        RewardsManager.EarnedRewardsChanged += Display;
+        GameManager.RoundResolved += OnRoundResolved;
     }
 
     void OnDisable()
     {
-        RewardsManager.EarnedRewardsChanged -= Display;
+        GameManager.RoundResolved -= OnRoundResolved;
     }
 
-    public void Display(IReadOnlyDictionary<int, int> rewards)
+    void OnRoundResolved(SpinResult result)
     {
-        foreach (var pair in rewards)
-        {
-            if (!_entries.TryGetValue(pair.Key, out var rView))
-                _entries[pair.Key] = rView = Instantiate(_rcPrefab, transform);
-            rView.Display(_iconLibrary.GetSprite(pair.Key), pair.Value);
-        }
+        if (result.IsBomb) return;
+        Display(result.Reward.Id, result.EarnedTotal);
+    }
+
+    public void Display(int rewardId, int total)
+    {
+        if (!_entries.TryGetValue(rewardId, out var rView))
+            _entries[rewardId] = rView = Instantiate(_rcPrefab, scrollViewContent);
+        rView.Display(_iconLibrary.GetSprite(rewardId), total);
     }
 }
