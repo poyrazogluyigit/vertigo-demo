@@ -10,6 +10,10 @@ public class RewardPanelView : MonoBehaviour
     public static event System.Action ExitButtonClicked;
     public void Display(Dictionary<RewardData, int> rewards)
     {
-        
+        foreach (var key in rewards.Keys)
+        {
+            var rView = Instantiate(_rcPrefab, transform);
+            rView.Display(key, rewards[key]);
+        }
     }
 }

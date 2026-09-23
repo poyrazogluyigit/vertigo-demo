@@ -12,6 +12,4 @@ public class RewardView : MonoBehaviour
         rewardImage.sprite = reward.sprite;
         amountDisplay.text = "x" + _amount;
     }
-
-    public void AddAmount(int amt) => _amount += amt;
 }

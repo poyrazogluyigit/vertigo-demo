@@ -7,5 +7,5 @@ public class RewardData : ScriptableObject
     public Sprite sprite;
     public float baseAmount = 1f;
     public float weight = 1f;
-    public bool isBomb {get; private set;} = false;
+    public bool isBomb = false;
 }

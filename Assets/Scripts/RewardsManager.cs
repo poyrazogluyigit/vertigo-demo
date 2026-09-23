@@ -60,7 +60,7 @@ public class RewardsManager : MonoBehaviour
 
     private RewardData[] GetRandomRewards(int numRewards)
     {
-        List<RewardData> rewards = new List<RewardData>(rewardPool.rewards);
+        List<RewardData> rewards = new List<RewardData>(rewardPool.GetRewards);
 
         // Fisher-Yates shuffle over all reward pool
         for (int i = rewards.Count - 1; i > 0; i--)
