@@ -15,8 +15,22 @@ public readonly struct Reward
 public class RewardsManager : MonoBehaviour
 {
     [SerializeField] private RewardPool rewardPool;
+    public Reward[] generatedRewards {get; private set;}
+    private readonly Dictionary<RewardData, int> _earnedRewards = new Dictionary<RewardData, int>();
+    public static event System.Action<Reward[]> RewardsGenerated;
+    public static event System.Action<bool> RewardPicked;
 
-    public Reward[] GenerateRewards(int level)
+    void OnEnable()
+    {
+        GameManager.LevelChanged += GenerateRewards;
+    }
+
+    void OnDisable()
+    {
+        GameManager.LevelChanged -= GenerateRewards;
+    }
+
+    public void GenerateRewards(int level)
     {
         const int numRewards = 8;
         Reward[] rewards = new Reward[numRewards];
@@ -27,7 +41,21 @@ public class RewardsManager : MonoBehaviour
             int amount = rewardPool.CalculateAmount(rd, level);
             rewards[i] = new Reward(rd, amount);
         }
-        return rewards;
+        generatedRewards = rewards;
+        RewardsGenerated.Invoke(generatedRewards);
+    }
+
+    private void PickReward()
+    {
+        Reward result = generatedRewards[Random.Range(0, 8)];
+        bool isBomb = true;
+        if (!result.Data.isBomb)
+        {
+            isBomb = false;
+            int prev = _earnedRewards.TryGetValue(result.Data, out int amount) ? amount : 0;
+            _earnedRewards[result.Data] = prev + result.Amount;
+        }
+        RewardPicked.Invoke(isBomb);
     }
 
     private RewardData[] GetRandomRewards(int numRewards)

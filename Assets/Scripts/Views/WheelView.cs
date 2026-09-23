@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using System.Threading.Tasks;
+using UnityEngine.Assertions;
 public class WheelView : MonoBehaviour
 {
     public enum WheelType {BRONZE, SILVER, GOLD}
@@ -14,23 +15,35 @@ public class WheelView : MonoBehaviour
     [SerializeField] private Button _spinButton;
     public static event System.Action SpinButtonClicked;
 
-    public void Draw(WheelType type, RewardData[] rewards, int[] amounts)
+    void OnEnable()
     {
-        wheelBase.sprite = wheels[(int) type].WheelBase;
-        indicator.sprite = wheels[(int) type].Indicator;
+        GameManager.LevelChanged += DrawWheel;
+        RewardsManager.RewardsGenerated += DrawRewards;
+    }
+    void OnDisable()
+    {
+        GameManager.LevelChanged -= DrawWheel;
+        RewardsManager.RewardsGenerated -= DrawRewards;
+    }
+
+    void DrawWheel(int wheelType)
+    {
+        wheelBase.sprite = wheels[wheelType].WheelBase;
+        indicator.sprite = wheels[wheelType].Indicator;
+    }
+    // TODO make sure rewards and slots length matches
+    public void DrawRewards(Reward[] rewards)
+    {
         for (int i = 0; i < slots.Length; i++)
         {
             if (slots[i] == null)
                 continue;
-            RewardData reward = rewards != null && i < rewards.Length ? rewards[i] : null;
-            int amount = amounts != null && i < amounts.Length ? amounts[i] : 0;
-            slots[i].SetReward(reward, amount);
+            slots[i].SetReward(rewards[i].Data, rewards[i].Amount);
         }
     }
-    public async Task Spin(int position)
+    public void Spin(int position)
     {
         Vector3 rot = new Vector3(0, 0, 360f / slots.Length * position + 360 * 3);
-        await transform.DORotate(rot, 4f, RotateMode.FastBeyond360)
-        .AsyncWaitForCompletion();
+        transform.DORotate(rot, 4f, RotateMode.FastBeyond360);
     }
 }
