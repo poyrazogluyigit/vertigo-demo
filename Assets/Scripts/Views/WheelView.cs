@@ -11,6 +11,9 @@ public class WheelView : MonoBehaviour
     [SerializeField] private WheelRewardView[] slots = new WheelRewardView[8];
     [SerializeField] private int _radius = 42;
 
+    [SerializeField] private Button _spinButton;
+    public static event System.Action SpinButtonClicked;
+
     public void Draw(WheelType type, RewardData[] rewards, int[] amounts)
     {
         wheelBase.sprite = wheels[(int) type].WheelBase;

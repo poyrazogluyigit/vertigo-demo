@@ -10,6 +10,6 @@ public class WheelRewardView : MonoBehaviour
     public void SetReward(RewardData reward, int amount)
     {
         icon.sprite = reward != null ? reward.sprite : null;
-        amountText.text = reward != null && reward.isCurrency ? "x" + amount : "";
+        amountText.text = reward != null ? "x" + amount : "";
     }
 }
