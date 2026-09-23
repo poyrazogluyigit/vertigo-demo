@@ -7,12 +7,12 @@ public class GameManager : MonoBehaviour
 
     void OnEnable()
     {
-        RewardsManager.RewardPicked += EndLevel;
+        RewardsManager.BombHit += EndLevel;
     }
 
     void OnDisable()
     {
-        RewardsManager.RewardPicked -= EndLevel;
+        RewardsManager.BombHit -= EndLevel;
     }
 
     void Start()

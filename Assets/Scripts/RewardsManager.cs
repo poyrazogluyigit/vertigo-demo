@@ -6,14 +6,14 @@ public class RewardsManager : MonoBehaviour
     [SerializeField] private RewardPool rewardPool;
     private const int num_options = 8;
 
-    // Ordered: index i is what wheel slot i shows.
     public Reward[] PossibleRewards { get; private set; } = new Reward[0];
     private readonly Dictionary<int, int> _earnedRewards = new Dictionary<int, int>();
     public IReadOnlyDictionary<int, int> EarnedRewards => _earnedRewards;
 
     public static event System.Action<Reward[]> RewardsGenerated;
     public static event System.Action<IReadOnlyDictionary<int, int>> EarnedRewardsChanged;
-    public static event System.Action<bool> RewardPicked;
+    public static event System.Action<int> RewardPicked;
+    public static event System.Action<bool> BombHit;
 
     void OnEnable()
     {
@@ -43,14 +43,11 @@ public class RewardsManager : MonoBehaviour
     private void PickReward()
     {
         Reward result = PossibleRewards[Random.Range(0, PossibleRewards.Length)];
-        bool isBomb = rewardPool.isBomb(result.Id);
-        if (!isBomb)
-        {
-            _earnedRewards.TryGetValue(result.Id, out int earned);
-            _earnedRewards[result.Id] = earned + result.Amount;
-            EarnedRewardsChanged?.Invoke(_earnedRewards);
-        }
-        RewardPicked?.Invoke(isBomb);
+        _earnedRewards.TryGetValue(result.Id, out int earned);
+        _earnedRewards[result.Id] = earned + result.Amount;
+        EarnedRewardsChanged?.Invoke(_earnedRewards);
+        RewardPicked?.Invoke(result.Id);
+        BombHit?.Invoke(rewardPool.isBomb(result.Id));
     }
 
     private int[] GetRandomRewards()

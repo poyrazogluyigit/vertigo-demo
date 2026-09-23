@@ -23,11 +23,13 @@ public class WheelView : MonoBehaviour
     {
         GameManager.LevelChanged += DrawWheel;
         RewardsManager.RewardsGenerated += DrawRewards;
+        RewardsManager.RewardPicked += Spin;
     }
     void OnDisable()
     {
         GameManager.LevelChanged -= DrawWheel;
         RewardsManager.RewardsGenerated -= DrawRewards;
+        RewardsManager.RewardPicked -= Spin;
     }
 
     // Every 30th level is a gold wheel, every 5th a silver one.
