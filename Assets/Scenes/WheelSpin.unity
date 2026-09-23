@@ -6769,6 +6769,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rcPrefab: {fileID: 1093725316888110820, guid: 30cecfcda44736a4fb4282b68f93d60e, type: 3}
   _iconLibrary: {fileID: 11400000, guid: 4af64f5309324bcca1ed09795d7d0595, type: 2}
+  scrollViewContent: {fileID: 84635836}
   _exitButton: {fileID: 2034027407}
 --- !u!1 &1585141999
 GameObject:
