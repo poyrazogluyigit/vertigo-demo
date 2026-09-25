@@ -25,7 +25,7 @@ public class EndgameView : MonoBehaviour
         gameOverContainer.gameObject.SetActive(false);
         exitContainer.gameObject.SetActive(false);
         _endgameCanvas.gameObject.SetActive(false);
-        RestartButtonClicked.Invoke();
+        RestartButtonClicked?.Invoke();
     }
 
     void DisplayEndScreen(bool isLost)

@@ -26,6 +26,7 @@ public class RewardPanelView : MonoBehaviour
         RewardsManager.RewardsCollected += OnRewardsCollected;
         GameManager.GameRestarted += OnGameRestarted;
         GameManager.SpinStarted += OnSpinStarted;
+        GameManager.GameEnded += OnGameEnded;
     }
 
     void OnDisable()
@@ -34,11 +35,16 @@ public class RewardPanelView : MonoBehaviour
         RewardsManager.RewardsCollected -= OnRewardsCollected;
         GameManager.GameRestarted -= OnGameRestarted;
         GameManager.SpinStarted -= OnSpinStarted;
+        GameManager.GameEnded -= OnGameEnded;
     }
 
     // Bailing out mid-spin would end the run on a result that is already
     // committed but not yet shown, so the exit stays locked until it lands.
     void OnSpinStarted(int slot) => _exitButton.interactable = false;
+
+    // The endgame screen overlays this panel; the run is already over, so the
+    // exit stays locked until a restart brings the panel back into play.
+    void OnGameEnded(bool isLost) => _exitButton.interactable = false;
 
     void OnRoundResolved(SpinResult result)
     {

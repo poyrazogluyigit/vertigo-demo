@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public static event System.Action GameRestarted;
 
     private bool _spinning;
+    private bool _gameEnded;
     private bool _isLost = false;
     private SpinResult _pending;
 
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviour
     void RestartGame()
     {
         _isLost = false;
+        _gameEnded = false;
         GameRestarted?.Invoke();   // listeners drop whatever last run left behind
         SetLevel(1);
     }
@@ -65,11 +67,15 @@ public class GameManager : MonoBehaviour
     // before the animation lands would drop a reward the player has won.
     void OnExitClicked()
     {
-        if (_spinning) return;
+        if (_spinning || _gameEnded) return;
         EndGame();
     }
 
-    private void EndGame() => GameEnded?.Invoke(_isLost);
+    private void EndGame()
+    {
+        _gameEnded = true;
+        GameEnded?.Invoke(_isLost);
+    }
 
     void SetLevel(int level)
     {
