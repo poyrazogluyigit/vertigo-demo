@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class RewardPanelView : MonoBehaviour
 {
     [SerializeField] private RewardView _rcPrefab;
+    [SerializeField] private RewardView _rcCardPrefab;
     [SerializeField] private Transform _inGameRewardsContent;
     [SerializeField] private Transform _endgameRewardsContent;
     [SerializeField] private Button _exitButton;
@@ -71,7 +72,10 @@ public class RewardPanelView : MonoBehaviour
     {
         Dictionary<RewardDefinition, RewardView> entries = EntriesFor(container);
         if (!entries.TryGetValue(reward.RewardDefn, out var rView))
-            entries[reward.RewardDefn] = rView = Instantiate(_rcPrefab, container);
+        {
+            RewardView prefab = container == _endgameRewardsContent ? _rcCardPrefab : _rcPrefab;
+            entries[reward.RewardDefn] = rView = Instantiate(prefab, container);
+        }
         rView.Display(reward.RewardDefn.image, reward.Amount);
     }
 

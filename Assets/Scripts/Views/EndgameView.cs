@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,12 @@ public class EndgameView : MonoBehaviour
     [SerializeField] private GameObject gameOverContainer;
     [SerializeField] private GameObject exitContainer;
     [SerializeField] private Button RestartButton;
+    [SerializeField] private Image RestartButtonImage;
+    [SerializeField] private TMP_Text RestartButtonLabel;
+    [SerializeField] private TMP_Text TitleText;
+    [SerializeField] private TMP_Text DescriptionText;
+    [SerializeField] private Sprite RestartButtonGreySprite;
+    [SerializeField] private Sprite RestartButtonOrangeSprite;
     public static event System.Action RestartButtonClicked;
     void OnEnable()
     {
@@ -31,7 +38,21 @@ public class EndgameView : MonoBehaviour
     void DisplayEndScreen(bool isLost)
     {
         _endgameCanvas.gameObject.SetActive(true);
-        if (isLost) gameOverContainer.SetActive(true);
-        else exitContainer.SetActive(true);
+        if (isLost)
+        {
+            gameOverContainer.SetActive(true);
+            TitleText.text = "OH NO, A BOMB EXPLODED RIGHT IN YOUR HANDS!";
+            DescriptionText.text = "You lost all your rewards.";
+            RestartButtonLabel.text = "GIVE UP";
+            RestartButtonImage.sprite = RestartButtonGreySprite;
+        }
+        else
+        {
+            exitContainer.SetActive(true);
+            TitleText.text = "YOU LEFT THE TABLE";
+            DescriptionText.text = "You collected the following rewards:";
+            RestartButtonLabel.text = "PLAY AGAIN";
+            RestartButtonImage.sprite = RestartButtonOrangeSprite;
+        }
     }
 }
