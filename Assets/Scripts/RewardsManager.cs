@@ -28,7 +28,7 @@ public class RewardsManager : MonoBehaviour
         var rewards = new Reward[rewardDefns.Length];
         int i = 0;
         if (level == 30) rewards[i++] = new Reward(rewardPool.Super, 1);    
-        else if (level % 5 != 0 || level != 1) rewards[i++] = new Reward(rewardPool.Bomb, 1);
+        else if (level % 5 != 0 && level != 1) rewards[i++] = new Reward(rewardPool.Bomb, 1);
         while (i < num_options)
         {
             rewards[i] = new Reward(rewardDefns[i], rewardPool.CalculateAmount(rewardDefns[i], level));
