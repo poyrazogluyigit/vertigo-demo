@@ -9,8 +9,6 @@ public class WheelView : MonoBehaviour
     [SerializeField] private Image indicator;
     [SerializeField] private Transform SpinningPart;
     [SerializeField] private RewardView[] slots = new RewardView[8];
-    [SerializeField] private int _radius = 42;
-
     [SerializeField] private Button _spinButton;
     public static event System.Action SpinButtonClicked;
     public static event System.Action SpinAnimationComplete;
