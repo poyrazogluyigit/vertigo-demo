@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     {
         WheelView.SpinButtonClicked += OnSpinClicked;
         WheelView.SpinAnimationComplete += OnSpinAnimationComplete;
-        RewardPanelView.ExitButtonClicked += EndGame;
+        RewardPanelView.ExitButtonClicked += OnExitClicked;
         EndgameView.RestartButtonClicked += RestartGame;
     }
 
@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     {
         WheelView.SpinButtonClicked -= OnSpinClicked;
         WheelView.SpinAnimationComplete -= OnSpinAnimationComplete;
-        RewardPanelView.ExitButtonClicked -= EndGame;
+        RewardPanelView.ExitButtonClicked -= OnExitClicked;
         EndgameView.RestartButtonClicked -= RestartGame;
     }
 
@@ -61,7 +61,15 @@ public class GameManager : MonoBehaviour
         else SetLevel(_currentLevel + 1);
     }
 
-    private void EndGame() => GameEnded.Invoke(_isLost);
+    // The spin's result is already picked once _spinning is set, so quitting
+    // before the animation lands would drop a reward the player has won.
+    void OnExitClicked()
+    {
+        if (_spinning) return;
+        EndGame();
+    }
+
+    private void EndGame() => GameEnded?.Invoke(_isLost);
 
     void SetLevel(int level)
     {
