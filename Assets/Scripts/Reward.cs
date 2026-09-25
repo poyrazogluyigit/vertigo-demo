@@ -1,11 +1,11 @@
 public readonly struct Reward
 {
-    public readonly int Id;
+    public readonly RewardDefinition RewardDefn;
     public readonly int Amount;
 
-    public Reward(int id, int amount)
+    public Reward(RewardDefinition rd, int amount)
     {
-        Id = id;
+        RewardDefn = rd;
         Amount = amount;
     }
 }
