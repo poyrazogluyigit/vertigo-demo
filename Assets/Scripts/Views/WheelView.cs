@@ -9,7 +9,6 @@ public class WheelView : MonoBehaviour
     [SerializeField] private Image indicator;
     [SerializeField] private Transform SpinningPart;
     [SerializeField] private RewardView[] slots = new RewardView[8];
-    [SerializeField] private RewardIconLibrary iconLibrary;
     [SerializeField] private int _radius = 42;
 
     [SerializeField] private Button _spinButton;
@@ -61,7 +60,7 @@ public class WheelView : MonoBehaviour
             bool hasReward = i < rewards.Length;
             slots[i].gameObject.SetActive(hasReward);
             if (hasReward)
-                slots[i].Display(iconLibrary.GetSprite(rewards[i].Id), rewards[i].Amount);
+                slots[i].Display(rewards[i].RewardDefn.image, rewards[i].Amount);
         }
     }
     public void Spin(int position)

@@ -6,24 +6,38 @@ public class GameManager : MonoBehaviour
     public static event System.Action<int> LevelChanged;
     public static event System.Action<int> SpinStarted;
     public static event System.Action<SpinResult> RoundResolved;
+    public static event System.Action<bool> GameEnded;
+    public static event System.Action GameRestarted;
 
     private bool _spinning;
+    private bool _isLost = false;
     private SpinResult _pending;
 
     void OnEnable()
     {
         WheelView.SpinButtonClicked += OnSpinClicked;
         WheelView.SpinAnimationComplete += OnSpinAnimationComplete;
+        RewardPanelView.ExitButtonClicked += EndGame;
+        EndgameView.RestartButtonClicked += RestartGame;
     }
 
     void OnDisable()
     {
         WheelView.SpinButtonClicked -= OnSpinClicked;
         WheelView.SpinAnimationComplete -= OnSpinAnimationComplete;
+        RewardPanelView.ExitButtonClicked -= EndGame;
+        EndgameView.RestartButtonClicked -= RestartGame;
     }
 
     void Start()
     {
+        SetLevel(1);
+    }
+
+    void RestartGame()
+    {
+        _isLost = false;
+        GameRestarted?.Invoke();   // listeners drop whatever last run left behind
         SetLevel(1);
     }
 
@@ -40,14 +54,14 @@ public class GameManager : MonoBehaviour
         if (!_spinning) return;
         _spinning = false;
         RoundResolved?.Invoke(_pending);
-        if (_pending.IsBomb) GameOver();
+        if (_pending.IsBomb)
+        {
+           _isLost = true; EndGame(); 
+        }
         else SetLevel(_currentLevel + 1);
     }
 
-    private void GameOver()
-    {
-        Debug.Log("Game Over!");
-    }
+    private void EndGame() => GameEnded.Invoke(_isLost);
 
     void SetLevel(int level)
     {

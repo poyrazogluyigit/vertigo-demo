@@ -5,12 +5,15 @@ using UnityEngine.UI;
 public class RewardPanelView : MonoBehaviour
 {
     [SerializeField] private RewardView _rcPrefab;
-    [SerializeField] private RewardIconLibrary _iconLibrary;
-    [SerializeField] private Transform scrollViewContent;
+    [SerializeField] private Transform _inGameRewardsContent;
+    [SerializeField] private Transform _endgameRewardsContent;
     [SerializeField] private Button _exitButton;
     public static event System.Action ExitButtonClicked;
 
-    private readonly Dictionary<int, RewardView> _entries = new Dictionary<int, RewardView>();
+    // One view cache per container: the same reward shows up in both the in-game
+    // list and the endgame list, and each list needs its own RewardView instance.
+    private readonly Dictionary<Transform, Dictionary<RewardDefinition, RewardView>> _entries =
+        new Dictionary<Transform, Dictionary<RewardDefinition, RewardView>>();
 
     void Awake()
     {
@@ -20,23 +23,58 @@ public class RewardPanelView : MonoBehaviour
     void OnEnable()
     {
         GameManager.RoundResolved += OnRoundResolved;
+        RewardsManager.RewardsCollected += OnRewardsCollected;
+        GameManager.GameRestarted += OnGameRestarted;
     }
 
     void OnDisable()
     {
         GameManager.RoundResolved -= OnRoundResolved;
+        RewardsManager.RewardsCollected -= OnRewardsCollected;
+        GameManager.GameRestarted -= OnGameRestarted;
     }
 
     void OnRoundResolved(SpinResult result)
     {
         if (result.IsBomb) return;
-        Display(result.Reward.Id, result.EarnedTotal);
+        Display(result.Reward, _inGameRewardsContent);
     }
 
-    public void Display(int rewardId, int total)
+    void OnGameRestarted() => Clear(_inGameRewardsContent);
+
+    void OnRewardsCollected(Reward[] rewards)
     {
-        if (!_entries.TryGetValue(rewardId, out var rView))
-            _entries[rewardId] = rView = Instantiate(_rcPrefab, scrollViewContent);
-        rView.Display(_iconLibrary.GetSprite(rewardId), total);
+        // The endgame list reflects a single run, so rebuild it from scratch.
+        Clear(_endgameRewardsContent);
+        foreach (var reward in rewards)
+            Display(reward, _endgameRewardsContent);
+    }
+
+    public void Display(Reward reward, Transform container)
+    {
+        Dictionary<RewardDefinition, RewardView> entries = EntriesFor(container);
+        if (!entries.TryGetValue(reward.RewardDefn, out var rView))
+            entries[reward.RewardDefn] = rView = Instantiate(_rcPrefab, container);
+        rView.Display(reward.RewardDefn.image, reward.Amount);
+    }
+
+    public void Clear(Transform container)
+    {
+        Dictionary<RewardDefinition, RewardView> entries = EntriesFor(container);
+        foreach (RewardView rView in entries.Values)
+        {
+            // Unparent first: Destroy is deferred to end of frame, and a pending
+            // child would still be counted by the layout group this frame.
+            rView.transform.SetParent(null);
+            Destroy(rView.gameObject);
+        }
+        entries.Clear();
+    }
+
+    private Dictionary<RewardDefinition, RewardView> EntriesFor(Transform container)
+    {
+        if (!_entries.TryGetValue(container, out var entries))
+            _entries[container] = entries = new Dictionary<RewardDefinition, RewardView>();
+        return entries;
     }
 }
