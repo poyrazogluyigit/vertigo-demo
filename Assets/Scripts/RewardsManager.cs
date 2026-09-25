@@ -11,15 +11,30 @@ public class RewardsManager : MonoBehaviour
     public IReadOnlyDictionary<RewardDefinition, int> EarnedRewards => _earnedRewards;
 
     public static event System.Action<Reward[]> RewardsGenerated;
+    public static event System.Action<Reward[]> RewardsCollected;
 
     void OnEnable()
     {
         GameManager.LevelChanged += GenerateRewards;
+        GameManager.GameEnded += HandleEarnedRewards;
     }
 
     void OnDisable()
     {
         GameManager.LevelChanged -= GenerateRewards;
+        GameManager.GameEnded -= HandleEarnedRewards;
+
+    }
+
+    private void HandleEarnedRewards(bool isLost)
+    {
+        List<Reward> finalRewards = new List<Reward>();
+        if (!isLost) foreach (var key in _earnedRewards.Keys)
+        {
+            finalRewards.Add(new Reward(key, _earnedRewards[key]));
+        }
+        _earnedRewards.Clear();
+        RewardsCollected.Invoke(finalRewards.ToArray());
     }
 
     public void GenerateRewards(int level)
