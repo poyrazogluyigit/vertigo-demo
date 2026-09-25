@@ -50,7 +50,7 @@ public class RewardPanelView : MonoBehaviour
     {
         _exitButton.interactable = true;
         if (result.IsBomb) return;
-        Display(result.Reward, _inGameRewardsContent);
+        Display(new Reward(result.Reward.RewardDefn, result.EarnedTotal), _inGameRewardsContent);
     }
 
     void OnGameRestarted()
