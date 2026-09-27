@@ -15,6 +15,9 @@ MonoBehaviour:
   WheelBase: {fileID: 21300000, guid: f16486652002ae34db3f97612251f171, type: 3}
   Indicator: {fileID: 21300000, guid: 4092e51649fd3bc44bd99efb8bc8d60b, type: 3}
   RaysColor: {r: 1, g: 0.7, b: 0.45, a: 0.19607843}
+  ZoneTileSprite: {fileID: 21300000, guid: 9c04d07bf0efc1a4e90e9a83b00d0566, type: 3}
+  ZoneTileColor: {r: 1, g: 1, b: 1, a: 1}
+  UpcomingTileColor: {r: 0, g: 0, b: 0, a: 0}
   Slices:
   - {fileID: 11400000, guid: 3172f645bf902e03de87a875225636a6, type: 2}
   - {fileID: 11400000, guid: 72b435bff2a13e291f23546fe3b69d6c, type: 2}

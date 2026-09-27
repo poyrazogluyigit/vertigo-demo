@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -32,7 +33,10 @@ public class ViewManager : MonoBehaviour
     {
         _wheelView.DrawWheel(wheel);
         _wheelView.DrawRewards(rewards);
+        _levelPanelView.DrawCurrentZone(wheel);
     }
+
+    public void BuildZoneBar(Func<int, WheelSO> wheelForZone) => _levelPanelView.BuildUpcomingTiles(wheelForZone);
 
     public async Task SpinWheel(int slot)
     {

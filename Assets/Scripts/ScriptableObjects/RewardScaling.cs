@@ -1,6 +1,5 @@
 using UnityEngine;
 
-// How a reward's amount grows with the zone. Rewards without one keep their base amount.
 [CreateAssetMenu(menuName = "WheelSpin/Reward Scaling", fileName = "NewRewardScaling")]
 public class RewardScaling : ScriptableObject
 {

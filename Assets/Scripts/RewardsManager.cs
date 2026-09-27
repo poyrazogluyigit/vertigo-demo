@@ -13,7 +13,7 @@ public class RewardsManager : MonoBehaviour
     public void ClearRewards() => _earnedRewards.Clear();
 
     // Every 30th zone is a gold wheel, every 5th (and the first) a silver one.
-    WheelSO WheelForLevel(int level)
+    public WheelSO WheelForLevel(int level)
     {
         if (level % 30 == 0) return _goldWheel;
         if (level % 5 == 0 || level == 1) return _silverWheel;

@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        _vm.BuildZoneBar(_rewardsManager.WheelForLevel);
         OnRestartButtonPressed();
     }
 

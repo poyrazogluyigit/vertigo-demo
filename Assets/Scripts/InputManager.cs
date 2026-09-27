@@ -43,7 +43,6 @@ public class InputManager : MonoBehaviour
         _restartButton.onClick.RemoveListener(OnRestartClicked);
     }
 
-    // Raise at click time: the events may have no subscribers yet when OnEnable runs
     void OnSpinClicked() => SpinButtonPressed?.Invoke();
     void OnExitClicked() => ExitButtonPressed?.Invoke();
     void OnRestartClicked() => RestartButtonPressed?.Invoke();
