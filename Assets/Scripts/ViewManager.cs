@@ -10,7 +10,7 @@ public class ViewManager : MonoBehaviour
     [SerializeField] private LevelPanelView _levelPanelView;
     [SerializeField] private WheelView _wheelView;
     [SerializeField] private RewardPanelView _rewardPanelView;
-    [SerializeField] private EndScreen _gameOverScreen, _cashOutScreen, _winScreen;
+    [SerializeField] private EndScreen _gameOverScreen, _cashOutScreen;
 
 
 #if UNITY_EDITOR
@@ -33,10 +33,7 @@ public class ViewManager : MonoBehaviour
     {
         _wheelView.DrawWheel(wheel);
         _wheelView.DrawRewards(rewards);
-        _levelPanelView.DrawCurrentZone(wheel);
     }
-
-    public void BuildZoneBar(Func<int, WheelSO> wheelForZone) => _levelPanelView.BuildUpcomingTiles(wheelForZone);
 
     public async Task SpinWheel(int slot)
     {
@@ -54,10 +51,9 @@ public class ViewManager : MonoBehaviour
             _rewardPanelView.DisplayInGame(new Reward(k, rewards[k]));
         }
     }
-    public void DisplayEndgameScreen(bool isWon, IReadOnlyDictionary<RewardDefinition, int> rewards)
+    public void DisplayEndgameScreen(IReadOnlyDictionary<RewardDefinition, int> rewards)
     {
-        if (isWon) _endgameView.DisplayScreen(_winScreen);
-        else _endgameView.DisplayScreen(_cashOutScreen);
+        _endgameView.DisplayScreen(_cashOutScreen);
         foreach (var k in rewards.Keys)
         {
             _rewardPanelView.DisplayEndgame(new Reward(k, rewards[k]));

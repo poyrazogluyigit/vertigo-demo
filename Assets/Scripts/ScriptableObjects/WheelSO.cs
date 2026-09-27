@@ -7,9 +7,6 @@ public class WheelSO : ScriptableObject
     public Sprite WheelBase;
     public Sprite Indicator;
     public Color RaysColor = Color.clear;
-    public Sprite ZoneTileSprite;
-    public Color ZoneTileColor = Color.white;
-    public Color UpcomingTileColor = Color.clear;
     public RewardDefinition[] Slices = new RewardDefinition[SliceCount];
 
 #if UNITY_EDITOR

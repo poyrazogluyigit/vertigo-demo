@@ -1,89 +1,80 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 using System.Threading.Tasks;
+
 public class LevelPanelView : View
 {
     [SerializeField] RectTransform _levelNumbers;
-    [SerializeField] Image _currentZoneTile;
-    [SerializeField] Image _upcomingTilePrefab;
+    [SerializeField] LevelPanelSetting _levelPanelSettings;
     private Vector3 _initialPosition;
-    private readonly Dictionary<int, Image> _upcomingTiles = new Dictionary<int, Image>();
     void Awake() => _initialPosition = _levelNumbers.anchoredPosition;
 
-    public async Task ChangeLevel(int level)
-    {
-        await MoveLevelIndicator(level);
-        RefreshZones(level);
-    }
     public void ResetIndicator()
     {
         _levelNumbers.anchoredPosition = _initialPosition;
-        RefreshZones(1);
+        int i = 0;
+        foreach (var t in _levelNumbers.GetComponentsInChildren<TMP_Text>())
+            t.text = (++i).ToString();
+        SetNumberStyle(1);
+
+
     }
 
-    public void DrawCurrentZone(WheelSO wheel)
+    public async Task ChangeLevel(int level, bool cancelAnimation = false)
     {
-        _currentZoneTile.sprite = wheel.ZoneTileSprite;
-        _currentZoneTile.color = wheel.ZoneTileColor;
+        if (level > 15) InfiniteSlideSetup(level);
+        await MoveLevelIndicator(level, cancelAnimation);
     }
 
-    // Marks special zones ahead of the player. Each tile is a track child placed before
-    // the numbers, so it draws behind its number and slides with the track.
-    public void BuildUpcomingTiles(Func<int, WheelSO> wheelForZone)
-    {
-        foreach (TMP_Text label in _levelNumbers.GetComponentsInChildren<TMP_Text>(true))
-        {
-            if (!TryGetZone(label, out int zone)) continue;
-            Color tint = wheelForZone(zone).UpcomingTileColor;
-            if (tint.a <= 0f) continue;
-
-            Image tile = Instantiate(_upcomingTilePrefab, _levelNumbers);
-            tile.name = $"ui_image_level_upcoming_{zone:00}";
-            tile.color = tint;
-            tile.rectTransform.anchoredPosition = new Vector2(label.rectTransform.rect.width * (zone - 0.5f), 0f);
-            tile.transform.SetAsFirstSibling();
-            _upcomingTiles[zone] = tile;
-        }
-    }
-
-    async Task MoveLevelIndicator(int level)
+    async Task MoveLevelIndicator(int level, bool cancelAnimation = false)
     {
         float xDelta = 135;
         Vector3 target = _initialPosition + new Vector3(-(level - 1) * xDelta, 0, 0);
         Debug.Log(target);
-        await _levelNumbers.DOAnchorPos(target, 1f)
+        if (!cancelAnimation) await _levelNumbers.DOAnchorPos(target, 1f)
         .AsyncWaitForCompletion();
+        else _levelNumbers.anchoredPosition = target;
     }
 
-    void RefreshZones(int level)
+    int GetLevelType(int level)
     {
-        foreach (TMP_Text label in _levelNumbers.GetComponentsInChildren<TMP_Text>(true))
+        if (level % 30 == 0) return 0;
+        else if (level % 5 == 0 || level == 1) return 1;
+        else return 2;
+    }
+
+    void IncreaseNumbers()
+    {
+        foreach (var t in _levelNumbers.GetComponentsInChildren<TMP_Text>())
         {
-            if (!TryGetZone(label, out int zone)) continue;
-            Color c = label.color;
-            c.a = zone < level ? 0.4f : 1f;
-            label.color = c;
+            int currentNumber = int.Parse(t.text);
+            t.text = (currentNumber + 1).ToString();
         }
-        // Reached zones lose their tile; the current zone shows the current-zone tile instead
-        foreach (KeyValuePair<int, Image> entry in _upcomingTiles)
-            entry.Value.gameObject.SetActive(entry.Key > level);
     }
 
-    static bool TryGetZone(TMP_Text label, out int zone)
+    void SetNumberStyle(int level)
     {
-        string[] parts = label.name.Split('_');
-        return int.TryParse(parts[parts.Length - 2], out zone);
+        foreach (var t in _levelNumbers.GetComponentsInChildren<TMP_Text>())
+        {
+            Color c = _levelPanelSettings.colors[GetLevelType(int.Parse(t.text))];
+            c.a = int.Parse(t.text) < level - 1 ? 0.4f : 1f;
+            t.color = c;
+        }
+    }
+
+    // a hack is used to keep reusing same components
+    void InfiniteSlideSetup(int level)
+    {
+        IncreaseNumbers();
+        SetNumberStyle(level);
     }
 
 #if UNITY_EDITOR
     void OnValidate()
     {
         _levelNumbers    = Child<RectTransform>("ui_group_level_track");
-        _currentZoneTile = Child<Image>("ui_image_level_current_bg_value");
     }
 #endif
 }

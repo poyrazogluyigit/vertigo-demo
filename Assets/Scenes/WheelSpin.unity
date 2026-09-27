@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 3394380}
   - component: {fileID: 3394379}
   m_Layer: 0
-  m_Name: ui_image_wheel_indicator
+  m_Name: ui_image_wheel_indicator_value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -210,7 +210,7 @@ GameObject:
   - component: {fileID: 18261920}
   - component: {fileID: 18261919}
   m_Layer: 0
-  m_Name: ui_wheel_slot_2
+  m_Name: ui_item_wheel_slot_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -478,7 +478,7 @@ GameObject:
   m_Component:
   - component: {fileID: 56017337}
   m_Layer: 0
-  m_Name: ui_wheel_spin_root
+  m_Name: ui_group_wheel_spin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1299,7 +1299,7 @@ GameObject:
   - component: {fileID: 278894264}
   - component: {fileID: 278894263}
   m_Layer: 0
-  m_Name: ui_image_wheel_base
+  m_Name: ui_image_wheel_base_value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2282,7 +2282,7 @@ GameObject:
   - component: {fileID: 444042946}
   - component: {fileID: 444042945}
   m_Layer: 0
-  m_Name: ui_wheel_slot_1
+  m_Name: ui_item_wheel_slot_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2897,7 +2897,7 @@ GameObject:
   - component: {fileID: 613758953}
   - component: {fileID: 613758952}
   m_Layer: 0
-  m_Name: ui_wheel_slot_4
+  m_Name: ui_item_wheel_slot_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3349,7 +3349,7 @@ GameObject:
   - component: {fileID: 689603876}
   - component: {fileID: 689603875}
   m_Layer: 0
-  m_Name: ui_wheel_slot_7
+  m_Name: ui_item_wheel_slot_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3964,7 +3964,7 @@ GameObject:
   - component: {fileID: 767577083}
   - component: {fileID: 767577082}
   m_Layer: 0
-  m_Name: ui_wheel_slot_5
+  m_Name: ui_item_wheel_slot_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4252,7 +4252,6 @@ MonoBehaviour:
   _rewardPanelView: {fileID: 1576380807}
   _gameOverScreen: {fileID: 11400000, guid: 52552571b15ee384e8d772d05f830ca2, type: 2}
   _cashOutScreen: {fileID: 11400000, guid: bc4a1813f2c291249b10341d35d076f2, type: 2}
-  _winScreen: {fileID: 11400000, guid: c933ddbc9623fd34e948477fe2ca9b6e, type: 2}
 --- !u!114 &861563883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4267,7 +4266,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spinButton: {fileID: 718867960}
   _exitButton: {fileID: 2034027407}
-  _restartButton: {fileID: 0}
+  _restartButton: {fileID: 45158198}
 --- !u!1 &896877779
 GameObject:
   m_ObjectHideFlags: 0
@@ -5068,7 +5067,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1028219559}
   m_Layer: 0
-  m_Name: ui_wheel_slot_group
+  m_Name: ui_group_wheel_slots
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5325,7 +5324,7 @@ GameObject:
   - component: {fileID: 1096087835}
   - component: {fileID: 1096087836}
   m_Layer: 0
-  m_Name: ui_wheel_slot_0
+  m_Name: ui_item_wheel_slot_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5962,7 +5961,7 @@ GameObject:
   - component: {fileID: 1360136872}
   - component: {fileID: 1360136871}
   m_Layer: 0
-  m_Name: ui_wheel_slot_3
+  m_Name: ui_item_wheel_slot_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7698,7 +7697,7 @@ GameObject:
   - component: {fileID: 1668961374}
   - component: {fileID: 1668961373}
   m_Layer: 0
-  m_Name: ui_wheel_slot_6
+  m_Name: ui_item_wheel_slot_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8178,7 +8177,7 @@ MonoBehaviour:
   _title: {fileID: 1454597787}
   _description: {fileID: 809000822}
   _buttonLabel: {fileID: 141713623}
-  _buttonImage: {fileID: 0}
+  _buttonImage: {fileID: 45158199}
 --- !u!1 &1705944692
 GameObject:
   m_ObjectHideFlags: 0
@@ -8420,7 +8419,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1591610283068927127, guid: 20d83e1ac6182484eb8c3bb3e78df1db, type: 3}
       propertyPath: m_Name
-      value: ui_view_levelPanel
+      value: ui_view_level
       objectReference: {fileID: 0}
     - target: {fileID: 5181659869715462931, guid: 20d83e1ac6182484eb8c3bb3e78df1db, type: 3}
       propertyPath: m_Pivot.y
@@ -8519,7 +8518,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _levelNumbers: {fileID: 896877780}
-  _currentZoneTile: {fileID: 0}
+  _currentZoneTile: {fileID: 427468598}
   _upcomingTilePrefab: {fileID: 100006, guid: 823a4ac0fca4460a9dadb979bd71c85f, type: 3}
 --- !u!1 &1776333600
 GameObject:
@@ -8686,7 +8685,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1591610283068927127, guid: 20d83e1ac6182484eb8c3bb3e78df1db, type: 3}
       propertyPath: m_Name
-      value: ui_view_rewardPanel
+      value: ui_view_rewards
       objectReference: {fileID: 0}
     - target: {fileID: 5181659869715462931, guid: 20d83e1ac6182484eb8c3bb3e78df1db, type: 3}
       propertyPath: m_RootOrder
@@ -9701,7 +9700,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 0
   m_OnCullStateChanged:
@@ -9790,7 +9789,7 @@ GameObject:
   - component: {fileID: 2104417004}
   - component: {fileID: 2104417005}
   m_Layer: 0
-  m_Name: ui_image_wheel_rays
+  m_Name: ui_image_wheel_rays_value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
