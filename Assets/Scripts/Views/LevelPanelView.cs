@@ -1,26 +1,30 @@
 using UnityEngine;
 using DG.Tweening;
 using TMPro;
-public class LevelPanelView : MonoBehaviour
+using System.Threading.Tasks;
+public class LevelPanelView : View
 {
     [SerializeField] RectTransform _levelNumbers;
     private Vector3 _initialPosition;
     void Awake() => _initialPosition = _levelNumbers.anchoredPosition;
-    void OnEnable() => GameManager.LevelChanged += OnLevelChanged;
-    void OnDisable() => GameManager.LevelChanged -= OnLevelChanged;
 
-
-    void OnLevelChanged(int level)
+    public async Task ChangeLevel(int level)
     {
-        MoveLevelIndicator(level);
+        await MoveLevelIndicator(level);
         ColorZoneNumbers(level);
     }
-    void MoveLevelIndicator(int level)
+    public void ResetIndicator()
+    {
+        _levelNumbers.anchoredPosition = _initialPosition;
+        ColorZoneNumbers(1);
+    }
+    async Task MoveLevelIndicator(int level)
     {
         float xDelta = 135;
         Vector3 target = _initialPosition + new Vector3(-(level - 1) * xDelta, 0, 0);
         Debug.Log(target);
-        _levelNumbers.DOAnchorPos(target, 1f);
+        await _levelNumbers.DOAnchorPos(target, 1f)
+        .AsyncWaitForCompletion();
     }
 
     void ColorZoneNumbers(int level)

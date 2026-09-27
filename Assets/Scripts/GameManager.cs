@@ -1,86 +1,87 @@
+using System.Threading.Tasks;
 using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private int _currentLevel = 1;
     [SerializeField] private RewardsManager _rewardsManager;
-    public static event System.Action<int> LevelChanged;
-    public static event System.Action<int> SpinStarted;
-    public static event System.Action<SpinResult> RoundResolved;
-    public static event System.Action<bool> GameEnded;
-    public static event System.Action GameRestarted;
-
-    private bool _spinning;
-    private bool _gameEnded;
-    private bool _isLost = false;
-    private SpinResult _pending;
-
-    void OnEnable()
-    {
-        WheelView.SpinButtonClicked += OnSpinClicked;
-        WheelView.SpinAnimationComplete += OnSpinAnimationComplete;
-        RewardPanelView.ExitButtonClicked += OnExitClicked;
-        EndgameView.RestartButtonClicked += RestartGame;
-    }
-
-    void OnDisable()
-    {
-        WheelView.SpinButtonClicked -= OnSpinClicked;
-        WheelView.SpinAnimationComplete -= OnSpinAnimationComplete;
-        RewardPanelView.ExitButtonClicked -= OnExitClicked;
-        EndgameView.RestartButtonClicked -= RestartGame;
-    }
+    [SerializeField] private InputManager _im;
+    [SerializeField] private ViewManager _vm;
 
     void Start()
     {
-        SetLevel(1);
+        OnRestartButtonPressed();
     }
 
-    void RestartGame()
+    void OnEnable()
     {
-        _isLost = false;
-        _gameEnded = false;
-        GameRestarted?.Invoke();   // listeners drop whatever last run left behind
-        SetLevel(1);
+        InputManager.SpinButtonPressed += OnSpinButtonPressed;
+        InputManager.ExitButtonPressed += OnExitButtonPressed;
+        InputManager.RestartButtonPressed += OnRestartButtonPressed;
+    }
+    void OnDisable()
+    {
+        InputManager.SpinButtonPressed -= OnSpinButtonPressed;
+        InputManager.ExitButtonPressed -= OnExitButtonPressed;
+        InputManager.RestartButtonPressed -= OnRestartButtonPressed;
     }
 
-    void OnSpinClicked()
+    async void OnSpinButtonPressed()
     {
-        if (_spinning) return;
-        _spinning = true;
-        _pending = _rewardsManager.Pick();      // data committed now
-        SpinStarted?.Invoke(_pending.Slot);     // presentation starts
+        DisableButtons();
+        SpinResult result = _rewardsManager.Pick();
+        await _vm.SpinWheel(result.Slot);
+        await HandleLevelEnd(result.IsBomb);
+        EnableButtons();
     }
 
-    void OnSpinAnimationComplete()
+    void OnExitButtonPressed()
     {
-        if (!_spinning) return;
-        _spinning = false;
-        RoundResolved?.Invoke(_pending);
-        if (_pending.IsBomb)
+        DisableButtons();
+        _vm.DisplayEndgameScreen(_rewardsManager.EarnedRewards);
+    }
+
+    void OnRestartButtonPressed()
+    {
+        _rewardsManager.ClearRewards();
+        _vm.Clear();
+        _currentLevel = 1;
+        EnableButtons();
+    }
+
+    async Task HandleLevelEnd(bool isBomb)
+    {
+        if (isBomb)
         {
-           _isLost = true; EndGame(); 
+            HandleGameLost();
+            return;
         }
-        else SetLevel(_currentLevel + 1);
+        _vm.DisplayEarnedRewards(_rewardsManager.EarnedRewards);
+        await SetLevel(++_currentLevel);
     }
 
-    // The spin's result is already picked once _spinning is set, so quitting
-    // before the animation lands would drop a reward the player has won.
-    void OnExitClicked()
+    void HandleGameLost()
     {
-        if (_spinning || _gameEnded) return;
-        EndGame();
+        DisableButtons();
+        _rewardsManager.ClearRewards();
+        _vm.DisplayGameOverScreen();
     }
 
-    private void EndGame()
+    void DisableButtons()
     {
-        _gameEnded = true;
-        GameEnded?.Invoke(_isLost);
+        _im.SetSpinButtonInteraction(false);
+        _im.SetExitButtonInteraction(false); 
     }
 
-    void SetLevel(int level)
+    void EnableButtons()
+    {
+        _im.SetSpinButtonInteraction(true);
+        _im.SetExitButtonInteraction(true); 
+    }
+
+    async Task SetLevel(int level)
     {
         _currentLevel = level;
-        LevelChanged?.Invoke(_currentLevel);
+        await _vm.UpdateLevelIndicator(_currentLevel);
     }
 
 }

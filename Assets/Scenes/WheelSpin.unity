@@ -442,7 +442,7 @@ MonoBehaviour:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -512,7 +512,7 @@ GameObject:
   - component: {fileID: 77384313}
   - component: {fileID: 77384314}
   m_Layer: 0
-  m_Name: ui_panel_wheel
+  m_Name: ui_view_wheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -568,7 +568,6 @@ MonoBehaviour:
   - {fileID: 767577082}
   - {fileID: 1668961373}
   - {fileID: 689603875}
-  _spinButton: {fileID: 718867960}
 --- !u!1 &84635835
 GameObject:
   m_ObjectHideFlags: 0
@@ -699,7 +698,7 @@ MonoBehaviour:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2953,7 +2952,7 @@ GameObject:
   - component: {fileID: 640912895}
   - component: {fileID: 640912894}
   m_Layer: 5
-  m_Name: ui_canvas_main
+  m_Name: ui_view_main
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4360,7 +4359,8 @@ GameObject:
   - component: {fileID: 861563880}
   - component: {fileID: 861563879}
   - component: {fileID: 861563881}
-  - component: {fileID: 1688691526}
+  - component: {fileID: 861563883}
+  - component: {fileID: 861563882}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -4382,6 +4382,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentLevel: 1
   _rewardsManager: {fileID: 861563881}
+  _im: {fileID: 861563883}
+  _vm: {fileID: 861563882}
 --- !u!4 &861563880
 Transform:
   m_ObjectHideFlags: 0
@@ -4409,6 +4411,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rewardPool: {fileID: 11400000, guid: debed3d578342304db363694ed0aeec4, type: 2}
+--- !u!114 &861563882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 861563878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fbe1205d1a1fd40a3016697d8f8d94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameOverScreen: {fileID: 11400000, guid: 52552571b15ee384e8d772d05f830ca2, type: 2}
+  _cashOutScreen: {fileID: 11400000, guid: bc4a1813f2c291249b10341d35d076f2, type: 2}
+--- !u!114 &861563883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 861563878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b2a188ea3846c5459074b5702bb3fbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &896877779
 GameObject:
   m_ObjectHideFlags: 0
@@ -7060,7 +7088,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1591610283068927127, guid: 20d83e1ac6182484eb8c3bb3e78df1db, type: 3}
       propertyPath: m_Name
-      value: ui_panel_gameend
+      value: ui_panel_endgame
       objectReference: {fileID: 0}
     - target: {fileID: 5181659869715462931, guid: 20d83e1ac6182484eb8c3bb3e78df1db, type: 3}
       propertyPath: m_Pivot.x
@@ -7710,7 +7738,6 @@ MonoBehaviour:
   _rcCardPrefab: {fileID: 1000000003, guid: 7d3e9a1c5f8b4602a9e1d7c3b5f9a2e6, type: 3}
   _inGameRewardsContent: {fileID: 84635836}
   _endgameRewardsContent: {fileID: 1890561686}
-  _exitButton: {fileID: 2034027407}
 --- !u!1 &1585141999
 GameObject:
   m_ObjectHideFlags: 0
@@ -8242,8 +8269,9 @@ GameObject:
   - component: {fileID: 1688691524}
   - component: {fileID: 1688691523}
   - component: {fileID: 1688691522}
+  - component: {fileID: 1688691526}
   m_Layer: 5
-  m_Name: ui_canvas_gameend
+  m_Name: ui_view_endgame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8337,22 +8365,18 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 861563878}
+  m_GameObject: {fileID: 1688691521}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b59bec3291b940f408e9cf109a34b5bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _endgameCanvas: {fileID: 1688691524}
-  gameOverContainer: {fileID: 1623132388}
-  exitContainer: {fileID: 514692680}
-  RestartButton: {fileID: 45158198}
-  RestartButtonImage: {fileID: 45158199}
-  RestartButtonLabel: {fileID: 141713623}
-  TitleText: {fileID: 1454597787}
-  DescriptionText: {fileID: 809000822}
-  RestartButtonGreySprite: {fileID: 21300000, guid: 1bec9bedaa5bfb347aa31da65108348f, type: 3}
-  RestartButtonOrangeSprite: {fileID: 21300000, guid: 48ecddce31db6034eb1b7d9a14ae0f7b, type: 3}
+  _rewardsContainer: {fileID: 514692680}
+  _bombContainer: {fileID: 1623132388}
+  _title: {fileID: 1454597787}
+  _description: {fileID: 809000822}
+  _buttonLabel: {fileID: 141713623}
+  _buttonImage: {fileID: 45158199}
 --- !u!1 &1705944692
 GameObject:
   m_ObjectHideFlags: 0
@@ -8820,7 +8844,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1591610283068927127, guid: 20d83e1ac6182484eb8c3bb3e78df1db, type: 3}
       propertyPath: m_Name
-      value: ui_panel_level
+      value: ui_view_levelPanel
       objectReference: {fileID: 0}
     - target: {fileID: 5181659869715462931, guid: 20d83e1ac6182484eb8c3bb3e78df1db, type: 3}
       propertyPath: m_Pivot.y
@@ -9083,7 +9107,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1591610283068927127, guid: 20d83e1ac6182484eb8c3bb3e78df1db, type: 3}
       propertyPath: m_Name
-      value: ui_panel_rewards
+      value: ui_view_rewardPanel
       objectReference: {fileID: 0}
     - target: {fileID: 5181659869715462931, guid: 20d83e1ac6182484eb8c3bb3e78df1db, type: 3}
       propertyPath: m_RootOrder
@@ -10090,7 +10114,7 @@ MonoBehaviour:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

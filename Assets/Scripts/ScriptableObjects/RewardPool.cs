@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 
-[CreateAssetMenu(menuName = "Wheel/Reward Pool")]
+[CreateAssetMenu(menuName = "WheelSpin/Reward Pool")]
 public class RewardPool : ScriptableObject
 {
     [SerializeField] private List<RewardDefinition> rewards  = new List<RewardDefinition>();

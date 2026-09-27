@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Wheel/Reward Defition", fileName = "NewRewardDefinition")]
+[CreateAssetMenu(menuName = "WheelSpin/Reward Defition", fileName = "NewRewardDefinition")]
 public class RewardDefinition : ScriptableObject, IEquatable<RewardDefinition>
 {
     public int id;

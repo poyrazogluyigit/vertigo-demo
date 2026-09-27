@@ -2,57 +2,34 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EndgameView : MonoBehaviour
+public class EndgameView : View
 {
-    [SerializeField] private Canvas _endgameCanvas;
-    [SerializeField] private GameObject gameOverContainer;
-    [SerializeField] private GameObject exitContainer;
-    [SerializeField] private Button RestartButton;
-    [SerializeField] private Image RestartButtonImage;
-    [SerializeField] private TMP_Text RestartButtonLabel;
-    [SerializeField] private TMP_Text TitleText;
-    [SerializeField] private TMP_Text DescriptionText;
-    [SerializeField] private Sprite RestartButtonGreySprite;
-    [SerializeField] private Sprite RestartButtonOrangeSprite;
-    public static event System.Action RestartButtonClicked;
-    void OnEnable()
+    [SerializeField] private GameObject _rewardsContainer, _bombContainer;
+    [SerializeField] private TMP_Text _title, _description, _buttonLabel;
+    [SerializeField] private Image _buttonImage;
+
+    public void DisplayScreen(EndScreen screen)
     {
-        GameManager.GameEnded += DisplayEndScreen;
-        RestartButton.onClick.AddListener(_rc);
+        _title.text = screen.Title;
+        _description.text = screen.Description;
+        _buttonLabel.text = screen.ButtonLabel;
+        _buttonImage.sprite = screen.ButtonSprite;
+        _rewardsContainer.SetActive(screen.ShowsRewards);
+        _bombContainer.SetActive(!screen.ShowsRewards);
+        gameObject.SetActive(true);
     }
 
-    void OnDisable()
-    {
-        GameManager.GameEnded -= DisplayEndScreen;
-        RestartButton.onClick.RemoveListener(_rc);
-    }
+    public void HideEndScreen() => gameObject.SetActive(false);
 
-    private void _rc()
+    #if UNITY_EDITOR
+    void OnValidate()
     {
-        gameOverContainer.gameObject.SetActive(false);
-        exitContainer.gameObject.SetActive(false);
-        _endgameCanvas.gameObject.SetActive(false);
-        RestartButtonClicked?.Invoke();
+        _rewardsContainer = Child<Transform>("ui_container_exit")?.gameObject;
+        _bombContainer    = Child<Transform>("ui_container_gameover")?.gameObject;
+        _title            = Child<TMP_Text>("ui_text_gameend_title_value");
+        _description      = Child<TMP_Text>("ui_text_gameend_desc_value");
+        _buttonLabel      = Child<TMP_Text>("ui_text_button_gameend_restart_value");
+        _buttonImage      = Child<Image>("ui_button_gameend_restart");
     }
-
-    void DisplayEndScreen(bool isLost)
-    {
-        _endgameCanvas.gameObject.SetActive(true);
-        if (isLost)
-        {
-            gameOverContainer.SetActive(true);
-            TitleText.text = "OH NO, A BOMB EXPLODED RIGHT IN YOUR HANDS!";
-            DescriptionText.text = "You lost all your rewards.";
-            RestartButtonLabel.text = "GIVE UP";
-            RestartButtonImage.sprite = RestartButtonGreySprite;
-        }
-        else
-        {
-            exitContainer.SetActive(true);
-            TitleText.text = "YOU LEFT THE TABLE";
-            DescriptionText.text = "You collected the following rewards:";
-            RestartButtonLabel.text = "PLAY AGAIN";
-            RestartButtonImage.sprite = RestartButtonOrangeSprite;
-        }
-    }
+#endif
 }

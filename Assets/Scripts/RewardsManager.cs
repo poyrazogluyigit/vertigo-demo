@@ -5,37 +5,12 @@ public class RewardsManager : MonoBehaviour
 {
     [SerializeField] private RewardPool rewardPool;
     private const int num_options = 8;
-
     public Reward[] PossibleRewards { get; private set; } = new Reward[0];
     private readonly Dictionary<RewardDefinition, int> _earnedRewards = new Dictionary<RewardDefinition, int>();
     public IReadOnlyDictionary<RewardDefinition, int> EarnedRewards => _earnedRewards;
 
-    public static event System.Action<Reward[]> RewardsGenerated;
-    public static event System.Action<Reward[]> RewardsCollected;
 
-    void OnEnable()
-    {
-        GameManager.LevelChanged += GenerateRewards;
-        GameManager.GameEnded += HandleEarnedRewards;
-    }
-
-    void OnDisable()
-    {
-        GameManager.LevelChanged -= GenerateRewards;
-        GameManager.GameEnded -= HandleEarnedRewards;
-
-    }
-
-    private void HandleEarnedRewards(bool isLost)
-    {
-        List<Reward> finalRewards = new List<Reward>();
-        if (!isLost) foreach (var key in _earnedRewards.Keys)
-        {
-            finalRewards.Add(new Reward(key, _earnedRewards[key]));
-        }
-        _earnedRewards.Clear();
-        RewardsCollected.Invoke(finalRewards.ToArray());
-    }
+    public void ClearRewards() => _earnedRewards.Clear();
 
     public void GenerateRewards(int level)
     {
@@ -50,7 +25,6 @@ public class RewardsManager : MonoBehaviour
             i++;
         }
         PossibleRewards = rewards;
-        RewardsGenerated?.Invoke(PossibleRewards);
     }
 
     // Decides and commits the outcome immediately; presentation happens later.
