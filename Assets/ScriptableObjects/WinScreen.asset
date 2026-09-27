@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19a1f5d98c51b64d8d38dd410694170, type: 3}
+  m_Name: WinScreen
+  m_EditorClassIdentifier: 
+  Title: YOU WIN!
+  Description: 'You successfully cleared all 30 levels. Here are your rewards:'
+  ButtonLabel: PLAY AGAIN
+  ButtonSprite: {fileID: 21300000, guid: 48ecddce31db6034eb1b7d9a14ae0f7b, type: 3}
+  ShowsRewards: 1

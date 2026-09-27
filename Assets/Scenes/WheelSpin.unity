@@ -4250,6 +4250,7 @@ MonoBehaviour:
   _rewardPanelView: {fileID: 1576380807}
   _gameOverScreen: {fileID: 11400000, guid: 52552571b15ee384e8d772d05f830ca2, type: 2}
   _cashOutScreen: {fileID: 11400000, guid: bc4a1813f2c291249b10341d35d076f2, type: 2}
+  _winScreen: {fileID: 11400000, guid: c933ddbc9623fd34e948477fe2ca9b6e, type: 2}
 --- !u!114 &861563883
 MonoBehaviour:
   m_ObjectHideFlags: 0

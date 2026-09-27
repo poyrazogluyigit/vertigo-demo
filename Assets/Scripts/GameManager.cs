@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
     void OnExitButtonPressed()
     {
         DisableButtons();
-        _vm.DisplayEndgameScreen(_rewardsManager.EarnedRewards);
+        _vm.DisplayEndgameScreen(false, _rewardsManager.EarnedRewards);
     }
 
     void OnRestartButtonPressed()
@@ -56,8 +56,14 @@ public class GameManager : MonoBehaviour
             HandleGameLost();
             return;
         }
-        _vm.DisplayEarnedRewards(_rewardsManager.EarnedRewards);
-        await SetLevel(++_currentLevel);
+        if (_currentLevel == 30)
+        {
+            _vm.DisplayEndgameScreen(true, _rewardsManager.EarnedRewards);
+        }
+        else {
+            _vm.DisplayEarnedRewards(_rewardsManager.EarnedRewards);
+            await SetLevel(++_currentLevel);
+        }
     }
 
     void HandleGameLost()

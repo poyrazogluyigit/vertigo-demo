@@ -48,28 +48,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f42c38607647b782cfd2c42d36248544, type: 2}
   bomb: {fileID: 11400000, guid: 72b435bff2a13e291f23546fe3b69d6c, type: 2}
   superReward: {fileID: 11400000, guid: 8afeb450954ce1a31aa66acb35d50162, type: 2}
-  amountCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 9
-      outSlope: 9
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 10
-      inSlope: 9
-      outSlope: 9
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   maxLevel: 30

@@ -7,6 +7,7 @@ public class RewardDefinition : ScriptableObject, IEquatable<RewardDefinition>
     public int id;
     public Sprite image;
     public float baseAmount = 1f;
+    public RewardScaling scaling;   // null keeps baseAmount on every level
     public bool Equals(RewardDefinition other)
     {
         if (other == null || GetType() != other.GetType())

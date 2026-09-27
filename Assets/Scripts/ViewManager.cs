@@ -9,7 +9,7 @@ public class ViewManager : MonoBehaviour
     [SerializeField] private LevelPanelView _levelPanelView;
     [SerializeField] private WheelView _wheelView;
     [SerializeField] private RewardPanelView _rewardPanelView;
-    [SerializeField] private EndScreen _gameOverScreen, _cashOutScreen;
+    [SerializeField] private EndScreen _gameOverScreen, _cashOutScreen, _winScreen;
 
 
 #if UNITY_EDITOR
@@ -50,9 +50,10 @@ public class ViewManager : MonoBehaviour
             _rewardPanelView.DisplayInGame(new Reward(k, rewards[k]));
         }
     }
-    public void DisplayEndgameScreen(IReadOnlyDictionary<RewardDefinition, int> rewards)
+    public void DisplayEndgameScreen(bool isWon, IReadOnlyDictionary<RewardDefinition, int> rewards)
     {
-        _endgameView.DisplayScreen(_cashOutScreen);
+        if (isWon) _endgameView.DisplayScreen(_winScreen);
+        else _endgameView.DisplayScreen(_cashOutScreen);
         foreach (var k in rewards.Keys)
         {
             _rewardPanelView.DisplayEndgame(new Reward(k, rewards[k]));

@@ -15,3 +15,4 @@ MonoBehaviour:
   id: 17
   image: {fileID: 21300000, guid: bab238a7e4bce8646a2fed0ecefd7bd8, type: 3}
   baseAmount: 1
+  scaling: {fileID: 11400000, guid: 552327758fb048aea8c4c51a4a194875, type: 2}
