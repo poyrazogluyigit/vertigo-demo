@@ -4,25 +4,14 @@ using DG.Tweening;
 using System.Threading.Tasks;
 public class WheelView : View
 {
-    public enum WheelType {BRONZE, SILVER, GOLD}
-    [SerializeField] public WheelSO[] wheels;
     [SerializeField] private Image wheelBase;
     [SerializeField] private Image indicator;
     [SerializeField] private Transform SpinningPart;
-    [SerializeField] private RewardView[] slots = new RewardView[8];
+    [SerializeField] private RewardView[] slots = new RewardView[WheelSO.SliceCount];
 
 
-    // Every 30th level is a gold wheel, every 5th a silver one.
-    static WheelType TypeForLevel(int level)
+    public void DrawWheel(WheelSO wheel)
     {
-        if (level % 30 == 0) return WheelType.GOLD;
-        if (level % 5 == 0 || level == 1) return WheelType.SILVER;
-        return WheelType.BRONZE;
-    }
-
-    void DrawWheel(int level)
-    {
-        WheelSO wheel = wheels[(int)TypeForLevel(level)];
         wheelBase.sprite = wheel.WheelBase;
         indicator.sprite = wheel.Indicator;
     }

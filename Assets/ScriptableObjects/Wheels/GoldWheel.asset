@@ -14,3 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WheelBase: {fileID: 21300000, guid: 096ff237df217a04ea9bee5d94fc5fca, type: 3}
   Indicator: {fileID: 21300000, guid: bf2385867a85ca741bcfbc94f62de8a3, type: 3}
+  Slices:
+  - {fileID: 11400000, guid: 3248b8065e7cc736fe6ff850489d4a62, type: 2}
+  - {fileID: 11400000, guid: ef4a7c0c700fd39f0110e088f243789b, type: 2}
+  - {fileID: 11400000, guid: 1df61845512db542b4c9f1ec57c2a15d, type: 2}
+  - {fileID: 11400000, guid: 0f6e9f7b86873d487af003d13a19bb0f, type: 2}
+  - {fileID: 11400000, guid: 28a65b06220be670e58ede29e5fe7509, type: 2}
+  - {fileID: 11400000, guid: af68b8e8c595cbbad7143db71334e717, type: 2}
+  - {fileID: 11400000, guid: 893a6eda5d04701cdc43861198b5c43d, type: 2}
+  - {fileID: 11400000, guid: c8f07c6e8483fd523cfc0db07e711e71, type: 2}

@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
         _rewardsManager.ClearRewards();
         _vm.Clear();
         _currentLevel = 1;
-        _rewardsManager.GenerateRewards(_currentLevel);
+        SetupWheel();
         EnableButtons();
     }
 
@@ -83,7 +83,13 @@ public class GameManager : MonoBehaviour
     {
         _currentLevel = level;
         await _vm.UpdateLevelIndicator(_currentLevel);
+        SetupWheel();
+    }
+
+    void SetupWheel()
+    {
         _rewardsManager.GenerateRewards(_currentLevel);
+        _vm.DrawWheel(_rewardsManager.CurrentWheel, _rewardsManager.PossibleRewards);
     }
 
 }

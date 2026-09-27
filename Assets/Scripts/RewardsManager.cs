@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 public class RewardsManager : MonoBehaviour
 {
     [SerializeField] private RewardPool rewardPool;
-    private const int num_options = 8;
+    [SerializeField] private WheelSO _bronzeWheel, _silverWheel, _goldWheel;
+    public WheelSO CurrentWheel { get; private set; }
     public Reward[] PossibleRewards { get; private set; } = new Reward[0];
     private readonly Dictionary<RewardDefinition, int> _earnedRewards = new Dictionary<RewardDefinition, int>();
     public IReadOnlyDictionary<RewardDefinition, int> EarnedRewards => _earnedRewards;
@@ -12,18 +12,25 @@ public class RewardsManager : MonoBehaviour
 
     public void ClearRewards() => _earnedRewards.Clear();
 
+    // Every 30th zone is a gold wheel, every 5th (and the first) a silver one.
+    WheelSO WheelForLevel(int level)
+    {
+        if (level % 30 == 0) return _goldWheel;
+        if (level % 5 == 0 || level == 1) return _silverWheel;
+        return _bronzeWheel;
+    }
+
     public void GenerateRewards(int level)
     {
-        RewardDefinition[] rewardDefns = GetRandomRewards();
-        var rewards = new Reward[rewardDefns.Length];
-        int i = 0;
-        if (level == 30) rewards[i++] = new Reward(rewardPool.Super, 1);    
-        else if (level % 5 != 0 && level != 1) rewards[i++] = new Reward(rewardPool.Bomb, 1);
-        while (i < num_options)
+        CurrentWheel = WheelForLevel(level);
+        RewardDefinition[] slices = CurrentWheel.Slices;
+        var rewards = new Reward[slices.Length];
+        for (int i = 0; i < slices.Length; i++)
         {
-            rewards[i] = new Reward(rewardDefns[i], rewardPool.CalculateAmount(rewardDefns[i], level));
-            Debug.Log("Reward chosen");
-            i++;
+            RewardDefinition defn = slices[i];
+            // Amount 0 hides the label, so the bomb shows no "x1"
+            int amount = defn == rewardPool.Bomb ? 0 : rewardPool.CalculateAmount(defn, level);
+            rewards[i] = new Reward(defn, amount);
         }
         PossibleRewards = rewards;
     }
@@ -42,22 +49,5 @@ public class RewardsManager : MonoBehaviour
             _earnedRewards[reward.RewardDefn] = earned;
         }
         return new SpinResult(slot, reward, isBomb, earned);
-    }
-
-    private RewardDefinition[] GetRandomRewards()
-    {
-        List<RewardDefinition> rewards = rewardPool.Rewards.Where(r => r != null).ToList();
-
-        // Fisher-Yates shuffle over all reward pool
-        for (int i = rewards.Count - 1; i > 0; i--)
-        {
-            int randomIndex = Random.Range(0, i + 1);
-            // Swap
-            RewardDefinition temp = rewards[i];
-            rewards[i] = rewards[randomIndex];
-            rewards[randomIndex] = temp;
-        }
-        return rewards.Take(num_options)
-            .ToArray();
     }
 }

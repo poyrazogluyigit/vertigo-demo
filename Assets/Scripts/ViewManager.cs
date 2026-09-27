@@ -28,6 +28,12 @@ public class ViewManager : MonoBehaviour
     }
 #endif
 
+    public void DrawWheel(WheelSO wheel, Reward[] rewards)
+    {
+        _wheelView.DrawWheel(wheel);
+        _wheelView.DrawRewards(rewards);
+    }
+
     public async Task SpinWheel(int slot)
     {
         await _wheelView.Spin(slot);
