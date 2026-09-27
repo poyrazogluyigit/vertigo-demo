@@ -6,6 +6,7 @@ public class WheelView : View
 {
     [SerializeField] private Image wheelBase;
     [SerializeField] private Image indicator;
+    [SerializeField] private Image rays;
     [SerializeField] private Transform SpinningPart;
     [SerializeField] private RewardView[] slots = new RewardView[WheelSO.SliceCount];
 
@@ -14,6 +15,8 @@ public class WheelView : View
     {
         wheelBase.sprite = wheel.WheelBase;
         indicator.sprite = wheel.Indicator;
+        rays.color = wheel.RaysColor;
+        rays.gameObject.SetActive(wheel.RaysColor.a > 0f);
     }
 
     public void DrawRewards(Reward[] rewards)

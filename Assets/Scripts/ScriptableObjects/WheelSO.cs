@@ -6,6 +6,8 @@ public class WheelSO : ScriptableObject
     public const int SliceCount = 8;
     public Sprite WheelBase;
     public Sprite Indicator;
+    // Tint of the sunburst behind the wheel; alpha 0 hides it
+    public Color RaysColor = Color.clear;
     // Slice i is drawn on WheelView slot i
     public RewardDefinition[] Slices = new RewardDefinition[SliceCount];
 

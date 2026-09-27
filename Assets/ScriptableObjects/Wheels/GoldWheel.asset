@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WheelBase: {fileID: 21300000, guid: 096ff237df217a04ea9bee5d94fc5fca, type: 3}
   Indicator: {fileID: 21300000, guid: bf2385867a85ca741bcfbc94f62de8a3, type: 3}
+  RaysColor: {r: 1, g: 0.85, b: 0.4, a: 0.35}
   Slices:
   - {fileID: 11400000, guid: 3248b8065e7cc736fe6ff850489d4a62, type: 2}
   - {fileID: 11400000, guid: ef4a7c0c700fd39f0110e088f243789b, type: 2}
