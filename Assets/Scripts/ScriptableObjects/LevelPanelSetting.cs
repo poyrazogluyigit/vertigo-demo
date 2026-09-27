@@ -14,16 +14,26 @@ public class LevelPanelSetting : ScriptableObject
     public List<Sprite> backgrounds;
     public List<Color> colors;
 
+    void Awake()
+    {
+        backgrounds = new List<Sprite>
+        {
+            currentSuperZoneBackground,
+            currentSafeZoneBackground,
+            currentNormalZoneBackground
+        };
+        colors = new List<Color>
+        {
+            superZoneColor,
+            safeZoneColor,
+            normalZoneColor
+        };
+    }
+
 #if UNITY_EDITOR
     void OnValidate()
     {
-        backgrounds[0] = currentSuperZoneBackground;
-        backgrounds[1] = currentSafeZoneBackground;
-        backgrounds[2] = currentNormalZoneBackground;
-
-        colors[0] = superZoneColor;
-        colors[1] = safeZoneColor;
-        colors[2] = normalZoneColor;
+        Awake();
     }
 #endif
 }

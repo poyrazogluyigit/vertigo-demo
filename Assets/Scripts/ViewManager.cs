@@ -41,7 +41,7 @@ public class ViewManager : MonoBehaviour
     }
     public async Task UpdateLevelIndicator(int level)
     {
-        await _levelPanelView.ChangeLevel(level);
+        await _levelPanelView.ChangeLevelTo(level);
     }
 
     public void DisplayEarnedRewards(IReadOnlyDictionary<RewardDefinition, int> rewards)

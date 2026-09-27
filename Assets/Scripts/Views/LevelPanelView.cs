@@ -8,6 +8,7 @@ public class LevelPanelView : View
 {
     [SerializeField] RectTransform _levelNumbers;
     [SerializeField] LevelPanelSetting _levelPanelSettings;
+    [SerializeField] Image _currentZoneBg;
     private Vector3 _initialPosition;
     void Awake() => _initialPosition = _levelNumbers.anchoredPosition;
 
@@ -18,21 +19,31 @@ public class LevelPanelView : View
         foreach (var t in _levelNumbers.GetComponentsInChildren<TMP_Text>())
             t.text = (++i).ToString();
         SetNumberStyle(1);
-
-
     }
 
-    public async Task ChangeLevel(int level, bool cancelAnimation = false)
+    // here we use a hack to keep reusing the same text objects
+    // the numbers are increased by one and moved to the right before
+    // moving to the left
+
+    const int PinnedSlot = 15;
+
+    public async Task ChangeLevelTo(int level, bool instant = false)
     {
-        if (level > 15) InfiniteSlideSetup(level);
-        await MoveLevelIndicator(level, cancelAnimation);
+    int slot = level - 1;
+    if (slot > PinnedSlot)
+    {
+        IncreaseNumbers();                            // slot 15 now shows `level`, slot 14 shows level-1
+        await MoveLevelIndicator(PinnedSlot - 1, true); // snap back: looks unchanged
+        slot = PinnedSlot;
+    }
+    SetNumberStyle(level);                            // after the renumber, so colours match
+    await MoveLevelIndicator(slot, instant);
     }
 
-    async Task MoveLevelIndicator(int level, bool cancelAnimation = false)
+    async Task MoveLevelIndicator(int targetTextBoxIndex, bool cancelAnimation = false)
     {
         float xDelta = 135;
-        Vector3 target = _initialPosition + new Vector3(-(level - 1) * xDelta, 0, 0);
-        Debug.Log(target);
+        Vector3 target = _initialPosition + new Vector3(-targetTextBoxIndex * xDelta, 0, 0);
         if (!cancelAnimation) await _levelNumbers.DOAnchorPos(target, 1f)
         .AsyncWaitForCompletion();
         else _levelNumbers.anchoredPosition = target;
@@ -56,25 +67,20 @@ public class LevelPanelView : View
 
     void SetNumberStyle(int level)
     {
+        _currentZoneBg.sprite = _levelPanelSettings.backgrounds[GetLevelType(level)];
         foreach (var t in _levelNumbers.GetComponentsInChildren<TMP_Text>())
         {
             Color c = _levelPanelSettings.colors[GetLevelType(int.Parse(t.text))];
-            c.a = int.Parse(t.text) < level - 1 ? 0.4f : 1f;
+            c.a = int.Parse(t.text) < level ? 0.4f : 1f;
             t.color = c;
         }
-    }
-
-    // a hack is used to keep reusing same components
-    void InfiniteSlideSetup(int level)
-    {
-        IncreaseNumbers();
-        SetNumberStyle(level);
     }
 
 #if UNITY_EDITOR
     void OnValidate()
     {
-        _levelNumbers    = Child<RectTransform>("ui_group_level_track");
+        _levelNumbers = Child<RectTransform>("ui_group_level_track");
+        _currentZoneBg = Child<Image>("ui_image_level_current_bg_value");
     }
 #endif
 }

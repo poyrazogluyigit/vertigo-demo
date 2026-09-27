@@ -8518,8 +8518,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _levelNumbers: {fileID: 896877780}
-  _currentZoneTile: {fileID: 427468598}
-  _upcomingTilePrefab: {fileID: 100006, guid: 823a4ac0fca4460a9dadb979bd71c85f, type: 3}
+  _levelPanelSettings: {fileID: 11400000, guid: d9af07484fbfc734a8b54cb053e1a1ef, type: 2}
 --- !u!1 &1776333600
 GameObject:
   m_ObjectHideFlags: 0
