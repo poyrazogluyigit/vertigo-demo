@@ -83,7 +83,7 @@ public class LevelPanelView : View
     void OnValidate()
     {
         _levelNumbers    = Child<RectTransform>("ui_group_level_track");
-        _currentZoneTile = Child<Image>("ui_image_level_current_bg");
+        _currentZoneTile = Child<Image>("ui_image_level_current_bg_value");
     }
 #endif
 }

@@ -22,7 +22,7 @@ public class InputManager : MonoBehaviour
 
         _spinButton = System.Array.Find(buttons, b => b.name == "ui_button_wheel_spin");
         _exitButton = System.Array.Find(buttons, b => b.name == "ui_button_rewards_exit");
-        _restartButton = System.Array.Find(buttons, b => b.name == "ui_button_gameend_restart");
+        _restartButton = System.Array.Find(buttons, b => b.name == "ui_button_gameend_restart_value");
 
         if (_spinButton == null) Debug.LogError("Spin button cannot be found!");
         if (_exitButton == null) Debug.LogError("Exit button cannot be found!");

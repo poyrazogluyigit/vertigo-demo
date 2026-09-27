@@ -29,7 +29,7 @@ public class EndgameView : View
         _title            = Child<TMP_Text>("ui_text_gameend_title_value");
         _description      = Child<TMP_Text>("ui_text_gameend_desc_value");
         _buttonLabel      = Child<TMP_Text>("ui_text_button_gameend_restart_value");
-        _buttonImage      = Child<Image>("ui_button_gameend_restart");
+        _buttonImage      = Child<Image>("ui_button_gameend_restart_value");
     }
 #endif
 }
