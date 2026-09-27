@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
         _rewardsManager.ClearRewards();
         _vm.Clear();
         _currentLevel = 1;
+        _rewardsManager.GenerateRewards(_currentLevel);
         EnableButtons();
     }
 
@@ -82,6 +83,7 @@ public class GameManager : MonoBehaviour
     {
         _currentLevel = level;
         await _vm.UpdateLevelIndicator(_currentLevel);
+        _rewardsManager.GenerateRewards(_currentLevel);
     }
 
 }

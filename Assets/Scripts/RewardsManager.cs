@@ -22,6 +22,7 @@ public class RewardsManager : MonoBehaviour
         while (i < num_options)
         {
             rewards[i] = new Reward(rewardDefns[i], rewardPool.CalculateAmount(rewardDefns[i], level));
+            Debug.Log("Reward chosen");
             i++;
         }
         PossibleRewards = rewards;
