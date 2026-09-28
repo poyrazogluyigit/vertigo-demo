@@ -14,7 +14,7 @@ public class LevelPanelSetting : ScriptableObject
     public List<Sprite> backgrounds;
     public List<Color> colors;
 
-    void Awake()
+    void OnEnable()
     {
         backgrounds = new List<Sprite>
         {
@@ -33,7 +33,7 @@ public class LevelPanelSetting : ScriptableObject
 #if UNITY_EDITOR
     void OnValidate()
     {
-        Awake();
+        OnEnable();
     }
 #endif
 }
