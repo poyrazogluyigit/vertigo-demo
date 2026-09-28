@@ -5,11 +5,11 @@ This repository contains the Wheel Spin demo project assigned by Vertigo Games. 
 ## Screenshots
 
 ### 16:9
-!(<16-9 aspect.png>)
+![16:9 Aspect Ratio](images/16-9-aspect.png)
 ### 4:3
-!(<4-3 aspect.png>)
+![4:3 Aspect Ratio](images/4-3-aspect.png)
 ### 20:9
-!(<20-9 aspect.png>)
+![20:9 Aspect Ratio](images/20-9-aspect.png)
 
 
 ## Notes
