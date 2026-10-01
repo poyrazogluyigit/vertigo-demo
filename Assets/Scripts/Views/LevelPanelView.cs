@@ -51,11 +51,15 @@ public class LevelPanelView : View
         else _levelNumbers.anchoredPosition = target;
     }
 
+    // Index into LevelPanelSetting's lists (super, safe, normal); replaced in step 3
     int GetLevelType(int level)
     {
-        if (level % Zones.SuperInterval == 0) return 0;
-        else if (level % Zones.SafeInterval == 0 || level == Zones.FirstLevel) return 1;
-        else return 2;
+        switch (Zones.TypeOf(level))
+        {
+            case ZoneType.Super: return 0;
+            case ZoneType.Safe: return 1;
+            default: return 2;
+        }
     }
 
     void IncreaseNumbers()

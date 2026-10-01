@@ -69,6 +69,7 @@ public class GameFlowTests
 
     // Review: "players can cash out on bronze zones".
     // Exit is only allowed on safe (every 5th) and super (every 30th) zones.
+    [TestCase(1, false)]
     [TestCase(2, false)]
     [TestCase(4, false)]
     [TestCase(5, true)]

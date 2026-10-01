@@ -113,7 +113,7 @@ public class GameFlow : IDisposable
 
     bool CanExit()
     {
-        return (_currentLevel % Zones.SafeInterval == 0 && _currentState == State.Idle);
+        return _currentState == State.Idle && Zones.AllowsExit(_currentLevel);
     }
 
     void EnableButtons()

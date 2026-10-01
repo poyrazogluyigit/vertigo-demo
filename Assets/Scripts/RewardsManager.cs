@@ -14,12 +14,14 @@ public class RewardsManager : MonoBehaviour, IRewardManager
 
     public void ClearRewards() => _earnedRewards.Clear();
 
-    // Every 30th zone is a gold wheel, every 5th (and the first) a silver one.
     public WheelSO WheelForLevel(int level)
     {
-        if (level % Zones.SuperInterval == 0) return _goldWheel;
-        if (level % Zones.SafeInterval == 0 || level == Zones.FirstLevel) return _silverWheel;
-        return _bronzeWheel;
+        switch (Zones.TypeOf(level))
+        {
+            case ZoneType.Super: return _goldWheel;
+            case ZoneType.Safe: return _silverWheel;
+            default: return _bronzeWheel;
+        }
     }
 
     public void GenerateRewards(int level)
