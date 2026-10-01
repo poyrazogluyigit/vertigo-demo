@@ -1,18 +1,23 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 
 [CreateAssetMenu(menuName = "WheelSpin/Reward Pool")]
 public class RewardPool : ScriptableObject
 {
-    [SerializeField] private RewardDefinition bomb;
-    [SerializeField, Min(2)] private int maxLevel = 30;
-    public RewardDefinition Bomb => bomb;
+    [FormerlySerializedAs("bomb")]
+    [SerializeField] private RewardDefinition _bomb;
+    [FormerlySerializedAs("maxLevel")]
+    [SerializeField, Min(2)] private int _maxLevel = 30;
+    public RewardDefinition Bomb => _bomb;
+
+    const int LabelSignificantDigits = 2;
 
     public int CalculateAmount(RewardDefinition rewardDefn, int level)
     {
-        RewardScaling scaling = rewardDefn.scaling;
-        float multiplier = scaling != null ? scaling.Multiplier(level, maxLevel) : 1f;
-        return RoundToSignificant(rewardDefn.baseAmount * multiplier, 2);
+        RewardScaling scaling = rewardDefn.Scaling;
+        float multiplier = scaling != null ? scaling.Multiplier(level, _maxLevel) : 1f;
+        return RoundToSignificant(rewardDefn.BaseAmount * multiplier, LabelSignificantDigits);
     }
 
     // Keeps labels tidy: 3,041 shows as 3,000

@@ -1,18 +1,21 @@
 using System.Globalization;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class RewardView : MonoBehaviour
 {
-    [SerializeField] private Image icon;
-    [SerializeField] private TextMeshProUGUI amountText;
+    [FormerlySerializedAs("icon")]
+    [SerializeField] private Image _icon;
+    [FormerlySerializedAs("amountText")]
+    [SerializeField] private TextMeshProUGUI _amountText;
 
     public void Display(Sprite sprite, int amount)
     {
-        icon.sprite = sprite;
-        if (amount == 0) amountText.text = "";
-        else amountText.text = "x" + Compact(amount);
+        _icon.sprite = sprite;
+        if (amount == 0) _amountText.text = "";
+        else _amountText.text = "x" + Compact(amount);
     }
 
     // 950, 1.2K, 16K, 1.5M

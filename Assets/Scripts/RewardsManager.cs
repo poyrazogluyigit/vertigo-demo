@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
-public class RewardsManager : MonoBehaviour
+using UnityEngine.Serialization;
+public class RewardsManager : MonoBehaviour, IRewardManager
 {
-    [SerializeField] private RewardPool rewardPool;
+    [FormerlySerializedAs("rewardPool")]
+    [SerializeField] private RewardPool _rewardPool;
     [SerializeField] private WheelSO _bronzeWheel, _silverWheel, _goldWheel;
     public WheelSO CurrentWheel { get; private set; }
     public Reward[] PossibleRewards { get; private set; } = new Reward[0];
@@ -15,8 +17,8 @@ public class RewardsManager : MonoBehaviour
     // Every 30th zone is a gold wheel, every 5th (and the first) a silver one.
     public WheelSO WheelForLevel(int level)
     {
-        if (level % 30 == 0) return _goldWheel;
-        if (level % 5 == 0 || level == 1) return _silverWheel;
+        if (level % Zones.SuperInterval == 0) return _goldWheel;
+        if (level % Zones.SafeInterval == 0 || level == Zones.FirstLevel) return _silverWheel;
         return _bronzeWheel;
     }
 
@@ -29,7 +31,7 @@ public class RewardsManager : MonoBehaviour
         {
             RewardDefinition defn = slices[i];
             // Amount 0 hides the label, so the bomb shows no "x1"
-            int amount = defn == rewardPool.Bomb ? 0 : rewardPool.CalculateAmount(defn, level);
+            int amount = defn == _rewardPool.Bomb ? 0 : _rewardPool.CalculateAmount(defn, level);
             rewards[i] = new Reward(defn, amount);
         }
         PossibleRewards = rewards;
@@ -40,7 +42,7 @@ public class RewardsManager : MonoBehaviour
     {
         int slot = Random.Range(0, PossibleRewards.Length);
         Reward reward = PossibleRewards[slot];
-        bool isBomb = reward.RewardDefn == rewardPool.Bomb;
+        bool isBomb = reward.RewardDefn == _rewardPool.Bomb;
 
         _earnedRewards.TryGetValue(reward.RewardDefn, out int earned);
         if (!isBomb)

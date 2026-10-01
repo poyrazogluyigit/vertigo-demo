@@ -26,7 +26,7 @@ public class RewardPanelView : View
             RewardView prefab = container == _endgameRewardsContent ? _rcCardPrefab : _rcPrefab;
             entries[reward.RewardDefn] = rView = Instantiate(prefab, container);
         }
-        rView.Display(reward.RewardDefn.image, reward.Amount);
+        rView.Display(reward.RewardDefn.Image, reward.Amount);
     }
 
     void ClearRewardsIn(Transform container)

@@ -18,7 +18,7 @@ public class LevelPanelView : View
         int i = 0;
         foreach (var t in _levelNumbers.GetComponentsInChildren<TMP_Text>())
             t.text = (++i).ToString();
-        SetNumberStyle(1);
+        SetNumberStyle(Zones.FirstLevel);
     }
 
     // here we use a hack to keep reusing the same text objects
@@ -26,6 +26,9 @@ public class LevelPanelView : View
     // moving to the left
 
     const int PinnedSlot = 15;
+    const float NumberSpacing = 135f;     // distance between two numbers on the track
+    const float MoveDuration = 1f;
+    const float PassedLevelAlpha = 0.4f;
 
     public async Task ChangeLevelTo(int level, bool instant = false)
     {
@@ -42,17 +45,16 @@ public class LevelPanelView : View
 
     async Task MoveLevelIndicator(int targetTextBoxIndex, bool cancelAnimation = false)
     {
-        float xDelta = 135;
-        Vector3 target = _initialPosition + new Vector3(-targetTextBoxIndex * xDelta, 0, 0);
-        if (!cancelAnimation) await _levelNumbers.DOAnchorPos(target, 1f)
+        Vector3 target = _initialPosition + new Vector3(-targetTextBoxIndex * NumberSpacing, 0, 0);
+        if (!cancelAnimation) await _levelNumbers.DOAnchorPos(target, MoveDuration)
         .AsyncWaitForCompletion();
         else _levelNumbers.anchoredPosition = target;
     }
 
     int GetLevelType(int level)
     {
-        if (level % 30 == 0) return 0;
-        else if (level % 5 == 0 || level == 1) return 1;
+        if (level % Zones.SuperInterval == 0) return 0;
+        else if (level % Zones.SafeInterval == 0 || level == Zones.FirstLevel) return 1;
         else return 2;
     }
 
@@ -67,11 +69,11 @@ public class LevelPanelView : View
 
     void SetNumberStyle(int level)
     {
-        _currentZoneBg.sprite = _levelPanelSettings.backgrounds[GetLevelType(level)];
+        _currentZoneBg.sprite = _levelPanelSettings.Backgrounds[GetLevelType(level)];
         foreach (var t in _levelNumbers.GetComponentsInChildren<TMP_Text>())
         {
-            Color c = _levelPanelSettings.colors[GetLevelType(int.Parse(t.text))];
-            c.a = int.Parse(t.text) < level ? 0.4f : 1f;
+            Color c = _levelPanelSettings.Colors[GetLevelType(int.Parse(t.text))];
+            c.a = int.Parse(t.text) < level ? PassedLevelAlpha : 1f;
             t.color = c;
         }
     }

@@ -1,11 +1,13 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(menuName = "WheelSpin/Reward Scaling", fileName = "NewRewardScaling")]
 public class RewardScaling : ScriptableObject
 {
-    [Min(1f)] public float multiplierAtMaxLevel = 1f;
+    [FormerlySerializedAs("multiplierAtMaxLevel")]
+    [Min(1f)] public float MultiplierAtMaxLevel = 1f;
 
-    // Geometric: 1x at level 1, multiplierAtMaxLevel x at maxLevel, and it keeps growing past maxLevel
+    // Geometric: 1x at level 1, MultiplierAtMaxLevel x at maxLevel, and it keeps growing past maxLevel
     public float Multiplier(int level, int maxLevel) =>
-        Mathf.Pow(multiplierAtMaxLevel, (level - 1f) / (maxLevel - 1f));
+        Mathf.Pow(MultiplierAtMaxLevel, (level - 1f) / (maxLevel - 1f));
 }

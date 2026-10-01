@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 
-public class ViewManager : MonoBehaviour
+public class ViewManager : MonoBehaviour, IGameView
 {
     [SerializeField] private EndgameView _endgameView;
     [SerializeField] private LevelPanelView _levelPanelView;
@@ -51,7 +51,7 @@ public class ViewManager : MonoBehaviour
             _rewardPanelView.DisplayInGame(new Reward(k, rewards[k]));
         }
     }
-    public void DisplayEndgameScreen(IReadOnlyDictionary<RewardDefinition, int> rewards)
+    public void DisplayExitScreen(IReadOnlyDictionary<RewardDefinition, int> rewards)
     {
         _endgameView.DisplayScreen(_cashOutScreen);
         foreach (var k in rewards.Keys)

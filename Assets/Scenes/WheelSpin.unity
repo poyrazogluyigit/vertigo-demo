@@ -4199,9 +4199,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcf51dec0f0faa041ad8b7fbd76fa318, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentLevel: 1
   _rewardsManager: {fileID: 861563881}
-  _im: {fileID: 861563883}
+  _input: {fileID: 0}
   _vm: {fileID: 861563882}
 --- !u!4 &861563880
 Transform:

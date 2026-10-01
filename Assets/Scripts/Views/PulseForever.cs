@@ -1,10 +1,13 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(RectTransform))]
 public class PulseForever : MonoBehaviour
 {
-    [SerializeField] private float growBy = 8f;
-    [SerializeField] private float period = 1.2f;
+    [FormerlySerializedAs("growBy")]
+    [SerializeField] private float _growBy = 8f;
+    [FormerlySerializedAs("period")]
+    [SerializeField] private float _period = 1.2f;
 
     RectTransform _rt;
     Vector2 _baseSize;
@@ -17,8 +20,8 @@ public class PulseForever : MonoBehaviour
 
     void Update()
     {
-        float t = 0.5f - 0.5f * Mathf.Cos(Time.time * 2f * Mathf.PI / period);
-        _rt.sizeDelta = _baseSize + Vector2.one * (growBy * t);
+        float t = 0.5f - 0.5f * Mathf.Cos(Time.time * 2f * Mathf.PI / _period);
+        _rt.sizeDelta = _baseSize + Vector2.one * (_growBy * t);
     }
 
     void OnDisable() => _rt.sizeDelta = _baseSize;

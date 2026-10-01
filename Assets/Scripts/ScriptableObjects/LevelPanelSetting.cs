@@ -1,32 +1,41 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 [CreateAssetMenu(fileName="NewLevelPanelSetting", menuName = "WheelSpin/LevelPanelSetting")]
 public class LevelPanelSetting : ScriptableObject
 {
-    [SerializeField] private Color normalZoneColor;
-    [SerializeField] private Sprite currentNormalZoneBackground;
-    [SerializeField] private Color safeZoneColor;
-    [SerializeField] private Sprite currentSafeZoneBackground;
-    [SerializeField] private Color superZoneColor;
-    [SerializeField] private Sprite currentSuperZoneBackground;
-    public List<Sprite> backgrounds;
-    public List<Color> colors;
+    [FormerlySerializedAs("normalZoneColor")]
+    [SerializeField] private Color _normalZoneColor;
+    [FormerlySerializedAs("currentNormalZoneBackground")]
+    [SerializeField] private Sprite _currentNormalZoneBackground;
+    [FormerlySerializedAs("safeZoneColor")]
+    [SerializeField] private Color _safeZoneColor;
+    [FormerlySerializedAs("currentSafeZoneBackground")]
+    [SerializeField] private Sprite _currentSafeZoneBackground;
+    [FormerlySerializedAs("superZoneColor")]
+    [SerializeField] private Color _superZoneColor;
+    [FormerlySerializedAs("currentSuperZoneBackground")]
+    [SerializeField] private Sprite _currentSuperZoneBackground;
+    [FormerlySerializedAs("backgrounds")]
+    public List<Sprite> Backgrounds;
+    [FormerlySerializedAs("colors")]
+    public List<Color> Colors;
 
     void OnEnable()
     {
-        backgrounds = new List<Sprite>
+        Backgrounds = new List<Sprite>
         {
-            currentSuperZoneBackground,
-            currentSafeZoneBackground,
-            currentNormalZoneBackground
+            _currentSuperZoneBackground,
+            _currentSafeZoneBackground,
+            _currentNormalZoneBackground
         };
-        colors = new List<Color>
+        Colors = new List<Color>
         {
-            superZoneColor,
-            safeZoneColor,
-            normalZoneColor
+            _superZoneColor,
+            _safeZoneColor,
+            _normalZoneColor
         };
     }
 
