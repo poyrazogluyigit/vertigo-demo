@@ -3,16 +3,16 @@ using System;
 public class GameFlow : IDisposable
 {
     private int _currentLevel = Zones.FirstLevel;
-    private readonly IRewardManager _rewardsManager;
+    private readonly IRewardService _rewards;
     private readonly IGameInput _input;
     private readonly IGameView _gameView;
 
     enum State { Restarting, Setup, Idle, Active, Cleared, Exit, GameOver }
     State _currentState;
 
-    public GameFlow(IRewardManager rewardsManager, IGameInput input, IGameView gameView)
+    public GameFlow(IRewardService rewards, IGameInput input, IGameView gameView)
     {
-        _rewardsManager = rewardsManager;
+        _rewards = rewards;
         _input = input;
         _gameView = gameView;
 
@@ -47,7 +47,7 @@ public class GameFlow : IDisposable
         {
             case State.Restarting:
 
-                _rewardsManager.ClearRewards();
+                _rewards.ClearRewards();
                 _gameView.Clear();
                 _currentLevel = Zones.FirstLevel;
                 SetState(State.Setup);
@@ -56,8 +56,8 @@ public class GameFlow : IDisposable
             case State.Setup:
 
                 await _gameView.UpdateLevelIndicator(_currentLevel);
-                _rewardsManager.GenerateRewards(_currentLevel);
-                _gameView.DrawWheel(_rewardsManager.CurrentWheel, _rewardsManager.PossibleRewards);
+                _rewards.GenerateRewards(_currentLevel);
+                _gameView.DrawWheel(_rewards.CurrentWheel, _rewards.PossibleRewards);
                 SetState(State.Idle);
                 break;
 
@@ -69,7 +69,7 @@ public class GameFlow : IDisposable
             case State.Active:
 
                 DisableButtons();
-                SpinResult result = _rewardsManager.Pick();
+                SpinResult result = _rewards.Pick();
                 await _gameView.SpinWheel(result.Slot);
                 if (result.IsBomb) SetState(State.GameOver);
                 else SetState(State.Cleared);
@@ -77,7 +77,7 @@ public class GameFlow : IDisposable
 
             case State.Cleared:
 
-                _gameView.DisplayEarnedRewards(_rewardsManager.EarnedRewards);
+                _gameView.DisplayEarnedRewards(_rewards.EarnedRewards);
                 _currentLevel++;
                 SetState(State.Setup);
                 break;
@@ -85,13 +85,13 @@ public class GameFlow : IDisposable
             case State.Exit:
 
                 DisableButtons();
-                _gameView.DisplayExitScreen(_rewardsManager.EarnedRewards);
+                _gameView.DisplayExitScreen(_rewards.EarnedRewards);
                 break;
 
             case State.GameOver:
 
                 DisableButtons();
-                _rewardsManager.ClearRewards();
+                _rewards.ClearRewards();
                 _gameView.DisplayGameOverScreen();
                 break;
 

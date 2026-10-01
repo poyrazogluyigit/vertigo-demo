@@ -13,6 +13,7 @@ public class RewardDefinition : ScriptableObject, IEquatable<RewardDefinition>
     public float BaseAmount = 1f;
     [FormerlySerializedAs("scaling")]
     public RewardScaling Scaling;   // null keeps BaseAmount on every level
+    public bool IsBomb;
     public bool Equals(RewardDefinition other)
     {
         if (other == null || GetType() != other.GetType())

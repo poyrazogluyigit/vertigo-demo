@@ -83,12 +83,4 @@ public class GameFlowTests
 
         Assert.AreEqual(exitEnabled, _input.ExitEnabled);
     }
-
-    [Test]
-    public void Exit_OnBronzeZone_IsIgnored()
-    {
-        SpinToLevel(3);
-        _input.PressExit();
-        _view.
-    }
 }

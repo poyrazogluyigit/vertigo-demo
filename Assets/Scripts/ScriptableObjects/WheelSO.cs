@@ -9,6 +9,17 @@ public class WheelSO : ScriptableObject
     public Color RaysColor = Color.clear;
     public RewardDefinition[] Slices = new RewardDefinition[SliceCount];
 
+    public int BombCount
+    {
+        get
+        {
+            int count = 0;
+            foreach (RewardDefinition slice in Slices)
+                if (slice != null && slice.IsBomb) count++;
+            return count;
+        }
+    }
+
 #if UNITY_EDITOR
     void OnValidate()
     {

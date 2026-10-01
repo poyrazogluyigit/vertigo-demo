@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 
 // Pick() returns whatever outcome the test chose last; defaults to a reward.
-public class FakeRewards : IRewardManager
+public class FakeRewards : IRewardService
 {
     private bool _nextIsBomb;
     private readonly Dictionary<RewardDefinition, int> _earnedRewards = new Dictionary<RewardDefinition, int>();

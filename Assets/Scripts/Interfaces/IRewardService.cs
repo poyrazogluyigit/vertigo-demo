@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-public interface IRewardManager
+public interface IRewardService
 {
     WheelSO CurrentWheel { get; }
     Reward[] PossibleRewards { get; }

@@ -14,4 +14,7 @@ public static class Zones
 
     // Cash-out is only offered where the wheel has no bomb
     public static bool AllowsExit(int level) => TypeOf(level) != ZoneType.Normal;
+
+    // Normal zones carry exactly one bomb; safe and super zones carry none
+    public static int BombsPerWheel(ZoneType zone) => zone == ZoneType.Normal ? 1 : 0;
 }
