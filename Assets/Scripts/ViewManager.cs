@@ -69,6 +69,7 @@ public class ViewManager : MonoBehaviour
     {
         _endgameView.HideEndScreen();
         _rewardPanelView.ClearInGameRewards();
+        _rewardPanelView.ClearEndgameRewards();
         _levelPanelView.ResetIndicator();
     }
 

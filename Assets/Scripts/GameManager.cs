@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 public class GameManager : MonoBehaviour
 {
@@ -7,10 +8,79 @@ public class GameManager : MonoBehaviour
     [SerializeField] private InputManager _im;
     [SerializeField] private ViewManager _vm;
 
+    enum States { RESTARTING, SETUP, IDLE, ACTIVE, CLEARED, EXIT, GAMEOVER }
+    States currentState;
+
     void Start()
     {
-        OnRestartButtonPressed();
+        currentState = States.SETUP;
+        GameLoop(); 
     }
+
+    async void GameLoop()
+    {
+        switch (currentState)
+        {
+            case States.RESTARTING:
+
+                _rewardsManager.ClearRewards();
+                _vm.Clear();
+                _currentLevel = 1;
+                SetState(States.SETUP);
+                break;
+
+            case States.SETUP:
+
+                await _vm.UpdateLevelIndicator(_currentLevel);
+                _rewardsManager.GenerateRewards(_currentLevel);
+                _vm.DrawWheel(_rewardsManager.CurrentWheel, _rewardsManager.PossibleRewards);
+                EnableButtons();
+                SetState(States.IDLE);
+                break;
+                
+            case States.IDLE:
+                {
+                    break;
+                }
+            case States.ACTIVE:
+
+                DisableButtons();
+                SpinResult result = _rewardsManager.Pick();
+                await _vm.SpinWheel(result.Slot);
+                if (result.IsBomb) SetState(States.GAMEOVER);
+                else SetState(States.CLEARED);
+                break;
+
+            case States.CLEARED:
+                
+                _vm.DisplayEarnedRewards(_rewardsManager.EarnedRewards);
+                _currentLevel++;
+                SetState(States.SETUP);
+                break;
+                
+            case States.EXIT:
+
+                DisableButtons();
+                _vm.DisplayEndgameScreen(_rewardsManager.EarnedRewards);
+                break;
+
+            case States.GAMEOVER:
+                
+                DisableButtons();
+                _rewardsManager.ClearRewards();
+                _vm.DisplayGameOverScreen();
+                break;
+                
+            default: break;
+        }
+    }
+
+    void SetState(States state)
+    {
+        currentState = state;
+        GameLoop();
+    }
+
 
     void OnEnable()
     {
@@ -25,47 +95,9 @@ public class GameManager : MonoBehaviour
         InputManager.RestartButtonPressed -= OnRestartButtonPressed;
     }
 
-    async void OnSpinButtonPressed()
-    {
-        DisableButtons();
-        SpinResult result = _rewardsManager.Pick();
-        await _vm.SpinWheel(result.Slot);
-        await HandleLevelEnd(result.IsBomb);
-        EnableButtons();
-    }
-
-    void OnExitButtonPressed()
-    {
-        DisableButtons();
-        _vm.DisplayEndgameScreen(_rewardsManager.EarnedRewards);
-    }
-
-    void OnRestartButtonPressed()
-    {
-        _rewardsManager.ClearRewards();
-        _vm.Clear();
-        _currentLevel = 1;
-        SetupWheel();
-        EnableButtons();
-    }
-
-    async Task HandleLevelEnd(bool isBomb)
-    {
-        if (isBomb)
-        {
-            HandleGameLost();
-            return;
-        }
-        _vm.DisplayEarnedRewards(_rewardsManager.EarnedRewards);
-        await SetLevel(++_currentLevel);
-    }
-
-    void HandleGameLost()
-    {
-        DisableButtons();
-        _rewardsManager.ClearRewards();
-        _vm.DisplayGameOverScreen();
-    }
+    void OnExitButtonPressed() => SetState(States.EXIT);
+    void OnRestartButtonPressed() => SetState(States.RESTARTING);
+    void OnSpinButtonPressed() => SetState(States.ACTIVE);
 
     void DisableButtons()
     {
@@ -76,20 +108,6 @@ public class GameManager : MonoBehaviour
     void EnableButtons()
     {
         _im.SetSpinButtonInteraction(true);
-        _im.SetExitButtonInteraction(true); 
+        if (_currentLevel % 5 == 0) _im.SetExitButtonInteraction(true); 
     }
-
-    async Task SetLevel(int level)
-    {
-        _currentLevel = level;
-        await _vm.UpdateLevelIndicator(_currentLevel);
-        SetupWheel();
-    }
-
-    void SetupWheel()
-    {
-        _rewardsManager.GenerateRewards(_currentLevel);
-        _vm.DrawWheel(_rewardsManager.CurrentWheel, _rewardsManager.PossibleRewards);
-    }
-
 }
