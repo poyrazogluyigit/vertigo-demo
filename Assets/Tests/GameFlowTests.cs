@@ -3,29 +3,54 @@ using NUnit.Framework;
 public class GameFlowTests
 {
     private FakeRewards _rewards;
-    private FakeInput _input;
+    private EventBus _eventBus;
     private FakeView _view;
     private GameFlow _flow;
+
+    // Null until GameFlow publishes one, so "never sent" can't pass as "all disabled"
+    private ActionsAllowed? _allowed;
 
     [SetUp]
     public void SetUp()
     {
         _rewards = new FakeRewards();
-        _input = new FakeInput();
+        _eventBus = new EventBus();
+
+        _allowed = null;
+        _eventBus.Subscribe<ActionsAllowed>(e => _allowed = e);
+
         _view = new FakeView();
-        _flow = new GameFlow(_rewards, _input, _view);
+        _flow = new GameFlow(_eventBus, _rewards, _view);
         _flow.Begin();
     }
 
     [TearDown]
     public void TearDown() => _flow.Dispose();
 
-    // The game starts at level 1 and every winning spin moves up one level.
+    // The latest ActionsAllowed; fails the test if GameFlow never published one.
+    private ActionsAllowed Allowed
+    {
+        get
+        {
+            Assert.IsTrue(_allowed.HasValue, "GameFlow never published ActionsAllowed");
+            return _allowed.Value;
+        }
+    }
+
     private void SpinToLevel(int level)
     {
         _rewards.ReturnReward();
         for (int i = 1; i < level; i++)
-            _input.PressSpin();
+            _eventBus.Publish(new SpinPressed());
+    }
+
+    // Review: "the exit button is enabled on bronze zones". The scene's buttons
+    // start interactable, so the first zone must say what is allowed.
+    [Test]
+    public void Begin_AllowsSpinButNotExitOnFirstZone()
+    {
+        Assert.IsTrue(Allowed.Spin);
+        Assert.IsFalse(Allowed.Exit);
     }
 
     // Review: "after a bomb the buttons are enabled again".
@@ -34,13 +59,13 @@ public class GameFlowTests
     public void Bomb_DisablesSpinAndExit()
     {
         SpinToLevel(5);
-        Assert.IsTrue(_input.SpinEnabled && _input.ExitEnabled, "precondition: both enabled on a safe zone");
+        Assert.IsTrue(Allowed.Spin && Allowed.Exit, "precondition: both enabled on a safe zone");
 
         _rewards.ReturnBomb();
-        _input.PressSpin();
+        _eventBus.Publish(new SpinPressed());
 
-        Assert.IsFalse(_input.SpinEnabled);
-        Assert.IsFalse(_input.ExitEnabled);
+        Assert.IsFalse(Allowed.Spin);
+        Assert.IsFalse(Allowed.Exit);
     }
 
     // Review: "the previous game's rewards show on the end screen".
@@ -52,16 +77,16 @@ public class GameFlowTests
         SpinToLevel(5);
         if (cashOut)
         {
-            _input.PressExit();
+            _eventBus.Publish(new ExitPressed());
         }
         else
         {
             _rewards.ReturnBomb();
-            _input.PressSpin();
+            _eventBus.Publish(new SpinPressed());
         }
         _view.Log.Clear();
 
-        _input.PressRestart();
+        _eventBus.Publish(new RestartPressed());
 
         Assert.AreEqual("Clear", _view.Log[0]);
         Assert.AreEqual("UpdateLevelIndicator(1)", _view.Log[1]);
@@ -81,6 +106,6 @@ public class GameFlowTests
     {
         SpinToLevel(level);
 
-        Assert.AreEqual(exitEnabled, _input.ExitEnabled);
+        Assert.AreEqual(exitEnabled, Allowed.Exit);
     }
 }

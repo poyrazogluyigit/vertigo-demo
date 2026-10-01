@@ -3,43 +3,42 @@ using System;
 public class GameFlow : IDisposable
 {
     private int _currentLevel = Zones.FirstLevel;
+    private EventBus _eventBus;
     private readonly IRewardService _rewards;
-    private readonly IGameInput _input;
     private readonly IGameView _gameView;
 
     enum State { Restarting, Setup, Idle, Active, Cleared, Exit, GameOver }
     State _currentState;
 
-    public GameFlow(IRewardService rewards, IGameInput input, IGameView gameView)
+    public GameFlow(EventBus eventBus, IRewardService rewards, IGameView gameView)
     {
+        _eventBus = eventBus;
         _rewards = rewards;
-        _input = input;
         _gameView = gameView;
+    }
 
-        _input.SpinPressed += OnSpinButtonPressed;
-        _input.ExitPressed += OnExitButtonPressed;
-        _input.RestartPressed += OnRestartButtonPressed;
+    public void Begin()
+    {
+        _eventBus.Subscribe<SpinPressed>(OnSpinButtonPressed);
+        _eventBus.Subscribe<ExitPressed>(OnExitButtonPressed);
+        _eventBus.Subscribe<RestartPressed>(OnRestartButtonPressed);
+        SetState(State.Setup);
     }
 
     public void Dispose()
     {
-        _input.SpinPressed -= OnSpinButtonPressed;
-        _input.ExitPressed -= OnExitButtonPressed;
-        _input.RestartPressed -= OnRestartButtonPressed;
+        _eventBus.Unsubscribe<SpinPressed>(OnSpinButtonPressed);
+        _eventBus.Unsubscribe<ExitPressed>(OnExitButtonPressed);
+        _eventBus.Unsubscribe<RestartPressed>(OnRestartButtonPressed);
     }
 
-    void OnExitButtonPressed()
+    void OnExitButtonPressed(ExitPressed _)
     {
         if (CanExit())
             SetState(State.Exit);
     }
-    void OnRestartButtonPressed() => SetState(State.Restarting);
-    void OnSpinButtonPressed() => SetState(State.Active);
-
-    public void Begin()
-    {
-        SetState(State.Setup);
-    }
+    void OnRestartButtonPressed(RestartPressed _) => SetState(State.Restarting);
+    void OnSpinButtonPressed(SpinPressed _) => SetState(State.Active);
 
     async void GameLoop()
     {
@@ -55,7 +54,7 @@ public class GameFlow : IDisposable
 
             case State.Setup:
 
-                DisableButtons();
+                _eventBus.Publish(new ActionsAllowed(false, false));
                 await _gameView.UpdateLevelIndicator(_currentLevel);
                 _rewards.GenerateRewards(_currentLevel);
                 _gameView.DrawWheel(_rewards.CurrentWheel, _rewards.PossibleRewards);
@@ -64,12 +63,12 @@ public class GameFlow : IDisposable
 
             case State.Idle:
 
-                EnableButtons();
+                _eventBus.Publish(new ActionsAllowed(true, CanExit()));
                 break;
 
             case State.Active:
 
-                DisableButtons();
+                _eventBus.Publish(new ActionsAllowed(false, false));
                 SpinResult result = _rewards.Pick();
                 await _gameView.SpinWheel(result.Slot);
                 if (result.IsBomb) SetState(State.GameOver);
@@ -85,13 +84,11 @@ public class GameFlow : IDisposable
 
             case State.Exit:
 
-                DisableButtons();
                 _gameView.DisplayExitScreen(_rewards.EarnedRewards);
                 break;
 
             case State.GameOver:
 
-                DisableButtons();
                 _rewards.ClearRewards();
                 _gameView.DisplayGameOverScreen();
                 break;
@@ -105,21 +102,8 @@ public class GameFlow : IDisposable
         _currentState = state;
         GameLoop();
     }
-
-    void DisableButtons()
-    {
-        _input.SetSpinEnabled(false);
-        _input.SetExitEnabled(false);
-    }
-
     bool CanExit()
     {
         return _currentState == State.Idle && Zones.AllowsExit(_currentLevel);
-    }
-
-    void EnableButtons()
-    {
-        _input.SetSpinEnabled(true);
-        if (CanExit()) _input.SetExitEnabled(true);
     }
 }

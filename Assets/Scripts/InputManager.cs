@@ -2,18 +2,26 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InputManager : MonoBehaviour, IGameInput
+public class InputManager : MonoBehaviour
 {
     [SerializeField] private Button _spinButton;
     [SerializeField] private Button _exitButton;
     [SerializeField] private Button _restartButton;
 
-    public event System.Action SpinPressed,
-    ExitPressed, RestartPressed;
-
-    public void SetSpinEnabled(bool enabled) => _spinButton.interactable = enabled;
-    public void SetExitEnabled(bool enabled) => _exitButton.interactable = enabled;
+    private EventBus _eventBus;
     public void SetRestartEnabled(bool enabled) => _restartButton.interactable = enabled;
+
+    public void SetButtonInteractability(ActionsAllowed a)
+    {
+        _spinButton.interactable = a.Spin;
+        _exitButton.interactable = a.Exit;
+    }
+
+    public void Bind(EventBus eventBus)
+    {
+        _eventBus = eventBus;
+        eventBus.Subscribe<ActionsAllowed>(SetButtonInteractability);
+    }
 
 #if UNITY_EDITOR
     void OnValidate()
@@ -44,9 +52,9 @@ public class InputManager : MonoBehaviour, IGameInput
         _restartButton.onClick.RemoveListener(OnRestartClicked);
     }
 
-    void OnSpinClicked() => SpinPressed?.Invoke();
-    void OnExitClicked() => ExitPressed?.Invoke();
-    void OnRestartClicked() => RestartPressed?.Invoke();
+    void OnSpinClicked() => _eventBus.Publish(new SpinPressed());
+    void OnExitClicked() => _eventBus.Publish(new ExitPressed());
+    void OnRestartClicked() => _eventBus.Publish(new RestartPressed());
     
 
 
