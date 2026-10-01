@@ -55,6 +55,7 @@ public class GameFlow : IDisposable
 
             case State.Setup:
 
+                DisableButtons();
                 await _gameView.UpdateLevelIndicator(_currentLevel);
                 _rewards.GenerateRewards(_currentLevel);
                 _gameView.DrawWheel(_rewards.CurrentWheel, _rewards.PossibleRewards);
