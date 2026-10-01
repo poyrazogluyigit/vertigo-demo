@@ -6,81 +6,70 @@ using System.Threading.Tasks;
 
 public class LevelPanelView : View
 {
-    [SerializeField] RectTransform _levelNumbers;
-    [SerializeField] LevelPanelSetting _levelPanelSettings;
-    [SerializeField] Image _currentZoneBg;
-    private Vector3 _initialPosition;
-    void Awake() => _initialPosition = _levelNumbers.anchoredPosition;
-
-    public void ResetIndicator()
-    {
-        _levelNumbers.anchoredPosition = _initialPosition;
-        int i = 0;
-        foreach (var t in _levelNumbers.GetComponentsInChildren<TMP_Text>())
-            t.text = (++i).ToString();
-        SetNumberStyle(Zones.FirstLevel);
-    }
-
-    // here we use a hack to keep reusing the same text objects
-    // the numbers are increased by one and moved to the right before
-    // moving to the left
-
     const int PinnedSlot = 15;
     const float NumberSpacing = 135f;     // distance between two numbers on the track
     const float MoveDuration = 1f;
     const float PassedLevelAlpha = 0.4f;
 
-    public async Task ChangeLevelTo(int level, bool instant = false)
+    [SerializeField] private RectTransform _levelNumbers;
+    [SerializeField] private LevelPanelSetting _levelPanelSettings;
+    [SerializeField] private Image _currentZoneBg;
+
+    private TMP_Text[] _labels;
+    private Vector2 _initialPosition;
+    private int _firstNumber = Zones.FirstLevel;   // the level shown by the leftmost label
+
+    void Awake()
     {
-    int slot = level - 1;
-    if (slot > PinnedSlot)
-    {
-        IncreaseNumbers();                            // slot 15 now shows `level`, slot 14 shows level-1
-        await MoveLevelIndicator(PinnedSlot - 1, true); // snap back: looks unchanged
-        slot = PinnedSlot;
-    }
-    SetNumberStyle(level);                            // after the renumber, so colours match
-    await MoveLevelIndicator(slot, instant);
+        _labels = _levelNumbers.GetComponentsInChildren<TMP_Text>();
+        _initialPosition = _levelNumbers.anchoredPosition;
     }
 
-    async Task MoveLevelIndicator(int targetTextBoxIndex, bool cancelAnimation = false)
+    public void ResetIndicator()
     {
-        Vector3 target = _initialPosition + new Vector3(-targetTextBoxIndex * NumberSpacing, 0, 0);
-        if (!cancelAnimation) await _levelNumbers.DOAnchorPos(target, MoveDuration)
-        .AsyncWaitForCompletion();
-        else _levelNumbers.anchoredPosition = target;
+        _firstNumber = Zones.FirstLevel;
+        _levelNumbers.anchoredPosition = _initialPosition;
+        RenderLevelsFrom(Zones.FirstLevel);
     }
 
-    // Index into LevelPanelSetting's lists (super, safe, normal); replaced in step 3
-    int GetLevelType(int level)
+    public async Task ChangeLevelTo(int level)
     {
-        switch (Zones.TypeOf(level))
+        int slot = level - _firstNumber;
+        if (slot > PinnedSlot)
         {
-            case ZoneType.Super: return 0;
-            case ZoneType.Safe: return 1;
-            default: return 2;
+            _firstNumber = level - PinnedSlot;
+            RenderLevelsFrom(level);
+            SnapIndicatorTo(PinnedSlot - 1);   // the previous level is back where the track already was
+            slot = PinnedSlot;
+        }
+        else
+        {
+            RenderLevelsFrom(level);
+        }
+        await SlideIndicatorTo(slot);
+    }
+
+    void RenderLevelsFrom(int currentLevel)
+    {
+        _currentZoneBg.sprite = _levelPanelSettings.BackgroundFor(Zones.TypeOf(currentLevel));
+        for (int i = 0; i < _labels.Length; i++)
+        {
+            int number = _firstNumber + i;
+            Color color = _levelPanelSettings.NumberColorFor(Zones.TypeOf(number));
+            color.a = number < currentLevel ? PassedLevelAlpha : 1f;
+            _labels[i].text = number.ToString();
+            _labels[i].color = color;
         }
     }
 
-    void IncreaseNumbers()
-    {
-        foreach (var t in _levelNumbers.GetComponentsInChildren<TMP_Text>())
-        {
-            int currentNumber = int.Parse(t.text);
-            t.text = (currentNumber + 1).ToString();
-        }
-    }
+    Vector2 PositionOf(int slot) => _initialPosition + new Vector2(-slot * NumberSpacing, 0f);
 
-    void SetNumberStyle(int level)
-    {
-        _currentZoneBg.sprite = _levelPanelSettings.Backgrounds[GetLevelType(level)];
-        foreach (var t in _levelNumbers.GetComponentsInChildren<TMP_Text>())
-        {
-            Color c = _levelPanelSettings.Colors[GetLevelType(int.Parse(t.text))];
-            c.a = int.Parse(t.text) < level ? PassedLevelAlpha : 1f;
-            t.color = c;
-        }
-    }
+    void SnapIndicatorTo(int slot) => _levelNumbers.anchoredPosition = PositionOf(slot);
+
+    Task SlideIndicatorTo(int slot) =>
+        _levelNumbers.DOAnchorPos(PositionOf(slot), MoveDuration)
+            .SetLink(gameObject)
+            .AsyncWaitForCompletion();
 
 #if UNITY_EDITOR
     void OnValidate()

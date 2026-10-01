@@ -1,8 +1,7 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
-using UnityEngine.UI;
 
+// How the level track looks for each zone type.
 [CreateAssetMenu(fileName="NewLevelPanelSetting", menuName = "WheelSpin/LevelPanelSetting")]
 public class LevelPanelSetting : ScriptableObject
 {
@@ -18,31 +17,25 @@ public class LevelPanelSetting : ScriptableObject
     [SerializeField] private Color _superZoneColor;
     [FormerlySerializedAs("currentSuperZoneBackground")]
     [SerializeField] private Sprite _currentSuperZoneBackground;
-    [FormerlySerializedAs("backgrounds")]
-    public List<Sprite> Backgrounds;
-    [FormerlySerializedAs("colors")]
-    public List<Color> Colors;
 
-    void OnEnable()
+    public Color NumberColorFor(ZoneType zone)
     {
-        Backgrounds = new List<Sprite>
+        switch (zone)
         {
-            _currentSuperZoneBackground,
-            _currentSafeZoneBackground,
-            _currentNormalZoneBackground
-        };
-        Colors = new List<Color>
-        {
-            _superZoneColor,
-            _safeZoneColor,
-            _normalZoneColor
-        };
+            case ZoneType.Super: return _superZoneColor;
+            case ZoneType.Safe: return _safeZoneColor;
+            default: return _normalZoneColor;
+        }
     }
 
-#if UNITY_EDITOR
-    void OnValidate()
+    // Shown behind the current level's number
+    public Sprite BackgroundFor(ZoneType zone)
     {
-        OnEnable();
+        switch (zone)
+        {
+            case ZoneType.Super: return _currentSuperZoneBackground;
+            case ZoneType.Safe: return _currentSafeZoneBackground;
+            default: return _currentNormalZoneBackground;
+        }
     }
-#endif
 }

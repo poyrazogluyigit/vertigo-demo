@@ -6,11 +6,24 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private WheelSchedule _wheelSchedule;
     [SerializeField] private RewardPricing _rewardPricing;
-    [FormerlySerializedAs("_im")]
+
     [SerializeField] private InputManager _input;
     [SerializeField] private ViewManager _vm;
 
     private GameFlow _gameFlow;
+
+#if UNITY_EDITOR
+    void OnValidate()
+    {
+        _input = FindObjectOfType<InputManager>(true);
+        _vm = FindObjectOfType<ViewManager>(true);
+
+        if (_input == null) Debug.LogError("Input manager cannot be found!", this);
+        if (_vm == null) Debug.LogError("View manager cannot be found!", this);
+        if (_wheelSchedule == null) Debug.LogError("Wheel schedule is not assigned!", this);
+        if (_rewardPricing == null) Debug.LogError("Reward pricing is not assigned!", this);
+    }
+#endif
 
     void Awake()
     {

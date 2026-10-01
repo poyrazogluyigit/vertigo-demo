@@ -250,8 +250,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab9d0ae2e51ef44d80d2e25cbf13d33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  icon: {fileID: 1875932264}
-  amountText: {fileID: 1705944695}
+  _icon: {fileID: 1875932264}
+  _amountText: {fileID: 1705944695}
 --- !u!114 &18261920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -559,11 +559,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3200482085625f54d9e968bf4241ac69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wheelBase: {fileID: 278894263}
-  indicator: {fileID: 3394379}
-  rays: {fileID: 2104417004}
-  SpinningPart: {fileID: 56017337}
-  slots:
+  _wheelBase: {fileID: 278894263}
+  _indicator: {fileID: 3394379}
+  _rays: {fileID: 2104417004}
+  _spinningPart: {fileID: 56017337}
+  _slots:
   - {fileID: 1096087836}
   - {fileID: 444042945}
   - {fileID: 18261919}
@@ -2322,8 +2322,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab9d0ae2e51ef44d80d2e25cbf13d33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  icon: {fileID: 266041283}
-  amountText: {fileID: 1944107144}
+  _icon: {fileID: 266041283}
+  _amountText: {fileID: 1944107144}
 --- !u!114 &444042946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2937,8 +2937,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab9d0ae2e51ef44d80d2e25cbf13d33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  icon: {fileID: 748439320}
-  amountText: {fileID: 1457210849}
+  _icon: {fileID: 748439320}
+  _amountText: {fileID: 1457210849}
 --- !u!114 &613758953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3389,8 +3389,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab9d0ae2e51ef44d80d2e25cbf13d33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  icon: {fileID: 1309404577}
-  amountText: {fileID: 1429753644}
+  _icon: {fileID: 1309404577}
+  _amountText: {fileID: 1429753644}
 --- !u!114 &689603876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4004,8 +4004,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab9d0ae2e51ef44d80d2e25cbf13d33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  icon: {fileID: 511397597}
-  amountText: {fileID: 1811221560}
+  _icon: {fileID: 511397597}
+  _amountText: {fileID: 1811221560}
 --- !u!114 &767577083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4177,7 +4177,6 @@ GameObject:
   m_Component:
   - component: {fileID: 861563880}
   - component: {fileID: 861563879}
-  - component: {fileID: 861563881}
   - component: {fileID: 861563883}
   - component: {fileID: 861563882}
   m_Layer: 0
@@ -4199,8 +4198,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcf51dec0f0faa041ad8b7fbd76fa318, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rewardsManager: {fileID: 861563881}
-  _input: {fileID: 0}
+  _wheelSchedule: {fileID: 11400000, guid: 81cce92b8a09b6e46a7ed784e193c2e5, type: 2}
+  _rewardPricing: {fileID: 11400000, guid: debed3d578342304db363694ed0aeec4, type: 2}
+  _input: {fileID: 861563883}
   _vm: {fileID: 861563882}
 --- !u!4 &861563880
 Transform:
@@ -4217,22 +4217,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &861563881
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 861563878}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45f5bd4ecb8a35a4e8eb1073f8ebd260, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rewardPool: {fileID: 11400000, guid: debed3d578342304db363694ed0aeec4, type: 2}
-  _bronzeWheel: {fileID: 11400000, guid: 07a50b37b0bc44045acb573d38d857ea, type: 2}
-  _silverWheel: {fileID: 11400000, guid: 00ad9a3b6511361498396110b42b8d17, type: 2}
-  _goldWheel: {fileID: 11400000, guid: 02105c611fc3b0a48a6d0a1b0eb516e9, type: 2}
 --- !u!114 &861563882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5389,8 +5373,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab9d0ae2e51ef44d80d2e25cbf13d33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  icon: {fileID: 1776333602}
-  amountText: {fileID: 439849442}
+  _icon: {fileID: 1776333602}
+  _amountText: {fileID: 439849442}
 --- !u!1 &1255020328
 GameObject:
   m_ObjectHideFlags: 0
@@ -6000,8 +5984,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab9d0ae2e51ef44d80d2e25cbf13d33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  icon: {fileID: 1295917325}
-  amountText: {fileID: 195694465}
+  _icon: {fileID: 1295917325}
+  _amountText: {fileID: 195694465}
 --- !u!114 &1360136872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7736,8 +7720,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab9d0ae2e51ef44d80d2e25cbf13d33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  icon: {fileID: 1095738439}
-  amountText: {fileID: 1681067984}
+  _icon: {fileID: 1095738439}
+  _amountText: {fileID: 1681067984}
 --- !u!114 &1668961374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9864,7 +9848,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2f9bd37b3f04dd2b123ddebd87392e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  degreesPerSecond: -10
+  _degreesPerSecond: -10
 --- !u!114 &2104417101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9877,8 +9861,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81089abd310e41c082cfb3440d81a337, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  growBy: 8
-  period: 1.2
+  _growBy: 8
+  _period: 1.2
 --- !u!1 &2109004598
 GameObject:
   m_ObjectHideFlags: 0

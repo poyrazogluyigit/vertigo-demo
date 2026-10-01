@@ -18,5 +18,3 @@ MonoBehaviour:
   currentSafeZoneBackground: {fileID: 21300000, guid: 0aff21deaae5a054186b6f97954ea5ec, type: 3}
   superZoneColor: {r: 0.84313726, g: 0.8627451, b: 0.8901961, a: 1}
   currentSuperZoneBackground: {fileID: 21300000, guid: 63dc20a8bb627bd469e7acf3f7c15d55, type: 3}
-  backgrounds: []
-  colors: []
