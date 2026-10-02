@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 using DG.Tweening;
-using System.Threading.Tasks;
+
 public class WheelView : View
 {
     [FormerlySerializedAs("wheelBase")]
@@ -19,7 +19,27 @@ public class WheelView : View
     const int ExtraTurns = 3;          // full turns before landing
     const float SpinDuration = 4f;
 
-    public void DrawWheel(WheelSO wheel)
+    protected override void Subscribe()
+    {
+        Bus.Subscribe<WheelReady>(OnWheelReady);
+        Bus.Subscribe<SpinStarted>(OnSpinStarted);
+    }
+
+    protected override void Unsubscribe()
+    {
+        Bus.Unsubscribe<WheelReady>(OnWheelReady);
+        Bus.Unsubscribe<SpinStarted>(OnSpinStarted);
+    }
+
+    void OnWheelReady(WheelReady e)
+    {
+        DrawWheel(e.Wheel);
+        DrawRewards(e.Rewards);
+    }
+
+    void OnSpinStarted(SpinStarted e) => Spin(e.Slot);
+
+    void DrawWheel(WheelSO wheel)
     {
         _wheelBase.sprite = wheel.WheelBase;
         _indicator.sprite = wheel.Indicator;
@@ -27,7 +47,7 @@ public class WheelView : View
         _rays.gameObject.SetActive(wheel.RaysColor.a > 0f);
     }
 
-    public void DrawRewards(Reward[] rewards)
+    void DrawRewards(Reward[] rewards)
     {
         if (rewards.Length != _slots.Length)
             Debug.LogWarning($"WheelView: {rewards.Length} rewards for {_slots.Length} slots", this);
@@ -42,11 +62,12 @@ public class WheelView : View
                 _slots[i].Display(rewards[i].RewardDefn.Image, rewards[i].Amount);
         }
     }
-    public async Task Spin(int position)
+
+    void Spin(int position)
     {
         Vector3 rot = new Vector3(0, 0, 360f / _slots.Length * position + 360f * ExtraTurns);
-        await _spinningPart.DORotate(rot, SpinDuration, RotateMode.FastBeyond360)
-        .AsyncWaitForCompletion();
+        _spinningPart.DORotate(rot, SpinDuration, RotateMode.FastBeyond360)
+            .SetLink(gameObject)
+            .OnComplete(() => Bus?.Publish(new SpinFinished()));
     }
-
 }

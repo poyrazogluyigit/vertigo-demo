@@ -4229,12 +4229,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6fbe1205d1a1fd40a3016697d8f8d94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _endgameView: {fileID: 1688691526}
-  _levelPanelView: {fileID: 1715485378}
-  _wheelView: {fileID: 77384314}
-  _rewardPanelView: {fileID: 1576380807}
-  _gameOverScreen: {fileID: 11400000, guid: 52552571b15ee384e8d772d05f830ca2, type: 2}
-  _cashOutScreen: {fileID: 11400000, guid: bc4a1813f2c291249b10341d35d076f2, type: 2}
+  _views:
+  - {fileID: 1688691526}
+  - {fileID: 1715485378}
+  - {fileID: 77384314}
+  - {fileID: 1576380807}
 --- !u!114 &861563883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8155,6 +8154,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b59bec3291b940f408e9cf109a34b5bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameOverScreen: {fileID: 11400000, guid: 52552571b15ee384e8d772d05f830ca2, type: 2}
+  _cashOutScreen: {fileID: 11400000, guid: bc4a1813f2c291249b10341d35d076f2, type: 2}
   _rewardsContainer: {fileID: 514692680}
   _bombContainer: {fileID: 1623132388}
   _title: {fileID: 1454597787}

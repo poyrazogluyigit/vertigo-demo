@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 // Composition root: holds the scene references and wires them into GameFlow.
 public class GameManager : MonoBehaviour
@@ -8,29 +7,31 @@ public class GameManager : MonoBehaviour
     [SerializeField] private RewardPricing _rewardPricing;
 
     [SerializeField] private InputManager _inputManager;
-    [SerializeField] private ViewManager _vm;
+    [SerializeField] private ViewManager _viewManager;
 
     private GameFlow _gameFlow;
-    private EventBus _eventBus = new EventBus();
+    private readonly IEventBus _eventBus = new EventBus();
 
 #if UNITY_EDITOR
     void OnValidate()
     {
         _inputManager = FindObjectOfType<InputManager>(true);
-        _vm = FindObjectOfType<ViewManager>(true);
+        _viewManager = FindObjectOfType<ViewManager>(true);
 
         if (_inputManager == null) Debug.LogError("Input manager cannot be found!", this);
-        if (_vm == null) Debug.LogError("View manager cannot be found!", this);
+        if (_viewManager == null) Debug.LogError("View manager cannot be found!", this);
         if (_wheelSchedule == null) Debug.LogError("Wheel schedule is not assigned!", this);
         if (_rewardPricing == null) Debug.LogError("Reward pricing is not assigned!", this);
     }
 #endif
 
+    // Everything subscribes in Awake; GameFlow starts publishing in Start.
     void Awake()
     {
         var rewards = new RewardService(_wheelSchedule, _rewardPricing, new UnityRandom());
-        _gameFlow = new GameFlow(_eventBus, rewards, _vm);
+        _gameFlow = new GameFlow(_eventBus, rewards);
         _inputManager.Bind(_eventBus);
+        _viewManager.Bind(_eventBus);
     }
 
     void Start()

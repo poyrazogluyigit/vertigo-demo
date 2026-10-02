@@ -1,76 +1,31 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 
-
-public class ViewManager : MonoBehaviour, IGameView
+// Hands the event bus to every view in the scene; the views subscribe to what they show.
+public class ViewManager : MonoBehaviour
 {
-    [SerializeField] private EndgameView _endgameView;
-    [SerializeField] private LevelPanelView _levelPanelView;
-    [SerializeField] private WheelView _wheelView;
-    [SerializeField] private RewardPanelView _rewardPanelView;
-    [SerializeField] private EndScreen _gameOverScreen, _cashOutScreen;
-
+    [SerializeField] private View[] _views;
 
 #if UNITY_EDITOR
     // includeInactive: the endgame view starts disabled
     void OnValidate()
     {
-        _endgameView = FindObjectOfType<EndgameView>(true);
-        _levelPanelView = FindObjectOfType<LevelPanelView>(true);
-        _wheelView = FindObjectOfType<WheelView>(true);
-        _rewardPanelView = FindObjectOfType<RewardPanelView>(true);
-
-        if (_endgameView == null) Debug.LogError("Endgame view cannot be found!");
-        if (_levelPanelView == null) Debug.LogError("Level panel view cannot be found!");
-        if (_wheelView == null) Debug.LogError("Wheel View cannot be found!");
-        if (_rewardPanelView == null) Debug.LogError("Reward panel view cannot be found!");
+        _views = FindObjectsOfType<View>(true);
+        if (_views.Length == 0) Debug.LogError("No views found in the scene!", this);
     }
 #endif
 
-    public void DrawWheel(WheelSO wheel, Reward[] rewards)
+    public void Bind(IEventBus bus)
     {
-        _wheelView.DrawWheel(wheel);
-        _wheelView.DrawRewards(rewards);
+        foreach (View view in _views)
+            view.Bind(bus);
     }
 
-    public async Task SpinWheel(int slot)
+    // Views that never became active get no OnDestroy, so they are unbound from here.
+    // ReferenceEquals: during scene unload a view may already be destroyed (Unity's == null
+    // is true), but Unbind only touches the C# side, so it still has to run.
+    void OnDestroy()
     {
-        await _wheelView.Spin(slot);
+        foreach (View view in _views)
+            if (!ReferenceEquals(view, null)) view.Unbind();
     }
-    public async Task UpdateLevelIndicator(int level)
-    {
-        await _levelPanelView.ChangeLevelTo(level);
-    }
-
-    public void DisplayEarnedRewards(IReadOnlyDictionary<RewardDefinition, int> rewards)
-    {
-        foreach (var k in rewards.Keys)
-        {
-            _rewardPanelView.DisplayInGame(new Reward(k, rewards[k]));
-        }
-    }
-    public void DisplayExitScreen(IReadOnlyDictionary<RewardDefinition, int> rewards)
-    {
-        _endgameView.DisplayScreen(_cashOutScreen);
-        foreach (var k in rewards.Keys)
-        {
-            _rewardPanelView.DisplayEndgame(new Reward(k, rewards[k]));
-        }
-    }
-
-    public void DisplayGameOverScreen()
-    {
-        _endgameView.DisplayScreen(_gameOverScreen);
-    }
-
-    public void Clear()
-    {
-        _endgameView.HideEndScreen();
-        _rewardPanelView.ClearInGameRewards();
-        _rewardPanelView.ClearEndgameRewards();
-        _levelPanelView.ResetIndicator();
-    }
-
 }

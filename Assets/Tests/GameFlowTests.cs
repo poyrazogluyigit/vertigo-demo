@@ -19,8 +19,8 @@ public class GameFlowTests
         _allowed = null;
         _eventBus.Subscribe<ActionsAllowed>(e => _allowed = e);
 
-        _view = new FakeView();
-        _flow = new GameFlow(_eventBus, _rewards, _view);
+        _view = new FakeView(_eventBus);
+        _flow = new GameFlow(_eventBus, _rewards);
         _flow.Begin();
     }
 
@@ -88,8 +88,45 @@ public class GameFlowTests
 
         _eventBus.Publish(new RestartPressed());
 
-        Assert.AreEqual("Clear", _view.Log[0]);
-        Assert.AreEqual("UpdateLevelIndicator(1)", _view.Log[1]);
+        Assert.AreEqual("GameReset", _view.Log[0]);
+        Assert.AreEqual("LevelStarted(1)", _view.Log[1]);
+    }
+
+    // The outcome is decided on press, but must not be shown before the wheel stops.
+    [Test]
+    public void Spin_WaitsForWheelBeforeShowingResult()
+    {
+        _view.FinishAnimations = false;
+        _view.Log.Clear();
+
+        _eventBus.Publish(new SpinPressed());
+        CollectionAssert.DoesNotContain(_view.Log, "RewardsEarned");
+
+        _eventBus.Publish(new SpinFinished());
+        CollectionAssert.Contains(_view.Log, "RewardsEarned");
+    }
+
+    // Buttons are disabled mid-spin, but the flow must not trust the UI for that.
+    [Test]
+    public void SpinPressed_WhileSpinning_IsIgnored()
+    {
+        _view.FinishAnimations = false;
+        _eventBus.Publish(new SpinPressed());
+        _view.Log.Clear();
+
+        _eventBus.Publish(new SpinPressed());
+
+        CollectionAssert.IsEmpty(_view.Log);
+    }
+
+    [Test]
+    public void LevelShown_WhenNotSettingUp_IsIgnored()
+    {
+        _view.Log.Clear();
+
+        _eventBus.Publish(new LevelShown());
+
+        CollectionAssert.IsEmpty(_view.Log);
     }
 
     // Review: "players can cash out on bronze zones".

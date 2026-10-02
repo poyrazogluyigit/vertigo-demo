@@ -13,10 +13,34 @@ public class RewardPanelView : View
     private readonly Dictionary<Transform, Dictionary<RewardDefinition, RewardView>> _entries =
         new Dictionary<Transform, Dictionary<RewardDefinition, RewardView>>();
 
-    public void DisplayInGame(Reward reward) => Display(reward, _inGameRewardsContent);
-    public void DisplayEndgame(Reward reward) => Display(reward, _endgameRewardsContent);
-    public void ClearInGameRewards() => ClearRewardsIn(_inGameRewardsContent);
-    public void ClearEndgameRewards() => ClearRewardsIn(_endgameRewardsContent);
+    protected override void Subscribe()
+    {
+        Bus.Subscribe<GameReset>(OnGameReset);
+        Bus.Subscribe<RewardsEarned>(OnRewardsEarned);
+        Bus.Subscribe<CashedOut>(OnCashedOut);
+    }
+
+    protected override void Unsubscribe()
+    {
+        Bus.Unsubscribe<GameReset>(OnGameReset);
+        Bus.Unsubscribe<RewardsEarned>(OnRewardsEarned);
+        Bus.Unsubscribe<CashedOut>(OnCashedOut);
+    }
+
+    void OnGameReset(GameReset _)
+    {
+        ClearRewardsIn(_inGameRewardsContent);
+        ClearRewardsIn(_endgameRewardsContent);
+    }
+
+    void OnRewardsEarned(RewardsEarned e) => DisplayAll(e.Earned, _inGameRewardsContent);
+    void OnCashedOut(CashedOut e) => DisplayAll(e.Earned, _endgameRewardsContent);
+
+    void DisplayAll(IReadOnlyDictionary<RewardDefinition, int> rewards, Transform container)
+    {
+        foreach (var pair in rewards)
+            Display(new Reward(pair.Key, pair.Value), container);
+    }
 
     void Display(Reward reward, Transform container)
     {

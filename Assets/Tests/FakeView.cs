@@ -1,29 +1,31 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
-// Records every call in order, so tests can assert what was shown and when.
-public class FakeView : IGameView
+// Stands in for the scene's views on the bus: records every game event in order,
+// and finishes level/spin animations instantly unless the test holds them.
+public class FakeView
 {
     public readonly List<string> Log = new List<string>();
 
-    // Replace with a TaskCompletionSource's Task to hold the wheel mid-spin.
-    public Task SpinTask = Task.CompletedTask;
+    // false holds the animation, so the test can publish LevelShown/SpinFinished itself
+    public bool FinishAnimations = true;
 
-    public void Clear() => Log.Add("Clear");
-    public void DrawWheel(WheelSO wheel, Reward[] rewards) => Log.Add("DrawWheel");
-    public void DisplayEarnedRewards(IReadOnlyDictionary<RewardDefinition, int> rewards) => Log.Add("DisplayEarnedRewards");
-    public void DisplayExitScreen(IReadOnlyDictionary<RewardDefinition, int> rewards) => Log.Add("DisplayExitScreen");
-    public void DisplayGameOverScreen() => Log.Add("DisplayGameOverScreen");
-
-    public Task SpinWheel(int slot)
+    public FakeView(IEventBus bus)
     {
-        Log.Add($"SpinWheel({slot})");
-        return SpinTask;
-    }
+        bus.Subscribe<GameReset>(_ => Log.Add("GameReset"));
+        bus.Subscribe<WheelReady>(_ => Log.Add("WheelReady"));
+        bus.Subscribe<RewardsEarned>(_ => Log.Add("RewardsEarned"));
+        bus.Subscribe<CashedOut>(_ => Log.Add("CashedOut"));
+        bus.Subscribe<BombHit>(_ => Log.Add("BombHit"));
 
-    public Task UpdateLevelIndicator(int level)
-    {
-        Log.Add($"UpdateLevelIndicator({level})");
-        return Task.CompletedTask;
+        bus.Subscribe<LevelStarted>(e =>
+        {
+            Log.Add($"LevelStarted({e.Level})");
+            if (FinishAnimations) bus.Publish(new LevelShown());
+        });
+        bus.Subscribe<SpinStarted>(e =>
+        {
+            Log.Add($"SpinStarted({e.Slot})");
+            if (FinishAnimations) bus.Publish(new SpinFinished());
+        });
     }
 }

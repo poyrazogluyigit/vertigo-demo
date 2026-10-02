@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
-using System.Threading.Tasks;
 
 public class LevelPanelView : View
 {
@@ -25,14 +24,31 @@ public class LevelPanelView : View
         _initialPosition = _levelNumbers.anchoredPosition;
     }
 
-    public void ResetIndicator()
+    protected override void Subscribe()
+    {
+        Bus.Subscribe<GameReset>(OnGameReset);
+        Bus.Subscribe<LevelStarted>(OnLevelStarted);
+    }
+
+    protected override void Unsubscribe()
+    {
+        Bus.Unsubscribe<GameReset>(OnGameReset);
+        Bus.Unsubscribe<LevelStarted>(OnLevelStarted);
+    }
+
+    void OnGameReset(GameReset _) => ResetIndicator();
+
+    void OnLevelStarted(LevelStarted e) =>
+        ChangeLevelTo(e.Level).OnComplete(() => Bus?.Publish(new LevelShown()));
+
+    void ResetIndicator()
     {
         _firstNumber = Zones.FirstLevel;
         _levelNumbers.anchoredPosition = _initialPosition;
         RenderLevelsFrom(Zones.FirstLevel);
     }
 
-    public async Task ChangeLevelTo(int level)
+    Tween ChangeLevelTo(int level)
     {
         int slot = level - _firstNumber;
         if (slot > PinnedSlot)
@@ -46,7 +62,7 @@ public class LevelPanelView : View
         {
             RenderLevelsFrom(level);
         }
-        await SlideIndicatorTo(slot);
+        return SlideIndicatorTo(slot);
     }
 
     void RenderLevelsFrom(int currentLevel)
@@ -66,10 +82,9 @@ public class LevelPanelView : View
 
     void SnapIndicatorTo(int slot) => _levelNumbers.anchoredPosition = PositionOf(slot);
 
-    Task SlideIndicatorTo(int slot) =>
+    Tween SlideIndicatorTo(int slot) =>
         _levelNumbers.DOAnchorPos(PositionOf(slot), MoveDuration)
-            .SetLink(gameObject)
-            .AsyncWaitForCompletion();
+            .SetLink(gameObject);
 
 #if UNITY_EDITOR
     void OnValidate()

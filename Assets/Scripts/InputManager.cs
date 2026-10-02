@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,8 +7,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] private Button _exitButton;
     [SerializeField] private Button _restartButton;
 
-    private EventBus _eventBus;
-    public void SetRestartEnabled(bool enabled) => _restartButton.interactable = enabled;
+    private IEventBus _eventBus;
 
     public void SetButtonInteractability(ActionsAllowed a)
     {
@@ -17,11 +15,13 @@ public class InputManager : MonoBehaviour
         _exitButton.interactable = a.Exit;
     }
 
-    public void Bind(EventBus eventBus)
+    public void Bind(IEventBus eventBus)
     {
         _eventBus = eventBus;
-        eventBus.Subscribe<ActionsAllowed>(SetButtonInteractability);
+        _eventBus.Subscribe<ActionsAllowed>(SetButtonInteractability);
     }
+
+    void OnDestroy() => _eventBus?.Unsubscribe<ActionsAllowed>(SetButtonInteractability);
 
 #if UNITY_EDITOR
     void OnValidate()
@@ -55,7 +55,4 @@ public class InputManager : MonoBehaviour
     void OnSpinClicked() => _eventBus.Publish(new SpinPressed());
     void OnExitClicked() => _eventBus.Publish(new ExitPressed());
     void OnRestartClicked() => _eventBus.Publish(new RestartPressed());
-    
-
-
 }
