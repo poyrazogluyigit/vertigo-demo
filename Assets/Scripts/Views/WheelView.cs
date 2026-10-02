@@ -24,7 +24,7 @@ public class WheelView : View
     [SerializeField] private Transform _spinningPart;
     [SerializeField] private Skin _normalSkin, _safeSkin, _superSkin;
     [FormerlySerializedAs("slots")]
-    [SerializeField] private RewardView[] _slots = new RewardView[WheelSO.SliceCount];
+    [SerializeField] private SpinItem[] _slots = new SpinItem[WheelSO.SliceCount];
 
     const int ExtraTurns = 3;          // full turns before landing
     const float SpinDuration = 4f;

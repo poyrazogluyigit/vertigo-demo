@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class RewardList : View
 {
-    [SerializeField] private RewardView _itemPrefab;
+    [SerializeField] private SpinItem _itemPrefab;
     [SerializeField] private bool _drawOnRewardsChanged = true;   // off for the cash-out list, which EndgameView draws
 
     protected override void Subscribe()
@@ -21,8 +21,8 @@ public class RewardList : View
     {
         for (int i = 0; i < rewards.Length; i++)
         {
-            RewardView item = i < transform.childCount
-                ? transform.GetChild(i).GetComponent<RewardView>()
+            SpinItem item = i < transform.childCount
+                ? transform.GetChild(i).GetComponent<SpinItem>()
                 : Instantiate(_itemPrefab, transform);
             item.gameObject.SetActive(true);
             item.Display(rewards[i].RewardDefn.Image, rewards[i].Amount);

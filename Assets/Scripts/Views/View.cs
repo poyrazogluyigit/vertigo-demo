@@ -3,9 +3,6 @@ using UnityEngine;
 public class View : MonoBehaviour
 {
     protected IEventBus Bus { get; private set; }
-
-    // Called by ViewManager, not OnEnable/OnDisable: some views start disabled
-    // and are only switched on by the events they listen to.
     public void Bind(IEventBus bus)
     {
         Bus = bus;

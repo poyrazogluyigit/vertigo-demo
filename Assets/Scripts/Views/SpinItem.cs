@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class RewardView : MonoBehaviour
+public class SpinItem : MonoBehaviour
 {
     [FormerlySerializedAs("icon")]
     [SerializeField] private Image _icon;

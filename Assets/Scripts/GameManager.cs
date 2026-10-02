@@ -1,13 +1,14 @@
 using UnityEngine;
 
-// Composition root: holds the scene references and wires them into GameFlow.
+// Composition root: holds the scene references and wires
+// everything to the event bus.
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private WheelSchedule _wheelSchedule;
     [SerializeField] private RewardPricing _rewardPricing;
 
     [SerializeField] private InputManager _inputManager;
-    [SerializeField] private ViewManager _viewManager;
+    [SerializeField] private View[] _views;
 
     private GameFlow _gameFlow;
     private readonly IEventBus _eventBus = new EventBus();
@@ -16,10 +17,10 @@ public class GameManager : MonoBehaviour
     void OnValidate()
     {
         _inputManager = FindObjectOfType<InputManager>(true);
-        _viewManager = FindObjectOfType<ViewManager>(true);
+        _views = FindObjectsOfType<View>(true);
 
         if (_inputManager == null) Debug.LogError("Input manager cannot be found!", this);
-        if (_viewManager == null) Debug.LogError("View manager cannot be found!", this);
+        if (_views.Length == 0) Debug.LogError("No views can be found", this);
         if (_wheelSchedule == null) Debug.LogError("Wheel schedule is not assigned!", this);
         if (_rewardPricing == null) Debug.LogError("Reward pricing is not assigned!", this);
     }
@@ -31,7 +32,10 @@ public class GameManager : MonoBehaviour
         var rewards = new RewardService(_wheelSchedule, _rewardPricing, new UnityRandom());
         _gameFlow = new GameFlow(_eventBus, rewards);
         _inputManager.Bind(_eventBus);
-        _viewManager.Bind(_eventBus);
+        foreach (var view in _views)
+        {
+            view.Bind(_eventBus);
+        }
     }
 
     void Start()
@@ -42,5 +46,7 @@ public class GameManager : MonoBehaviour
     void OnDestroy()
     {
         _gameFlow?.Dispose();
+        foreach (View view in _views)
+            if (!ReferenceEquals(view, null)) view.Unbind();
     }
 }
