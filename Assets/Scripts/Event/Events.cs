@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 // Input events
 public struct SpinPressed : IEvent { };
 public struct ExitPressed : IEvent { };
@@ -41,16 +39,17 @@ public struct SpinStarted : IEvent
     public SpinStarted(int slot) => Slot = slot;
 }
 
-public struct RewardsEarned : IEvent
+// Everything earned so far; empty after a restart
+public struct RewardsChanged : IEvent
 {
-    public IReadOnlyDictionary<RewardDefinition, int> Earned;
-    public RewardsEarned(IReadOnlyDictionary<RewardDefinition, int> earned) => Earned = earned;
+    public Reward[] Earned;
+    public RewardsChanged(Reward[] earned) => Earned = earned;
 }
 
 public struct CashedOut : IEvent
 {
-    public IReadOnlyDictionary<RewardDefinition, int> Earned;
-    public CashedOut(IReadOnlyDictionary<RewardDefinition, int> earned) => Earned = earned;
+    public Reward[] Earned;
+    public CashedOut(Reward[] earned) => Earned = earned;
 }
 
 public struct BombHit : IEvent { };

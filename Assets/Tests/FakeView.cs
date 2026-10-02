@@ -9,11 +9,18 @@ public class FakeView
     // false holds the animation, so the test can publish LevelShown/SpinFinished itself
     public bool FinishAnimations = true;
 
+    // Payload of the latest RewardsChanged, null until one is published
+    public Reward[] LastEarned;
+
     public FakeView(IEventBus bus)
     {
         bus.Subscribe<GameReset>(_ => Log.Add("GameReset"));
         bus.Subscribe<WheelReady>(_ => Log.Add("WheelReady"));
-        bus.Subscribe<RewardsEarned>(_ => Log.Add("RewardsEarned"));
+        bus.Subscribe<RewardsChanged>(e =>
+        {
+            Log.Add("RewardsChanged");
+            LastEarned = e.Earned;
+        });
         bus.Subscribe<CashedOut>(_ => Log.Add("CashedOut"));
         bus.Subscribe<BombHit>(_ => Log.Add("BombHit"));
 

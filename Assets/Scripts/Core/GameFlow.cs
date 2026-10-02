@@ -75,6 +75,7 @@ public class GameFlow : IDisposable
                 _rewards.ClearRewards();
                 _currentLevel = Zones.FirstLevel;
                 _eventBus.Publish(new GameReset());
+                _eventBus.Publish(new RewardsChanged(_rewards.Earned()));
                 SetState(State.Setup);
                 break;
 
@@ -105,7 +106,7 @@ public class GameFlow : IDisposable
 
             case State.Cleared:
 
-                _eventBus.Publish(new RewardsEarned(_rewards.EarnedRewards));
+                _eventBus.Publish(new RewardsChanged(_rewards.Earned()));
                 _currentLevel++;
                 SetState(State.Setup);
                 break;
@@ -113,7 +114,7 @@ public class GameFlow : IDisposable
             case State.Exit:
 
                 DisableButtons();
-                _eventBus.Publish(new CashedOut(_rewards.EarnedRewards));
+                _eventBus.Publish(new CashedOut(_rewards.Earned()));
                 break;
 
             case State.GameOver:

@@ -16,14 +16,14 @@ public class RewardPanelView : View
     protected override void Subscribe()
     {
         Bus.Subscribe<GameReset>(OnGameReset);
-        Bus.Subscribe<RewardsEarned>(OnRewardsEarned);
+        Bus.Subscribe<RewardsChanged>(OnRewardsChanged);
         Bus.Subscribe<CashedOut>(OnCashedOut);
     }
 
     protected override void Unsubscribe()
     {
         Bus.Unsubscribe<GameReset>(OnGameReset);
-        Bus.Unsubscribe<RewardsEarned>(OnRewardsEarned);
+        Bus.Unsubscribe<RewardsChanged>(OnRewardsChanged);
         Bus.Unsubscribe<CashedOut>(OnCashedOut);
     }
 
@@ -33,13 +33,13 @@ public class RewardPanelView : View
         ClearRewardsIn(_endgameRewardsContent);
     }
 
-    void OnRewardsEarned(RewardsEarned e) => DisplayAll(e.Earned, _inGameRewardsContent);
+    void OnRewardsChanged(RewardsChanged e) => DisplayAll(e.Earned, _inGameRewardsContent);
     void OnCashedOut(CashedOut e) => DisplayAll(e.Earned, _endgameRewardsContent);
 
-    void DisplayAll(IReadOnlyDictionary<RewardDefinition, int> rewards, Transform container)
+    void DisplayAll(Reward[] rewards, Transform container)
     {
-        foreach (var pair in rewards)
-            Display(new Reward(pair.Key, pair.Value), container);
+        foreach (Reward reward in rewards)
+            Display(reward, container);
     }
 
     void Display(Reward reward, Transform container)

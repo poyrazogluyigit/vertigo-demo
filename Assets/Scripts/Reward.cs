@@ -1,7 +1,7 @@
-public readonly struct Reward
+public struct Reward
 {
-    public readonly RewardDefinition RewardDefn;
-    public readonly int Amount;
+    public RewardDefinition RewardDefn;
+    public int Amount;
 
     public Reward(RewardDefinition rd, int amount)
     {

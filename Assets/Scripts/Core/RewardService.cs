@@ -5,7 +5,8 @@ public class RewardService : IRewardService
     private readonly IWheelSchedule _schedule;
     private readonly IRewardPricing _pricing;
     private readonly IRandom _random;
-    private readonly Dictionary<RewardDefinition, int> _earnedRewards = new Dictionary<RewardDefinition, int>();
+
+    private readonly List<Reward> _earned = new List<Reward>();
 
     public RewardService(IWheelSchedule schedule, IRewardPricing pricing, IRandom random)
     {
@@ -16,9 +17,13 @@ public class RewardService : IRewardService
 
     public WheelSO CurrentWheel { get; private set; }
     public Reward[] PossibleRewards { get; private set; } = new Reward[0];
-    public IReadOnlyDictionary<RewardDefinition, int> EarnedRewards => _earnedRewards;
 
-    public void ClearRewards() => _earnedRewards.Clear();
+    public Reward[] Earned() => _earned.ToArray();
+
+    public void ClearRewards()
+    {
+        _earned.Clear();
+    }
 
     public void GenerateRewards(int level)
     {
@@ -42,12 +47,22 @@ public class RewardService : IRewardService
         Reward reward = PossibleRewards[slot];
         bool isBomb = reward.RewardDefn.IsBomb;
 
-        _earnedRewards.TryGetValue(reward.RewardDefn, out int earned);
-        if (!isBomb)
-        {
-            earned += reward.Amount;
-            _earnedRewards[reward.RewardDefn] = earned;
-        }
+        int earned = isBomb ? 0 : Earn(reward);
         return new SpinResult(slot, reward, isBomb, earned);
+    }
+
+    // Adds to the reward's running total and returns the new total
+    int Earn(Reward reward)
+    {
+        for (int i = 0; i < _earned.Count; i++)
+        {
+            if (_earned[i].RewardDefn == reward.RewardDefn)
+            {
+                _earned[i] = new Reward(_earned[i].RewardDefn, _earned[i].Amount + reward.Amount);
+                return _earned[i].Amount;
+            }
+        }
+        _earned.Add(reward);
+        return reward.Amount;
     }
 }

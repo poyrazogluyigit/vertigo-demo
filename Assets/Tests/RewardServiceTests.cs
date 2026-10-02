@@ -7,7 +7,7 @@ public class RewardServiceTests
     private const int Amount = 10;
 
     private readonly List<Object> _created = new List<Object>();
-    private RewardDefinition _cash, _bomb;
+    private RewardDefinition _cash, _gold, _bomb;
     private StubRandom _random;
     private RewardService _service;
 
@@ -16,9 +16,10 @@ public class RewardServiceTests
     {
         _cash = Definition(id: 1, isBomb: false);
         _bomb = Definition(id: 2, isBomb: true);
+        _gold = Definition(id: 3, isBomb: false);
 
         var wheel = Create<WheelSO>();
-        wheel.Slices = new[] { _cash, _bomb };
+        wheel.Slices = new[] { _cash, _bomb, _gold };
 
         _random = new StubRandom();
         _service = new RewardService(new StubSchedule(wheel), new StubPricing(), _random);
@@ -41,7 +42,7 @@ public class RewardServiceTests
         SpinResult second = _service.Pick();
 
         Assert.AreEqual(2 * Amount, second.EarnedTotal);
-        Assert.AreEqual(2 * Amount, _service.EarnedRewards[_cash]);
+        Assert.AreEqual(2 * Amount, EarnedOf(_cash));
     }
 
     [Test]
@@ -53,8 +54,43 @@ public class RewardServiceTests
         SpinResult bomb = _service.Pick();
 
         Assert.IsTrue(bomb.IsBomb);
-        Assert.IsFalse(_service.EarnedRewards.ContainsKey(_bomb));
-        Assert.AreEqual(Amount, _service.EarnedRewards[_cash]);
+        Assert.AreEqual(1, _service.Earned().Length, "the bomb must not get an entry");
+        Assert.AreEqual(Amount, EarnedOf(_cash));
+    }
+
+    // Views redraw the list from scratch each time, so its order has to come from here.
+    [Test]
+    public void SnapshotEarned_KeepsFirstWonOrder()
+    {
+        _random.Next(2, 0, 2);
+
+        _service.Pick();
+        _service.Pick();
+        _service.Pick();
+
+        Reward[] earned = _service.Earned();
+        Assert.AreEqual(_gold, earned[0].RewardDefn);
+        Assert.AreEqual(_cash, earned[1].RewardDefn);
+        Assert.AreEqual(2 * Amount, earned[0].Amount);
+    }
+
+    [Test]
+    public void SnapshotEarned_IsACopy()
+    {
+        _random.Next(0, 0);
+        _service.Pick();
+        Reward[] before = _service.Earned();
+
+        _service.Pick();
+
+        Assert.AreEqual(Amount, before[0].Amount);
+    }
+
+    private int EarnedOf(RewardDefinition defn)
+    {
+        foreach (Reward r in _service.Earned())
+            if (r.RewardDefn == defn) return r.Amount;
+        return 0;
     }
 
     private RewardDefinition Definition(int id, bool isBomb)

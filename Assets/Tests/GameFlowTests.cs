@@ -88,8 +88,9 @@ public class GameFlowTests
 
         _eventBus.Publish(new RestartPressed());
 
-        Assert.AreEqual("GameReset", _view.Log[0]);
-        Assert.AreEqual("LevelStarted(1)", _view.Log[1]);
+        CollectionAssert.AreEqual(new[] { "GameReset", "RewardsChanged", "LevelStarted(1)" },
+            _view.Log.GetRange(0, 3));
+        CollectionAssert.IsEmpty(_view.LastEarned, "the in-game list must be emptied on restart");
     }
 
     // The outcome is decided on press, but must not be shown before the wheel stops.
@@ -100,10 +101,10 @@ public class GameFlowTests
         _view.Log.Clear();
 
         _eventBus.Publish(new SpinPressed());
-        CollectionAssert.DoesNotContain(_view.Log, "RewardsEarned");
+        CollectionAssert.DoesNotContain(_view.Log, "RewardsChanged");
 
         _eventBus.Publish(new SpinFinished());
-        CollectionAssert.Contains(_view.Log, "RewardsEarned");
+        CollectionAssert.Contains(_view.Log, "RewardsChanged");
     }
 
     // Buttons are disabled mid-spin, but the flow must not trust the UI for that.
