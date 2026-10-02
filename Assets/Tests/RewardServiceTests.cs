@@ -60,7 +60,7 @@ public class RewardServiceTests
 
     // Views redraw the list from scratch each time, so its order has to come from here.
     [Test]
-    public void SnapshotEarned_KeepsFirstWonOrder()
+    public void Earned_KeepsFirstWonOrder()
     {
         _random.Next(2, 0, 2);
 
@@ -75,7 +75,7 @@ public class RewardServiceTests
     }
 
     [Test]
-    public void SnapshotEarned_IsACopy()
+    public void Earned_IsACopy()
     {
         _random.Next(0, 0);
         _service.Pick();

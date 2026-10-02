@@ -8,6 +8,7 @@ public class EndgameView : View
     [SerializeField] private GameObject _rewardsContainer, _bombContainer;
     [SerializeField] private TMP_Text _title, _description, _buttonLabel;
     [SerializeField] private Image _buttonImage;
+    [SerializeField] private RewardList _rewards;
 
     protected override void Subscribe()
     {
@@ -24,7 +25,12 @@ public class EndgameView : View
     }
 
     void OnGameReset(GameReset _) => gameObject.SetActive(false);
-    void OnCashedOut(CashedOut _) => DisplayScreen(_cashOutScreen);
+    void OnCashedOut(CashedOut e)
+    {
+        _rewards.Draw(e.Earned);
+        DisplayScreen(_cashOutScreen);
+    }
+
     void OnBombHit(BombHit _) => DisplayScreen(_gameOverScreen);
 
     void DisplayScreen(EndScreen screen)
@@ -47,6 +53,7 @@ public class EndgameView : View
         _description      = Child<TMP_Text>("ui_text_gameend_desc_value");
         _buttonLabel      = Child<TMP_Text>("ui_text_button_gameend_restart_value");
         _buttonImage      = Child<Image>("ui_button_gameend_restart_value");
+        _rewards          = Child<RewardList>("ui_content_exit_rewards");
 
         if (_gameOverScreen == null) Debug.LogError("Game over screen is not assigned!", this);
         if (_cashOutScreen == null) Debug.LogError("Cash out screen is not assigned!", this);

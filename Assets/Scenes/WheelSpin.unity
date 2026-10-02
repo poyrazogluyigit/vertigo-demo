@@ -583,6 +583,7 @@ GameObject:
   - component: {fileID: 84635836}
   - component: {fileID: 84635838}
   - component: {fileID: 84635837}
+  - component: {fileID: 1576380807}
   m_Layer: 0
   m_Name: ui_content_rewards
   m_TagString: Untagged
@@ -4234,6 +4235,7 @@ MonoBehaviour:
   - {fileID: 1715485378}
   - {fileID: 77384314}
   - {fileID: 1576380807}
+  - {fileID: 1890561690}
 --- !u!114 &861563883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7568,16 +7570,14 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1576380806}
+  m_GameObject: {fileID: 84635835}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c85d04aaff9a9542917bc4909252055, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f26db274fcb41347947d87f61e9f639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rcPrefab: {fileID: 1093725316888110820, guid: 30cecfcda44736a4fb4282b68f93d60e, type: 3}
-  _rcCardPrefab: {fileID: 1000000003, guid: 7d3e9a1c5f8b4602a9e1d7c3b5f9a2e6, type: 3}
-  _inGameRewardsContent: {fileID: 84635836}
-  _endgameRewardsContent: {fileID: 1890561686}
+  _itemPrefab: {fileID: 1093725316888110820, guid: 30cecfcda44736a4fb4282b68f93d60e, type: 3}
+  _drawOnRewardsChanged: 1
 --- !u!1 &1623132388
 GameObject:
   m_ObjectHideFlags: 0
@@ -8162,6 +8162,7 @@ MonoBehaviour:
   _description: {fileID: 809000822}
   _buttonLabel: {fileID: 141713623}
   _buttonImage: {fileID: 45158199}
+  _rewards: {fileID: 1890561690}
 --- !u!1 &1705944692
 GameObject:
   m_ObjectHideFlags: 0
@@ -9009,6 +9010,7 @@ GameObject:
   - component: {fileID: 1890561686}
   - component: {fileID: 900000051}
   - component: {fileID: 900000052}
+  - component: {fileID: 1890561690}
   m_Layer: 0
   m_Name: ui_content_exit_rewards
   m_TagString: Untagged
@@ -9999,3 +10001,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2109004598}
   m_CullTransparentMesh: 1
+--- !u!114 &1890561690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1890561685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f26db274fcb41347947d87f61e9f639, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _itemPrefab: {fileID: 1000000003, guid: 7d3e9a1c5f8b4602a9e1d7c3b5f9a2e6, type: 3}
+  _drawOnRewardsChanged: 0
