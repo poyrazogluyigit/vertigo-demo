@@ -1,66 +1,68 @@
 using System.Collections.Generic;
 
-public class RewardService : IRewardService
+namespace WheelSpin
 {
-    private readonly IWheelSchedule _schedule;
-    private readonly IRewardPricing _pricing;
-    private readonly IRandom _random;
-
-    private readonly List<Reward> _earned = new List<Reward>();
-
-    public RewardService(IWheelSchedule schedule, IRewardPricing pricing, IRandom random)
+    public class RewardService : IRewardService
     {
-        _schedule = schedule;
-        _pricing = pricing;
-        _random = random;
-    }
+        private readonly IWheelSchedule _schedule;
+        private readonly IRewardPricing _pricing;
+        private readonly IRandom _random;
 
-    public Reward[] PossibleRewards { get; private set; } = new Reward[0];
+        private readonly List<Reward> _earned = new List<Reward>();
 
-    public Reward[] Earned() => _earned.ToArray();
-
-    public void ClearRewards()
-    {
-        _earned.Clear();
-    }
-
-    public void GenerateRewards(int level)
-    {
-        RewardDefinition[] slices = _schedule.WheelFor(level).Slices;
-        var rewards = new Reward[slices.Length];
-        for (int i = 0; i < slices.Length; i++)
+        public RewardService(IWheelSchedule schedule, IRewardPricing pricing, IRandom random)
         {
-            RewardDefinition slice = slices[i];
-            // Amount 0 hides the label, so the bomb shows no "x1"
-            int amount = slice.IsBomb ? 0 : _pricing.AmountFor(slice, level);
-            rewards[i] = new Reward(slice, amount);
+            _schedule = schedule;
+            _pricing = pricing;
+            _random = random;
         }
-        PossibleRewards = rewards;
-    }
 
-    // Decides and commits the outcome immediately; presentation happens later.
-    public SpinResult Pick()
-    {
-        int slot = _random.Range(0, PossibleRewards.Length);
-        Reward reward = PossibleRewards[slot];
-        bool isBomb = reward.RewardDefn.IsBomb;
+        private Reward[] _possible = new Reward[0];
 
-        int earned = isBomb ? 0 : Earn(reward);
-        return new SpinResult(slot, reward, isBomb, earned);
-    }
+        public Reward[] PossibleRewards() => (Reward[])_possible.Clone();
 
-    // Adds to the reward's running total and returns the new total
-    int Earn(Reward reward)
-    {
-        for (int i = 0; i < _earned.Count; i++)
+        public Reward[] Earned() => _earned.ToArray();
+
+        public void ClearRewards()
         {
-            if (_earned[i].RewardDefn == reward.RewardDefn)
+            _earned.Clear();
+        }
+
+        public void GenerateRewards(int level)
+        {
+            RewardDefinition[] slices = _schedule.WheelFor(level).Slices;
+            var rewards = new Reward[slices.Length];
+            for (int i = 0; i < slices.Length; i++)
             {
-                _earned[i] = new Reward(_earned[i].RewardDefn, _earned[i].Amount + reward.Amount);
-                return _earned[i].Amount;
+                RewardDefinition slice = slices[i];
+                // Amount 0 hides the label, so the bomb shows no "x1"
+                int amount = slice.IsBomb ? 0 : _pricing.AmountFor(slice, level);
+                rewards[i] = new Reward(slice, amount);
             }
+            _possible = rewards;
         }
-        _earned.Add(reward);
-        return reward.Amount;
+
+        // Decides and commits the outcome immediately; presentation happens later.
+        public SpinResult Pick()
+        {
+            int slot = _random.Range(0, _possible.Length);
+            var result = new SpinResult(slot, _possible[slot]);
+            if (!result.IsBomb) Earn(result.Reward);
+            return result;
+        }
+
+        // Adds to the reward's running total
+        void Earn(Reward reward)
+        {
+            for (int i = 0; i < _earned.Count; i++)
+            {
+                if (_earned[i].Definition == reward.Definition)
+                {
+                    _earned[i] = new Reward(reward.Definition, _earned[i].Amount + reward.Amount);
+                    return;
+                }
+            }
+            _earned.Add(reward);
+        }
     }
 }

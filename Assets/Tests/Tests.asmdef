@@ -1,6 +1,6 @@
 {
     "name": "Tests",
-    "rootNamespace": "",
+    "rootNamespace": "WheelSpin.Tests",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",

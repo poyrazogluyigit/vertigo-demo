@@ -1,52 +1,55 @@
 using UnityEngine;
 
-// Composition root: holds the scene references and wires
-// everything to the event bus.
-public class GameManager : MonoBehaviour
+namespace WheelSpin
 {
-    [SerializeField] private WheelSchedule _wheelSchedule;
-    [SerializeField] private RewardPricing _rewardPricing;
-
-    [SerializeField] private InputManager _inputManager;
-    [SerializeField] private View[] _views;
-
-    private GameFlow _gameFlow;
-    private readonly IEventBus _eventBus = new EventBus();
-
-#if UNITY_EDITOR
-    void OnValidate()
+    // Composition root: holds the scene references and wires
+    // everything to the event bus.
+    public class GameManager : MonoBehaviour
     {
-        _inputManager = FindObjectOfType<InputManager>(true);
-        _views = FindObjectsOfType<View>(true);
+        [SerializeField] private WheelSchedule _wheelSchedule;
+        [SerializeField] private RewardPricing _rewardPricing;
 
-        if (_inputManager == null) Debug.LogError("Input manager cannot be found!", this);
-        if (_views.Length == 0) Debug.LogError("No views can be found", this);
-        if (_wheelSchedule == null) Debug.LogError("Wheel schedule is not assigned!", this);
-        if (_rewardPricing == null) Debug.LogError("Reward pricing is not assigned!", this);
-    }
-#endif
+        [SerializeField] private InputManager _inputManager;
+        [SerializeField] private View[] _views;
 
-    // Everything subscribes in Awake; GameFlow starts publishing in Start.
-    void Awake()
-    {
-        var rewards = new RewardService(_wheelSchedule, _rewardPricing, new UnityRandom());
-        _gameFlow = new GameFlow(_eventBus, rewards);
-        _inputManager.Bind(_eventBus);
-        foreach (var view in _views)
+        private GameFlow _gameFlow;
+        private readonly IEventBus _eventBus = new EventBus();
+
+    #if UNITY_EDITOR
+        void OnValidate()
         {
-            view.Bind(_eventBus);
+            _inputManager = FindObjectOfType<InputManager>(true);
+            _views = FindObjectsOfType<View>(true);
+
+            if (_inputManager == null) Debug.LogError("Input manager cannot be found!", this);
+            if (_views.Length == 0) Debug.LogError("No views can be found", this);
+            if (_wheelSchedule == null) Debug.LogError("Wheel schedule is not assigned!", this);
+            if (_rewardPricing == null) Debug.LogError("Reward pricing is not assigned!", this);
         }
-    }
+    #endif
 
-    void Start()
-    {
-        _gameFlow.Begin();
-    }
+        // Everything subscribes in Awake; GameFlow starts publishing in Start.
+        void Awake()
+        {
+            var rewards = new RewardService(_wheelSchedule, _rewardPricing, new UnityRandom());
+            _gameFlow = new GameFlow(_eventBus, rewards);
+            _inputManager.Bind(_eventBus);
+            foreach (var view in _views)
+            {
+                view.Bind(_eventBus);
+            }
+        }
 
-    void OnDestroy()
-    {
-        _gameFlow?.Dispose();
-        foreach (View view in _views)
-            if (!ReferenceEquals(view, null)) view.Unbind();
+        void Start()
+        {
+            _gameFlow.Begin();
+        }
+
+        void OnDestroy()
+        {
+            _gameFlow?.Dispose();
+            foreach (View view in _views)
+                if (!ReferenceEquals(view, null)) view.Unbind();
+        }
     }
 }

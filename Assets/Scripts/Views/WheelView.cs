@@ -4,90 +4,93 @@ using UnityEngine.Serialization;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class WheelView : View
+namespace WheelSpin
 {
-    [Serializable]
-    private struct Skin
+    public class WheelView : View
     {
-        public Sprite Base;
-        public Sprite Indicator;
-        public Color Rays;   // alpha 0 hides the rays
-    }
-
-    [FormerlySerializedAs("wheelBase")]
-    [SerializeField] private Image _wheelBase;
-    [FormerlySerializedAs("indicator")]
-    [SerializeField] private Image _indicator;
-    [FormerlySerializedAs("rays")]
-    [SerializeField] private Image _rays;
-    [FormerlySerializedAs("SpinningPart")]
-    [SerializeField] private Transform _spinningPart;
-    [SerializeField] private Skin _normalSkin, _safeSkin, _superSkin;
-    [FormerlySerializedAs("slots")]
-    [SerializeField] private SpinItem[] _slots = new SpinItem[WheelSO.SliceCount];
-
-    const int ExtraTurns = 3;          // full turns before landing
-    const float SpinDuration = 4f;
-
-    protected override void Subscribe()
-    {
-        Bus.Subscribe<RewardsReady>(OnWheelReady);
-        Bus.Subscribe<SpinStarted>(OnSpinStarted);
-    }
-
-    protected override void Unsubscribe()
-    {
-        Bus.Unsubscribe<RewardsReady>(OnWheelReady);
-        Bus.Unsubscribe<SpinStarted>(OnSpinStarted);
-    }
-
-    void OnWheelReady(RewardsReady e)
-    {
-        DrawSkin(SkinFor(e.Zone));
-        DrawRewards(e.Rewards);
-    }
-
-    void OnSpinStarted(SpinStarted e) => Spin(e.Slot);
-
-    Skin SkinFor(ZoneType zone)
-    {
-        switch (zone)
+        [Serializable]
+        private struct Skin
         {
-            case ZoneType.Super: return _superSkin;
-            case ZoneType.Safe: return _safeSkin;
-            default: return _normalSkin;
+            public Sprite Base;
+            public Sprite Indicator;
+            public Color Rays;   // alpha 0 hides the rays
         }
-    }
 
-    void DrawSkin(Skin skin)
-    {
-        _wheelBase.sprite = skin.Base;
-        _indicator.sprite = skin.Indicator;
-        _rays.color = skin.Rays;
-        _rays.gameObject.SetActive(skin.Rays.a > 0f);
-    }
+        [FormerlySerializedAs("wheelBase")]
+        [SerializeField] private Image _wheelBase;
+        [FormerlySerializedAs("indicator")]
+        [SerializeField] private Image _indicator;
+        [FormerlySerializedAs("rays")]
+        [SerializeField] private Image _rays;
+        [FormerlySerializedAs("SpinningPart")]
+        [SerializeField] private Transform _spinningPart;
+        [SerializeField] private Skin _normalSkin, _safeSkin, _superSkin;
+        [FormerlySerializedAs("slots")]
+        [SerializeField] private SpinItem[] _slots = new SpinItem[WheelSO.SliceCount];
 
-    void DrawRewards(Reward[] rewards)
-    {
-        if (rewards.Length != _slots.Length)
-            Debug.LogWarning($"WheelView: {rewards.Length} rewards for {_slots.Length} slots", this);
+        const int ExtraTurns = 3;          // full turns before landing
+        const float SpinDuration = 4f;
 
-        for (int i = 0; i < _slots.Length; i++)
+        protected override void Subscribe()
         {
-            if (_slots[i] == null)
-                continue;
-            bool hasReward = i < rewards.Length;
-            _slots[i].gameObject.SetActive(hasReward);
-            if (hasReward)
-                _slots[i].Display(rewards[i].RewardDefn.Image, rewards[i].Amount);
+            Bus.Subscribe<RewardsReady>(OnWheelReady);
+            Bus.Subscribe<SpinStarted>(OnSpinStarted);
         }
-    }
 
-    void Spin(int position)
-    {
-        Vector3 rot = new Vector3(0, 0, 360f / _slots.Length * position + 360f * ExtraTurns);
-        _spinningPart.DORotate(rot, SpinDuration, RotateMode.FastBeyond360)
-            .SetLink(gameObject)
-            .OnComplete(() => Bus?.Publish(new SpinFinished()));
+        protected override void Unsubscribe()
+        {
+            Bus.Unsubscribe<RewardsReady>(OnWheelReady);
+            Bus.Unsubscribe<SpinStarted>(OnSpinStarted);
+        }
+
+        void OnWheelReady(RewardsReady e)
+        {
+            DrawSkin(SkinFor(e.Zone));
+            DrawRewards(e.Rewards);
+        }
+
+        void OnSpinStarted(SpinStarted e) => Spin(e.Slot);
+
+        Skin SkinFor(ZoneType zone)
+        {
+            switch (zone)
+            {
+                case ZoneType.Super: return _superSkin;
+                case ZoneType.Safe: return _safeSkin;
+                default: return _normalSkin;
+            }
+        }
+
+        void DrawSkin(Skin skin)
+        {
+            _wheelBase.sprite = skin.Base;
+            _indicator.sprite = skin.Indicator;
+            _rays.color = skin.Rays;
+            _rays.gameObject.SetActive(skin.Rays.a > 0f);
+        }
+
+        void DrawRewards(Reward[] rewards)
+        {
+            if (rewards.Length != _slots.Length)
+                Debug.LogWarning($"WheelView: {rewards.Length} rewards for {_slots.Length} slots", this);
+
+            for (int i = 0; i < _slots.Length; i++)
+            {
+                if (_slots[i] == null)
+                    continue;
+                bool hasReward = i < rewards.Length;
+                _slots[i].gameObject.SetActive(hasReward);
+                if (hasReward)
+                    _slots[i].Display(rewards[i].Definition.Image, rewards[i].Amount);
+            }
+        }
+
+        void Spin(int position)
+        {
+            Vector3 rot = new Vector3(0, 0, 360f / _slots.Length * position + 360f * ExtraTurns);
+            _spinningPart.DORotate(rot, SpinDuration, RotateMode.FastBeyond360)
+                .SetLink(gameObject)
+                .OnComplete(() => Bus?.Publish(new SpinFinished()));
+        }
     }
 }

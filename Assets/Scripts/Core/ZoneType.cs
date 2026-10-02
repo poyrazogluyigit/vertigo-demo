@@ -1,1 +1,4 @@
-public enum ZoneType { Normal, Safe, Super }
+namespace WheelSpin
+{
+    public enum ZoneType { Normal, Safe, Super }
+}

@@ -1,58 +1,61 @@
 using NUnit.Framework;
 
-public struct Ping : IEvent { }
-
-public class EventBusTests
+namespace WheelSpin.Tests
 {
-    EventBus _eventBus;
+    public struct Ping : IEvent { }
 
-    [SetUp]
-    public void SetUp()
+    public class EventBusTests
     {
-        _eventBus = new EventBus();
-    }
+        EventBus _eventBus;
 
-    [Test] 
-    public void Publish_CallsSubscribedHandler()
-    {
-        int calls = 0;
-        _eventBus.Subscribe<Ping>(_ => calls++);
+        [SetUp]
+        public void SetUp()
+        {
+            _eventBus = new EventBus();
+        }
 
-        _eventBus.Publish(new Ping());
+        [Test] 
+        public void Publish_CallsSubscribedHandler()
+        {
+            int calls = 0;
+            _eventBus.Subscribe<Ping>(_ => calls++);
 
-        Assert.AreEqual(1, calls);
-    }
+            _eventBus.Publish(new Ping());
 
-    [Test]
-    public void Subscribe_TwoSubscribersCalled()
-    {
-        bool call1 = false;
-        bool call2 = false;
-        _eventBus.Subscribe<Ping>(_ => call1 = true);
-        _eventBus.Subscribe<Ping>(_ => call2 = true);
+            Assert.AreEqual(1, calls);
+        }
 
-        _eventBus.Publish(new Ping());
+        [Test]
+        public void Subscribe_TwoSubscribersCalled()
+        {
+            bool call1 = false;
+            bool call2 = false;
+            _eventBus.Subscribe<Ping>(_ => call1 = true);
+            _eventBus.Subscribe<Ping>(_ => call2 = true);
 
-        Assert.IsTrue(call1);
-        Assert.IsTrue(call2);
-    }
+            _eventBus.Publish(new Ping());
 
-    [Test]
-    public void Subscribe_Unsubscribe_NotCalled()
-    {
-        bool called = false;
-        System.Action<Ping> a = _ => called = true;
+            Assert.IsTrue(call1);
+            Assert.IsTrue(call2);
+        }
 
-        _eventBus.Subscribe(a);
-        _eventBus.Unsubscribe(a);
-        _eventBus.Publish(new Ping());
+        [Test]
+        public void Subscribe_Unsubscribe_NotCalled()
+        {
+            bool called = false;
+            System.Action<Ping> a = _ => called = true;
 
-        Assert.IsFalse(called);
-    }
+            _eventBus.Subscribe(a);
+            _eventBus.Unsubscribe(a);
+            _eventBus.Publish(new Ping());
 
-    [Test]
-    public void Publish_NoSubscribers()
-    {
-        Assert.DoesNotThrow(() => { _eventBus.Publish(new Ping()); });
+            Assert.IsFalse(called);
+        }
+
+        [Test]
+        public void Publish_NoSubscribers()
+        {
+            Assert.DoesNotThrow(() => { _eventBus.Publish(new Ping()); });
+        }
     }
 }
