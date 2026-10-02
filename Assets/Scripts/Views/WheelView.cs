@@ -31,17 +31,17 @@ public class WheelView : View
 
     protected override void Subscribe()
     {
-        Bus.Subscribe<WheelReady>(OnWheelReady);
+        Bus.Subscribe<RewardsReady>(OnWheelReady);
         Bus.Subscribe<SpinStarted>(OnSpinStarted);
     }
 
     protected override void Unsubscribe()
     {
-        Bus.Unsubscribe<WheelReady>(OnWheelReady);
+        Bus.Unsubscribe<RewardsReady>(OnWheelReady);
         Bus.Unsubscribe<SpinStarted>(OnSpinStarted);
     }
 
-    void OnWheelReady(WheelReady e)
+    void OnWheelReady(RewardsReady e)
     {
         DrawSkin(SkinFor(e.Zone));
         DrawRewards(e.Rewards);

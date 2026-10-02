@@ -7,8 +7,7 @@ public class GameFlow : IDisposable
     private readonly IRewardService _rewards;
     private SpinResult _spinResult;
 
-    // Setup and Spinning wait for a view to report its animation finished (LevelShown, SpinFinished).
-    enum State { Restarting, Setup, Drawing, Idle, Spinning, Cleared, Exit, GameOver }
+    enum State { StartingLevel, Idle, Spinning, CashedOut, GameOver }
     State _currentState;
 
     public GameFlow(IEventBus eventBus, IRewardService rewards)
@@ -22,9 +21,8 @@ public class GameFlow : IDisposable
         _eventBus.Subscribe<SpinPressed>(OnSpinButtonPressed);
         _eventBus.Subscribe<ExitPressed>(OnExitButtonPressed);
         _eventBus.Subscribe<RestartPressed>(OnRestartButtonPressed);
-        _eventBus.Subscribe<LevelShown>(OnLevelShown);
         _eventBus.Subscribe<SpinFinished>(OnSpinFinished);
-        SetState(State.Setup);
+        SetState(State.StartingLevel);
     }
 
     public void Dispose()
@@ -32,63 +30,68 @@ public class GameFlow : IDisposable
         _eventBus.Unsubscribe<SpinPressed>(OnSpinButtonPressed);
         _eventBus.Unsubscribe<ExitPressed>(OnExitButtonPressed);
         _eventBus.Unsubscribe<RestartPressed>(OnRestartButtonPressed);
-        _eventBus.Unsubscribe<LevelShown>(OnLevelShown);
         _eventBus.Unsubscribe<SpinFinished>(OnSpinFinished);
     }
 
     void OnExitButtonPressed(ExitPressed _)
     {
         if (CanExit())
-            SetState(State.Exit);
+            SetState(State.CashedOut);
     }
     void OnRestartButtonPressed(RestartPressed _)
     {
-        if (_currentState == State.Exit || _currentState == State.GameOver)
-            SetState(State.Restarting);
+        if (_currentState == State.CashedOut || _currentState == State.GameOver)
+            Restart();
     }
     void OnSpinButtonPressed(SpinPressed _)
     {
         if (_currentState == State.Idle)
             SetState(State.Spinning);
     }
-    void OnLevelShown(LevelShown _)
-    {
-        if (_currentState == State.Setup)
-            SetState(State.Drawing);
-    }
+
     void OnSpinFinished(SpinFinished _)
     {
-        if (_currentState == State.Spinning)
-            SetState(_spinResult.IsBomb ? State.GameOver : State.Cleared);
+        if (!(_currentState == State.Spinning)) return;
+        if (_spinResult.IsBomb) SetState(State.GameOver);
+        else AdvanceLevel();
     }
 
     void EnableButtons() => _eventBus.Publish(new ActionsAllowed(true, CanExit()));
     void DisableButtons() => _eventBus.Publish(new ActionsAllowed(false, false));
 
 
-    void GameLoop()
+    void ClearRewards()
+    {
+        _rewards.ClearRewards();
+        _eventBus.Publish(new RewardsChanged(_rewards.Earned()));
+    }
+
+    void Restart()
+    {
+        ClearRewards();
+        _currentLevel = Zones.FirstLevel;
+        SetState(State.StartingLevel);
+        _eventBus.Publish(new GameReset());
+    }
+
+    void AdvanceLevel()
+    {
+        _eventBus.Publish(new RewardsChanged(_rewards.Earned()));
+        _currentLevel++;
+        SetState(State.StartingLevel);
+    }
+
+
+    void GameState()
     {
         switch (_currentState)
         {
-            case State.Restarting:
-
-                _rewards.ClearRewards();
-                _currentLevel = Zones.FirstLevel;
-                _eventBus.Publish(new GameReset());
-                _eventBus.Publish(new RewardsChanged(_rewards.Earned()));
-                SetState(State.Setup);
-                break;
-
-            case State.Setup:
+            case State.StartingLevel:
 
                 DisableButtons();
-                _eventBus.Publish(new LevelStarted(_currentLevel));
-                break;
-
-            case State.Drawing:
-
+                _eventBus.Publish(new LevelChangedTo(_currentLevel));
                 _rewards.GenerateRewards(_currentLevel);
-                _eventBus.Publish(new WheelReady(Zones.TypeOf(_currentLevel), _rewards.PossibleRewards));
+                _eventBus.Publish(new RewardsReady(Zones.TypeOf(_currentLevel), _rewards.PossibleRewards));
                 SetState(State.Idle);
                 break;
 
@@ -104,14 +107,7 @@ public class GameFlow : IDisposable
                 _eventBus.Publish(new SpinStarted(_spinResult.Slot));
                 break;
 
-            case State.Cleared:
-
-                _eventBus.Publish(new RewardsChanged(_rewards.Earned()));
-                _currentLevel++;
-                SetState(State.Setup);
-                break;
-
-            case State.Exit:
+            case State.CashedOut:
 
                 DisableButtons();
                 _eventBus.Publish(new CashedOut(_rewards.Earned()));
@@ -130,7 +126,7 @@ public class GameFlow : IDisposable
     void SetState(State state)
     {
         _currentState = state;
-        GameLoop();
+        GameState();
     }
     bool CanExit()
     {

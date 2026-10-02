@@ -15,7 +15,7 @@ public class FakeView
     public FakeView(IEventBus bus)
     {
         bus.Subscribe<GameReset>(_ => Log.Add("GameReset"));
-        bus.Subscribe<WheelReady>(e => Log.Add($"WheelReady({e.Zone})"));
+        bus.Subscribe<RewardsReady>(e => Log.Add($"RewardsReady({e.Zone})"));
         bus.Subscribe<RewardsChanged>(e =>
         {
             Log.Add("RewardsChanged");
@@ -24,10 +24,9 @@ public class FakeView
         bus.Subscribe<CashedOut>(_ => Log.Add("CashedOut"));
         bus.Subscribe<BombHit>(_ => Log.Add("BombHit"));
 
-        bus.Subscribe<LevelStarted>(e =>
+        bus.Subscribe<LevelChangedTo>(e =>
         {
-            Log.Add($"LevelStarted({e.Level})");
-            if (FinishAnimations) bus.Publish(new LevelShown());
+            Log.Add($"LevelChangedTo({e.Level})");
         });
         bus.Subscribe<SpinStarted>(e =>
         {

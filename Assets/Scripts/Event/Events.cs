@@ -16,18 +16,18 @@ public struct ActionsAllowed : IEvent
 // Game events, published by GameFlow
 public struct GameReset : IEvent { };
 
-public struct LevelStarted : IEvent
+public struct LevelChangedTo : IEvent
 {
     public int Level;
-    public LevelStarted(int level) => Level = level;
+    public LevelChangedTo(int level) => Level = level;
 }
 
-public struct WheelReady : IEvent
+public struct RewardsReady : IEvent
 {
     public ZoneType Zone;
     public Reward[] Rewards;
 
-    public WheelReady(ZoneType zone, Reward[] rewards)
+    public RewardsReady(ZoneType zone, Reward[] rewards)
     {
         Zone = zone; Rewards = rewards;
     }
@@ -53,5 +53,4 @@ public struct CashedOut : IEvent
 }
 
 public struct BombHit : IEvent { };
-public struct LevelShown : IEvent { };
 public struct SpinFinished : IEvent { };

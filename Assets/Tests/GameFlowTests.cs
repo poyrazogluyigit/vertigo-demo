@@ -120,16 +120,6 @@ public class GameFlowTests
         CollectionAssert.IsEmpty(_view.Log);
     }
 
-    [Test]
-    public void LevelShown_WhenNotSettingUp_IsIgnored()
-    {
-        _view.Log.Clear();
-
-        _eventBus.Publish(new LevelShown());
-
-        CollectionAssert.IsEmpty(_view.Log);
-    }
-
     // WheelView picks the wheel's look from the zone, so the event must carry the current level's.
     [TestCase(1, ZoneType.Normal)]
     [TestCase(5, ZoneType.Safe)]

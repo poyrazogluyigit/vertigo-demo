@@ -27,19 +27,19 @@ public class LevelPanelView : View
     protected override void Subscribe()
     {
         Bus.Subscribe<GameReset>(OnGameReset);
-        Bus.Subscribe<LevelStarted>(OnLevelStarted);
+        Bus.Subscribe<LevelChangedTo>(OnLevelStarted);
     }
 
     protected override void Unsubscribe()
     {
         Bus.Unsubscribe<GameReset>(OnGameReset);
-        Bus.Unsubscribe<LevelStarted>(OnLevelStarted);
+        Bus.Unsubscribe<LevelChangedTo>(OnLevelStarted);
     }
 
     void OnGameReset(GameReset _) => ResetIndicator();
 
-    void OnLevelStarted(LevelStarted e) =>
-        ChangeLevelTo(e.Level).OnComplete(() => Bus?.Publish(new LevelShown()));
+    void OnLevelStarted(LevelChangedTo e) =>
+        ChangeLevelTo(e.Level);
 
     void ResetIndicator()
     {
