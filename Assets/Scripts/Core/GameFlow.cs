@@ -88,7 +88,7 @@ public class GameFlow : IDisposable
             case State.Drawing:
 
                 _rewards.GenerateRewards(_currentLevel);
-                _eventBus.Publish(new WheelReady(_rewards.CurrentWheel, _rewards.PossibleRewards));
+                _eventBus.Publish(new WheelReady(Zones.TypeOf(_currentLevel), _rewards.PossibleRewards));
                 SetState(State.Idle);
                 break;
 

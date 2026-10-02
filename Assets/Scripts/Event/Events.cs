@@ -24,12 +24,12 @@ public struct LevelStarted : IEvent
 
 public struct WheelReady : IEvent
 {
-    public WheelSO Wheel;
+    public ZoneType Zone;
     public Reward[] Rewards;
 
-    public WheelReady(WheelSO wheel, Reward[] rewards)
+    public WheelReady(ZoneType zone, Reward[] rewards)
     {
-        Wheel = wheel; Rewards = rewards;
+        Zone = zone; Rewards = rewards;
     }
 }
 

@@ -4,9 +4,6 @@ using UnityEngine;
 public class WheelSO : ScriptableObject
 {
     public const int SliceCount = 8;
-    public Sprite WheelBase;
-    public Sprite Indicator;
-    public Color RaysColor = Color.clear;
     public RewardDefinition[] Slices = new RewardDefinition[SliceCount];
 
     public int BombCount

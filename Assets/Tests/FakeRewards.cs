@@ -3,7 +3,6 @@ public class FakeRewards : IRewardService
 {
     private bool _nextIsBomb;
 
-    public WheelSO CurrentWheel => null;
     public Reward[] PossibleRewards { get; } = new Reward[0];
     public Reward[] Earned() => new Reward[0];
 

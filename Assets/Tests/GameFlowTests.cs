@@ -130,6 +130,17 @@ public class GameFlowTests
         CollectionAssert.IsEmpty(_view.Log);
     }
 
+    // WheelView picks the wheel's look from the zone, so the event must carry the current level's.
+    [TestCase(1, ZoneType.Normal)]
+    [TestCase(5, ZoneType.Safe)]
+    [TestCase(30, ZoneType.Super)]
+    public void WheelReady_CarriesZoneOfCurrentLevel(int level, ZoneType zone)
+    {
+        SpinToLevel(level);
+
+        Assert.AreEqual($"WheelReady({zone})", _view.Log.FindLast(s => s.StartsWith("WheelReady")));
+    }
+
     // Review: "players can cash out on bronze zones".
     // Exit is only allowed on safe (every 5th) and super (every 30th) zones.
     [TestCase(1, false)]

@@ -15,7 +15,7 @@ public class FakeView
     public FakeView(IEventBus bus)
     {
         bus.Subscribe<GameReset>(_ => Log.Add("GameReset"));
-        bus.Subscribe<WheelReady>(_ => Log.Add("WheelReady"));
+        bus.Subscribe<WheelReady>(e => Log.Add($"WheelReady({e.Zone})"));
         bus.Subscribe<RewardsChanged>(e =>
         {
             Log.Add("RewardsChanged");

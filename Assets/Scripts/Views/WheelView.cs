@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -5,6 +6,14 @@ using DG.Tweening;
 
 public class WheelView : View
 {
+    [Serializable]
+    private struct Skin
+    {
+        public Sprite Base;
+        public Sprite Indicator;
+        public Color Rays;   // alpha 0 hides the rays
+    }
+
     [FormerlySerializedAs("wheelBase")]
     [SerializeField] private Image _wheelBase;
     [FormerlySerializedAs("indicator")]
@@ -13,6 +22,7 @@ public class WheelView : View
     [SerializeField] private Image _rays;
     [FormerlySerializedAs("SpinningPart")]
     [SerializeField] private Transform _spinningPart;
+    [SerializeField] private Skin _normalSkin, _safeSkin, _superSkin;
     [FormerlySerializedAs("slots")]
     [SerializeField] private RewardView[] _slots = new RewardView[WheelSO.SliceCount];
 
@@ -33,18 +43,28 @@ public class WheelView : View
 
     void OnWheelReady(WheelReady e)
     {
-        DrawWheel(e.Wheel);
+        DrawSkin(SkinFor(e.Zone));
         DrawRewards(e.Rewards);
     }
 
     void OnSpinStarted(SpinStarted e) => Spin(e.Slot);
 
-    void DrawWheel(WheelSO wheel)
+    Skin SkinFor(ZoneType zone)
     {
-        _wheelBase.sprite = wheel.WheelBase;
-        _indicator.sprite = wheel.Indicator;
-        _rays.color = wheel.RaysColor;
-        _rays.gameObject.SetActive(wheel.RaysColor.a > 0f);
+        switch (zone)
+        {
+            case ZoneType.Super: return _superSkin;
+            case ZoneType.Safe: return _safeSkin;
+            default: return _normalSkin;
+        }
+    }
+
+    void DrawSkin(Skin skin)
+    {
+        _wheelBase.sprite = skin.Base;
+        _indicator.sprite = skin.Indicator;
+        _rays.color = skin.Rays;
+        _rays.gameObject.SetActive(skin.Rays.a > 0f);
     }
 
     void DrawRewards(Reward[] rewards)

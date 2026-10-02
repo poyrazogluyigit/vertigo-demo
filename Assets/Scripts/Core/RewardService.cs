@@ -15,7 +15,6 @@ public class RewardService : IRewardService
         _random = random;
     }
 
-    public WheelSO CurrentWheel { get; private set; }
     public Reward[] PossibleRewards { get; private set; } = new Reward[0];
 
     public Reward[] Earned() => _earned.ToArray();
@@ -27,8 +26,7 @@ public class RewardService : IRewardService
 
     public void GenerateRewards(int level)
     {
-        CurrentWheel = _schedule.WheelFor(level);
-        RewardDefinition[] slices = CurrentWheel.Slices;
+        RewardDefinition[] slices = _schedule.WheelFor(level).Slices;
         var rewards = new Reward[slices.Length];
         for (int i = 0; i < slices.Length; i++)
         {
