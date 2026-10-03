@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3aa8fbd8ffbeb540a0684804676038c, type: 3}
+  m_Name: Gold_05
+  m_EditorClassIdentifier:
+  Slices:
+  - {fileID: 11400000, guid: 3248b8065e7cc736fe6ff850489d4a62, type: 2}
+  - {fileID: 11400000, guid: 7d4694b55eb965b7dde0245fb8fec428, type: 2}
+  - {fileID: 11400000, guid: af68b8e8c595cbbad7143db71334e717, type: 2}
+  - {fileID: 11400000, guid: be8e846146ac4d03e0a9bf142f1f79ba, type: 2}
+  - {fileID: 11400000, guid: ef4a7c0c700fd39f0110e088f243789b, type: 2}
+  - {fileID: 11400000, guid: 893a6eda5d04701cdc43861198b5c43d, type: 2}
+  - {fileID: 11400000, guid: 181d75a0696bdbae581f754572b2b651, type: 2}
+  - {fileID: 11400000, guid: d74049642c31822e52e258fd7f79b580, type: 2}

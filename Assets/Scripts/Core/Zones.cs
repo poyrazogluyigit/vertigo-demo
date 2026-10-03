@@ -1,5 +1,8 @@
+using System;
+
 namespace WheelSpin
 {
+    public enum ZoneType { Normal, Safe, Super }
     // The zone rhythm. Every rule that depends on a level's zone type goes through here.
     public static class Zones
     {
@@ -20,4 +23,18 @@ namespace WheelSpin
         // Normal zones carry exactly one bomb; safe and super zones carry none
         public static int BombsPerWheel(ZoneType zone) => zone == ZoneType.Normal ? 1 : 0;
     }
+
+    [Serializable]
+    public struct ByZone<T>
+    {
+        public T Normal, Safe, Super;
+
+        public T For(ZoneType zone) => zone switch
+        {
+            ZoneType.Super => Super,
+            ZoneType.Safe => Safe,
+            _ => Normal,
+        };
+    }
+
 }

@@ -5,12 +5,12 @@ namespace WheelSpin
     public class RewardService : IRewardService
     {
         private readonly IWheelSchedule _schedule;
-        private readonly IRewardPricing _pricing;
+        private readonly IRewardScaler _pricing;
         private readonly IRandom _random;
 
         private readonly List<Reward> _earned = new List<Reward>();
 
-        public RewardService(IWheelSchedule schedule, IRewardPricing pricing, IRandom random)
+        public RewardService(IWheelSchedule schedule, IRewardScaler pricing, IRandom random)
         {
             _schedule = schedule;
             _pricing = pricing;

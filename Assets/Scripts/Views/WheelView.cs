@@ -24,9 +24,9 @@ namespace WheelSpin
         [SerializeField] private Image _rays;
         [FormerlySerializedAs("SpinningPart")]
         [SerializeField] private Transform _spinningPart;
-        [SerializeField] private Skin _normalSkin, _safeSkin, _superSkin;
+        [SerializeField] private ByZone<Skin> _skins;
         [FormerlySerializedAs("slots")]
-        [SerializeField] private SpinItem[] _slots = new SpinItem[WheelSO.SliceCount];
+        [SerializeField] private SpinItem[] _slots = new SpinItem[WheelContent.SliceCount];
 
         const int ExtraTurns = 3;          // full turns before landing
         const float SpinDuration = 4f;
@@ -45,21 +45,11 @@ namespace WheelSpin
 
         void OnWheelReady(RewardsReady e)
         {
-            DrawSkin(SkinFor(e.Zone));
+            DrawSkin(_skins.For(e.Zone));
             DrawRewards(e.Rewards);
         }
 
         void OnSpinStarted(SpinStarted e) => Spin(e.Slot);
-
-        Skin SkinFor(ZoneType zone)
-        {
-            switch (zone)
-            {
-                case ZoneType.Super: return _superSkin;
-                case ZoneType.Safe: return _safeSkin;
-                default: return _normalSkin;
-            }
-        }
 
         void DrawSkin(Skin skin)
         {

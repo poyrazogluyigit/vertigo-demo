@@ -20,7 +20,7 @@ namespace WheelSpin.Tests
             _bomb = Definition(isBomb: true);
             _gold = Definition(isBomb: false);
 
-            var wheel = Create<WheelSO>();
+            var wheel = Create<WheelContent>();
             wheel.Slices = new[] { _cash, _bomb, _gold };
 
             _random = new StubRandom();
@@ -110,12 +110,12 @@ namespace WheelSpin.Tests
 
         private class StubSchedule : IWheelSchedule
         {
-            private readonly WheelSO _wheel;
-            public StubSchedule(WheelSO wheel) => _wheel = wheel;
-            public WheelSO WheelFor(int level) => _wheel;
+            private readonly WheelContent _wheel;
+            public StubSchedule(WheelContent wheel) => _wheel = wheel;
+            public WheelContent WheelFor(int level) => _wheel;
         }
 
-        private class StubPricing : IRewardPricing
+        private class StubPricing : IRewardScaler
         {
             public int AmountFor(RewardDefinition reward, int level) => Amount;
         }

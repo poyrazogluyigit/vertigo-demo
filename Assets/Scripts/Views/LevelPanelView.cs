@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -7,14 +8,21 @@ namespace WheelSpin
 {
     public class LevelPanelView : View
     {
+        [Serializable]
+        private struct Skin
+        {
+            public Color NumberColor;          // every level number of this zone type
+            public Sprite CurrentBackground;   // behind the current level's number
+        }
+
         const int PinnedSlot = 15;
         const float NumberSpacing = 135f;     // distance between two numbers on the track
         const float MoveDuration = 1f;
         const float PassedLevelAlpha = 0.4f;
 
         [SerializeField] private RectTransform _levelNumbers;
-        [SerializeField] private LevelPanelSetting _levelPanelSettings;
         [SerializeField] private Image _currentZoneBg;
+        [SerializeField] private ByZone<Skin> _skins;
 
         private TMP_Text[] _labels;
         private Vector2 _initialPosition;
@@ -69,11 +77,11 @@ namespace WheelSpin
 
         void RenderLevelsFrom(int currentLevel)
         {
-            _currentZoneBg.sprite = _levelPanelSettings.BackgroundFor(Zones.TypeOf(currentLevel));
+            _currentZoneBg.sprite = _skins.For(Zones.TypeOf(currentLevel)).CurrentBackground;
             for (int i = 0; i < _labels.Length; i++)
             {
                 int number = _firstNumber + i;
-                Color color = _levelPanelSettings.NumberColorFor(Zones.TypeOf(number));
+                Color color = _skins.For(Zones.TypeOf(number)).NumberColor;
                 color.a = number < currentLevel ? PassedLevelAlpha : 1f;
                 _labels[i].text = number.ToString();
                 _labels[i].color = color;
