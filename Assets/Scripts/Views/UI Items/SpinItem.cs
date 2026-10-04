@@ -24,6 +24,12 @@ namespace WheelSpin
 
         protected override Tween Effect() => IsBomb ? BombEffect() : RewardEffect();
 
+        protected override void ShowAmount(int amount)
+        {
+            gameObject.GetComponent<LayoutGroup>().childAlignment = IsBomb ? TextAnchor.MiddleCenter : TextAnchor.LowerCenter;
+            base.ShowAmount(amount);
+        }
+
         // Punch plus a warm glow burst
         Tween RewardEffect()
         {

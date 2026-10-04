@@ -131,7 +131,7 @@ MonoBehaviour:
   _icon: {fileID: 2787389139816009250}
   _amountText: {fileID: 2787389141708762338}
   _iconSize: 72
-  _iconMaxWidth: 110
+  _iconMaxWidth: 100
   _iconMaxHeight: 72
   _effectImage: {fileID: 21300000, guid: 8d3b72664c648ec4fa5dca55a7d01169, type: 3}
   _bombImage: {fileID: 21300000, guid: e9a67c06e04b3c747b5a17b30d9918c0, type: 3}
@@ -156,10 +156,10 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 4
+  m_ChildAlignment: 7
   m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0

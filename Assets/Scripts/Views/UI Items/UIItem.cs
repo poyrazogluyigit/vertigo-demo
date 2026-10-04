@@ -31,7 +31,7 @@ namespace WheelSpin
             ShowAmount(amount);
         }
 
-        protected void ShowAmount(int amount)
+        protected virtual void ShowAmount(int amount)
         {
             _amountText.text = AmountText.Label(amount);
             _amountText.gameObject.SetActive(amount != 0);
