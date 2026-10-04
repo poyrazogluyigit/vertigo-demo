@@ -22,14 +22,12 @@ namespace WheelSpin
         [SerializeField] private Image _indicator;
         [FormerlySerializedAs("rays")]
         [SerializeField] private Image _rays;
-        [FormerlySerializedAs("SpinningPart")]
-        [SerializeField] private Transform _spinningPart;
         [SerializeField] private ByZone<Skin> _skins;
         [FormerlySerializedAs("slots")]
         [SerializeField] private SpinItem[] _slots = new SpinItem[WheelContent.SliceCount];
 
-        const int ExtraTurns = 3;          // full turns before landing
-        const float SpinDuration = 4f;
+        [SerializeField] private WheelAnimation _wheelAnimation;
+
 
         protected override void Subscribe()
         {
@@ -57,6 +55,10 @@ namespace WheelSpin
             _indicator.sprite = skin.Indicator;
             _rays.color = skin.Rays;
             _rays.gameObject.SetActive(skin.Rays.a > 0f);
+
+            // The landing glow shares the rays' tint, so it follows the zone (its alpha is animated anyway)
+            foreach (SpinItem slot in _slots)
+                if (slot != null) slot.SetGlowColor(skin.Rays);
         }
 
         void DrawRewards(Reward[] rewards)
@@ -70,17 +72,20 @@ namespace WheelSpin
                     continue;
                 bool hasReward = i < rewards.Length;
                 _slots[i].gameObject.SetActive(hasReward);
-                if (hasReward)
-                    _slots[i].Display(rewards[i].Definition.Image, rewards[i].Amount);
+                if (!hasReward)
+                    continue;
+                _slots[i].IsBomb = rewards[i].Definition.IsBomb;
+                _slots[i].Display(rewards[i].Definition.Image, rewards[i].Amount);
             }
         }
 
         void Spin(int position)
         {
-            Vector3 rot = new Vector3(0, 0, 360f / _slots.Length * position + 360f * ExtraTurns);
-            _spinningPart.DORotate(rot, SpinDuration, RotateMode.FastBeyond360)
-                .SetLink(gameObject)
-                .OnComplete(() => Bus?.Publish(new SpinFinished()));
+            float landing = 360f / _slots.Length * position;
+            _wheelAnimation.GetTween(landing, 360f / _slots.Length).SetLink(gameObject)
+                // SpinFinished waits for the landing effect: GameFlow opens the game-over screen on it
+                .OnComplete(() => _slots[position].PlayEffect()
+                    .OnComplete(() => Bus?.Publish(new SpinFinished())));
         }
     }
 }

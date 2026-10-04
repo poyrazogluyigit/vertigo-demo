@@ -2,19 +2,22 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using DG.Tweening;
 
 namespace WheelSpin
 {
-    public class SpinItem : MonoBehaviour
+    public abstract class UIItem : MonoBehaviour
     {
         [FormerlySerializedAs("icon")]
-        [SerializeField] private Image _icon;
+        [SerializeField] Image _icon;
         [FormerlySerializedAs("amountText")]
-        [SerializeField] private TextMeshProUGUI _amountText;
+        [SerializeField] TextMeshProUGUI _amountText;
 
-        [SerializeField] private float _iconSize = 72f;        
+        [SerializeField] private float _iconSize = 72f;
         [SerializeField] private float _iconMaxWidth = 110f;
         [SerializeField] private float _iconMaxHeight = 72f;
+
+        protected Image Icon => _icon;
 
         public void Display(Sprite sprite, int amount)
         {
@@ -36,5 +39,9 @@ namespace WheelSpin
 
             _icon.rectTransform.sizeDelta = new Vector2(width, height) * shrink;
         }
+
+        protected abstract Tween Effect();
+
+        public Tween PlayEffect() => Effect();
     }
 }

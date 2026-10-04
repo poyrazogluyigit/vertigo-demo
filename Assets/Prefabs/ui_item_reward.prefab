@@ -90,11 +90,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 5413945238259821098}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ab9d0ae2e51ef44d80d2e25cbf13d33, type: 3}
+  m_Script: {fileID: 11500000, guid: 38dfbd5ace0495645932ef3652c61f30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  icon: {fileID: 7171959124640369039}
-  amountText: {fileID: 6204735422231712610}
+  _icon: {fileID: 7171959124640369039}
+  _amountText: {fileID: 6204735422231712610}
+  _iconSize: 72
+  _iconMaxWidth: 110
+  _iconMaxHeight: 72
 --- !u!114 &1093725316888110821
 MonoBehaviour:
   m_ObjectHideFlags: 0

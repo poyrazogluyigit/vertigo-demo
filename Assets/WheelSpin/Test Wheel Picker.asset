@@ -11,10 +11,11 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4c47b6acec21a24aaeaa0e3902ff134, type: 3}
   m_Name: Test Wheel Picker
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   _superWheels:
   - {fileID: 11400000, guid: 104dc2eb93324ed69a572c4fda76a630, type: 2}
   _safeWheels:
   - {fileID: 11400000, guid: 104dc2eb93324ed69a572c4fda76a630, type: 2}
   _normalWheels:
   - {fileID: 11400000, guid: 104dc2eb93324ed69a572c4fda76a630, type: 2}
+  - {fileID: 11400000, guid: e9daefaae7011a846bab9d313f10b4d9, type: 2}

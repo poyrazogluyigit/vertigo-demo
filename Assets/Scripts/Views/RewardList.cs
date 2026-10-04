@@ -4,7 +4,7 @@ namespace WheelSpin
 {
     public class RewardList : View
     {
-        [SerializeField] private SpinItem _itemPrefab;
+        [SerializeField] private RewardListItem _itemPrefab;
         [SerializeField] private bool _drawOnRewardsChanged = true;   // off for the cash-out list, which EndgameView draws
 
         protected override void Subscribe()
@@ -23,8 +23,8 @@ namespace WheelSpin
         {
             for (int i = 0; i < rewards.Length; i++)
             {
-                SpinItem item = i < transform.childCount
-                    ? transform.GetChild(i).GetComponent<SpinItem>()
+                RewardListItem item = i < transform.childCount
+                    ? transform.GetChild(i).GetComponent<RewardListItem>()
                     : Instantiate(_itemPrefab, transform);
                 item.gameObject.SetActive(true);
                 item.Display(rewards[i].Definition.Image, rewards[i].Amount);
