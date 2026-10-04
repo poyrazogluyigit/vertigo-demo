@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9d0cd1e92b2a2045bab2daf86cc8935, type: 3}
   m_Name: BronzeChest
   m_EditorClassIdentifier: 
-  image: {fileID: 21300000, guid: 955aa7dc2e98549409b36d939c26312f, type: 3}
+  image: {fileID: 21300000, guid: 8f8857d7f02c00849872aab9526077df, type: 3}
   baseAmount: 1
   scaling: {fileID: 11400000, guid: 552327758fb048aea8c4c51a4a194875, type: 2}

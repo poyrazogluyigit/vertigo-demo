@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9d0cd1e92b2a2045bab2daf86cc8935, type: 3}
   m_Name: GoldChest
   m_EditorClassIdentifier: 
-  image: {fileID: 21300000, guid: bd77ebf902955974da118462bc1821de, type: 3}
+  image: {fileID: 21300000, guid: 75981fde9ce4a38478793e88b3e6cc46, type: 3}
   baseAmount: 1
   scaling: {fileID: 11400000, guid: 552327758fb048aea8c4c51a4a194875, type: 2}

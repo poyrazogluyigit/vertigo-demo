@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3aa8fbd8ffbeb540a0684804676038c, type: 3}
+  m_Name: Test_IconSizes
+  m_EditorClassIdentifier: 
+  Slices:
+  - {fileID: 11400000, guid: d081d36a00e62fda455b731d9a22ef22, type: 2}
+  - {fileID: 11400000, guid: 7fb1dbc9f39c01fccb583b3afb46b4ae, type: 2}
+  - {fileID: 11400000, guid: 02a4a6952d8237633bd5703d076fc72e, type: 2}
+  - {fileID: 11400000, guid: 8aef936604d86c2bcbe8c787fd4ff639, type: 2}
+  - {fileID: 11400000, guid: 3172f645bf902e03de87a875225636a6, type: 2}
+  - {fileID: 11400000, guid: fbbf1cf00122272891a213b8c48e9a0e, type: 2}
+  - {fileID: 11400000, guid: be8e846146ac4d03e0a9bf142f1f79ba, type: 2}
+  - {fileID: 11400000, guid: 181d75a0696bdbae581f754572b2b651, type: 2}

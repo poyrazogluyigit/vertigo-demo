@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9d0cd1e92b2a2045bab2daf86cc8935, type: 3}
   m_Name: M26Grenade
   m_EditorClassIdentifier: 
-  image: {fileID: 21300000, guid: 92af54b590c95b44586fa237aaab7f60, type: 3}
+  image: {fileID: -280056602, guid: 7231866d6dc7428409ed474a3f66d6b9, type: 3}
   baseAmount: 1
   scaling: {fileID: 11400000, guid: 552327758fb048aea8c4c51a4a194875, type: 2}

@@ -207,7 +207,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 18261918}
-  - component: {fileID: 18261920}
   - component: {fileID: 18261919}
   m_Layer: 0
   m_Name: ui_item_wheel_slot_2
@@ -252,32 +251,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _icon: {fileID: 1875932264}
   _amountText: {fileID: 1705944695}
---- !u!114 &18261920
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 18261917}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 1
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 1
-  m_ChildControlHeight: 1
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!1 &42410474
 GameObject:
   m_ObjectHideFlags: 0
@@ -810,7 +783,6 @@ GameObject:
   - component: {fileID: 195694463}
   - component: {fileID: 195694466}
   - component: {fileID: 195694465}
-  - component: {fileID: 195694464}
   m_Layer: 0
   m_Name: ui_text_wheel_slot_amount_value
   m_TagString: Untagged
@@ -833,31 +805,11 @@ RectTransform:
   m_Father: {fileID: 1360136870}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 38.436, y: -86.14697}
+  m_SizeDelta: {x: 76.872, y: 32.714043}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &195694464
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 195694462}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreLayout: 0
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: 120
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1
 --- !u!114 &195694465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -880,8 +832,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: x999
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6611def3bc9a56a4db16f0c2f295cfad, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 9c1a4f0e2b6d8e7f5a3c1b9d7e5f3a1c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -905,10 +857,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29.25
-  m_fontSizeBase: 5
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -1258,10 +1210,10 @@ RectTransform:
   m_Father: {fileID: 444042944}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 38.436, y: -34.894978}
+  m_SizeDelta: {x: 76.872, y: 69.789955}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &266041283
 MonoBehaviour:
@@ -2139,7 +2091,6 @@ GameObject:
   - component: {fileID: 439849440}
   - component: {fileID: 439849443}
   - component: {fileID: 439849442}
-  - component: {fileID: 439849441}
   m_Layer: 0
   m_Name: ui_text_wheel_slot_amount_value
   m_TagString: Untagged
@@ -2162,31 +2113,11 @@ RectTransform:
   m_Father: {fileID: 1096087834}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 38.436, y: -86.14697}
+  m_SizeDelta: {x: 76.872, y: 32.714043}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &439849441
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 439849439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreLayout: 0
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: 120
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1
 --- !u!114 &439849442
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2209,8 +2140,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: x999
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6611def3bc9a56a4db16f0c2f295cfad, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 9c1a4f0e2b6d8e7f5a3c1b9d7e5f3a1c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2234,10 +2165,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29.25
-  m_fontSizeBase: 5
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -2293,7 +2224,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 444042944}
-  - component: {fileID: 444042946}
   - component: {fileID: 444042945}
   m_Layer: 0
   m_Name: ui_item_wheel_slot_1
@@ -2338,32 +2268,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _icon: {fileID: 266041283}
   _amountText: {fileID: 1944107144}
---- !u!114 &444042946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 444042943}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 1
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 1
-  m_ChildControlHeight: 1
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!1 &452039542
 GameObject:
   m_ObjectHideFlags: 0
@@ -2600,10 +2504,10 @@ RectTransform:
   m_Father: {fileID: 767577081}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 38.436, y: -34.894978}
+  m_SizeDelta: {x: 76.872, y: 69.789955}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &511397597
 MonoBehaviour:
@@ -2658,7 +2562,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &514692681
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2908,7 +2812,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 613758951}
-  - component: {fileID: 613758953}
   - component: {fileID: 613758952}
   m_Layer: 0
   m_Name: ui_item_wheel_slot_4
@@ -2953,32 +2856,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _icon: {fileID: 748439320}
   _amountText: {fileID: 1457210849}
---- !u!114 &613758953
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 613758950}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 1
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 1
-  m_ChildControlHeight: 1
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!1 &640912893
 GameObject:
   m_ObjectHideFlags: 0
@@ -3360,7 +3237,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 689603874}
-  - component: {fileID: 689603876}
   - component: {fileID: 689603875}
   m_Layer: 0
   m_Name: ui_item_wheel_slot_7
@@ -3405,32 +3281,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _icon: {fileID: 1309404577}
   _amountText: {fileID: 1429753644}
---- !u!114 &689603876
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 689603873}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 1
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 1
-  m_ChildControlHeight: 1
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!1 &707080019
 GameObject:
   m_ObjectHideFlags: 0
@@ -3720,10 +3570,10 @@ RectTransform:
   m_Father: {fileID: 613758951}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 38.436, y: -34.894978}
+  m_SizeDelta: {x: 76.872, y: 69.789955}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &748439320
 MonoBehaviour:
@@ -3975,7 +3825,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 767577081}
-  - component: {fileID: 767577083}
   - component: {fileID: 767577082}
   m_Layer: 0
   m_Name: ui_item_wheel_slot_5
@@ -4020,32 +3869,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _icon: {fileID: 511397597}
   _amountText: {fileID: 1811221560}
---- !u!114 &767577083
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 767577080}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 1
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 1
-  m_ChildControlHeight: 1
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!1 &809000820
 GameObject:
   m_ObjectHideFlags: 0
@@ -4211,7 +4034,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcf51dec0f0faa041ad8b7fbd76fa318, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _wheelPicker: {fileID: 11400000, guid: 10e9d0427c9b5244ba4417995d1541cd, type: 2}
+  _wheelPicker: {fileID: 11400000, guid: 8de14ed26ac34db5ae1b52d09f5a9371, type: 2}
   _rewardScaler: {fileID: 11400000, guid: debed3d578342304db363694ed0aeec4, type: 2}
   _inputManager: {fileID: 861563883}
   _views:
@@ -5252,10 +5075,10 @@ RectTransform:
   m_Father: {fileID: 1668961372}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 38.436, y: -34.894978}
+  m_SizeDelta: {x: 76.872, y: 69.789955}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1095738439
 MonoBehaviour:
@@ -5304,7 +5127,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1096087834}
-  - component: {fileID: 1096087835}
   - component: {fileID: 1096087836}
   m_Layer: 0
   m_Name: ui_item_wheel_slot_0
@@ -5335,32 +5157,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 235}
   m_SizeDelta: {x: 76.872, y: 102.504}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1096087835
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1096087833}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 1
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 1
-  m_ChildControlHeight: 1
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!114 &1096087836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5678,10 +5474,10 @@ RectTransform:
   m_Father: {fileID: 1360136870}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 38.436, y: -34.894978}
+  m_SizeDelta: {x: 76.872, y: 69.789955}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1295917325
 MonoBehaviour:
@@ -5754,10 +5550,10 @@ RectTransform:
   m_Father: {fileID: 689603874}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 38.436, y: -34.894978}
+  m_SizeDelta: {x: 76.872, y: 69.789955}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1309404577
 MonoBehaviour:
@@ -5941,7 +5737,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1360136870}
-  - component: {fileID: 1360136872}
   - component: {fileID: 1360136871}
   m_Layer: 0
   m_Name: ui_item_wheel_slot_3
@@ -5986,32 +5781,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _icon: {fileID: 1295917325}
   _amountText: {fileID: 195694465}
---- !u!114 &1360136872
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1360136869}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 1
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 1
-  m_ChildControlHeight: 1
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!1 &1429753641
 GameObject:
   m_ObjectHideFlags: 0
@@ -6023,7 +5792,6 @@ GameObject:
   - component: {fileID: 1429753642}
   - component: {fileID: 1429753645}
   - component: {fileID: 1429753644}
-  - component: {fileID: 1429753643}
   m_Layer: 0
   m_Name: ui_text_wheel_slot_amount_value
   m_TagString: Untagged
@@ -6046,31 +5814,11 @@ RectTransform:
   m_Father: {fileID: 689603874}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 38.436, y: -86.14697}
+  m_SizeDelta: {x: 76.872, y: 32.714043}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1429753643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1429753641}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreLayout: 0
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: 120
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1
 --- !u!114 &1429753644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6093,8 +5841,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: x999
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6611def3bc9a56a4db16f0c2f295cfad, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 9c1a4f0e2b6d8e7f5a3c1b9d7e5f3a1c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6118,10 +5866,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29.25
-  m_fontSizeBase: 5
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -6584,7 +6332,6 @@ GameObject:
   - component: {fileID: 1457210847}
   - component: {fileID: 1457210850}
   - component: {fileID: 1457210849}
-  - component: {fileID: 1457210848}
   m_Layer: 0
   m_Name: ui_text_wheel_slot_amount_value
   m_TagString: Untagged
@@ -6607,31 +6354,11 @@ RectTransform:
   m_Father: {fileID: 613758951}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 38.436, y: -86.14697}
+  m_SizeDelta: {x: 76.872, y: 32.714043}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1457210848
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1457210846}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreLayout: 0
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: 120
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1
 --- !u!114 &1457210849
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6654,8 +6381,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: x999
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6611def3bc9a56a4db16f0c2f295cfad, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 9c1a4f0e2b6d8e7f5a3c1b9d7e5f3a1c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6679,10 +6406,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29.25
-  m_fontSizeBase: 5
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -7670,7 +7397,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1668961372}
-  - component: {fileID: 1668961374}
   - component: {fileID: 1668961373}
   m_Layer: 0
   m_Name: ui_item_wheel_slot_6
@@ -7715,32 +7441,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _icon: {fileID: 1095738439}
   _amountText: {fileID: 1681067984}
---- !u!114 &1668961374
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1668961371}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 1
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 1
-  m_ChildControlHeight: 1
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!1 &1678053750
 GameObject:
   m_ObjectHideFlags: 0
@@ -7887,7 +7587,6 @@ GameObject:
   - component: {fileID: 1681067982}
   - component: {fileID: 1681067985}
   - component: {fileID: 1681067984}
-  - component: {fileID: 1681067983}
   m_Layer: 0
   m_Name: ui_text_wheel_slot_amount_value
   m_TagString: Untagged
@@ -7910,31 +7609,11 @@ RectTransform:
   m_Father: {fileID: 1668961372}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 38.436, y: -86.14697}
+  m_SizeDelta: {x: 76.872, y: 32.714043}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1681067983
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1681067981}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreLayout: 0
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: 120
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1
 --- !u!114 &1681067984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7957,8 +7636,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: x999
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6611def3bc9a56a4db16f0c2f295cfad, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 9c1a4f0e2b6d8e7f5a3c1b9d7e5f3a1c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7982,10 +7661,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29.25
-  m_fontSizeBase: 5
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -8168,7 +7847,6 @@ GameObject:
   - component: {fileID: 1705944693}
   - component: {fileID: 1705944696}
   - component: {fileID: 1705944695}
-  - component: {fileID: 1705944694}
   m_Layer: 0
   m_Name: ui_text_wheel_slot_amount_value
   m_TagString: Untagged
@@ -8191,31 +7869,11 @@ RectTransform:
   m_Father: {fileID: 18261918}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 38.436, y: -86.14697}
+  m_SizeDelta: {x: 76.872, y: 32.714043}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1705944694
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1705944692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreLayout: 0
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: 120
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1
 --- !u!114 &1705944695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8238,8 +7896,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: x999
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6611def3bc9a56a4db16f0c2f295cfad, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 9c1a4f0e2b6d8e7f5a3c1b9d7e5f3a1c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8263,10 +7921,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29.25
-  m_fontSizeBase: 5
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -8541,10 +8199,10 @@ RectTransform:
   m_Father: {fileID: 1096087834}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 38.436, y: -34.894978}
+  m_SizeDelta: {x: 76.872, y: 69.789955}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1776333602
 MonoBehaviour:
@@ -8781,7 +8439,6 @@ GameObject:
   - component: {fileID: 1811221558}
   - component: {fileID: 1811221561}
   - component: {fileID: 1811221560}
-  - component: {fileID: 1811221559}
   m_Layer: 0
   m_Name: ui_text_wheel_slot_amount_value
   m_TagString: Untagged
@@ -8804,31 +8461,11 @@ RectTransform:
   m_Father: {fileID: 767577081}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 38.436, y: -86.14697}
+  m_SizeDelta: {x: 76.872, y: 32.714043}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1811221559
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1811221557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreLayout: 0
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: 120
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1
 --- !u!114 &1811221560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8851,8 +8488,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: x999
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6611def3bc9a56a4db16f0c2f295cfad, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 9c1a4f0e2b6d8e7f5a3c1b9d7e5f3a1c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8876,10 +8513,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29.25
-  m_fontSizeBase: 5
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -8959,10 +8596,10 @@ RectTransform:
   m_Father: {fileID: 18261918}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 38.436, y: -34.894978}
+  m_SizeDelta: {x: 76.872, y: 69.789955}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1875932264
 MonoBehaviour:
@@ -9036,10 +8673,10 @@ RectTransform:
   m_Father: {fileID: 1482612430}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: -149.64}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1890561690
 MonoBehaviour:
@@ -9201,7 +8838,6 @@ GameObject:
   - component: {fileID: 1944107142}
   - component: {fileID: 1944107145}
   - component: {fileID: 1944107144}
-  - component: {fileID: 1944107143}
   m_Layer: 0
   m_Name: ui_text_wheel_slot_amount_value
   m_TagString: Untagged
@@ -9224,31 +8860,11 @@ RectTransform:
   m_Father: {fileID: 444042944}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 38.436, y: -86.14697}
+  m_SizeDelta: {x: 76.872, y: 32.714043}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1944107143
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1944107141}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreLayout: 0
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: -1
-  m_PreferredHeight: 120
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1
 --- !u!114 &1944107144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9271,8 +8887,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: x999
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6611def3bc9a56a4db16f0c2f295cfad, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 9c1a4f0e2b6d8e7f5a3c1b9d7e5f3a1c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -9296,10 +8912,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29.25
-  m_fontSizeBase: 5
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
