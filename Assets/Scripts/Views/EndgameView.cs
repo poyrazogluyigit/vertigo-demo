@@ -11,6 +11,7 @@ namespace WheelSpin
         [SerializeField] private TMP_Text _title, _description, _buttonLabel;
         [SerializeField] private Image _buttonImage;
         [SerializeField] private RewardList _rewards;
+        [SerializeField] private ScrollRect _rewardsScroll;
 
         protected override void Subscribe()
         {
@@ -37,7 +38,7 @@ namespace WheelSpin
 
         void DisplayScreen(EndScreen screen)
         {
-            Child<ScrollRect>("ui_scrollview_exit_rewards").verticalNormalizedPosition = 0;
+            _rewardsScroll.verticalNormalizedPosition = 0;
             _title.text = screen.Title;
             _description.text = screen.Description;
             _buttonLabel.text = screen.ButtonLabel;
@@ -57,6 +58,7 @@ namespace WheelSpin
             _buttonLabel      = Child<TMP_Text>("ui_text_button_gameend_restart_value");
             _buttonImage      = Child<Image>("ui_button_gameend_restart_value");
             _rewards          = Child<RewardList>("ui_content_exit_rewards");
+            _rewardsScroll    = Child<ScrollRect>("ui_scrollview_exit_rewards");
 
             if (_gameOverScreen == null) Debug.LogError("Game over screen is not assigned!", this);
             if (_cashOutScreen == null) Debug.LogError("Cash out screen is not assigned!", this);

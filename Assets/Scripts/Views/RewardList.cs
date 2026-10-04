@@ -26,8 +26,9 @@ namespace WheelSpin
                 RewardListItem item = i < transform.childCount
                     ? transform.GetChild(i).GetComponent<RewardListItem>()
                     : Instantiate(_itemPrefab, transform);
-                item.gameObject.SetActive(true);
                 item.Display(rewards[i].Definition.Image, rewards[i].Amount);
+                item.gameObject.SetActive(true);
+                if (_drawOnRewardsChanged && item.AmountChanged) item.PlayEffect();
             }
 
             // Hidden rather than destroyed: layout groups skip inactive children,

@@ -18,17 +18,23 @@ namespace WheelSpin
         [SerializeField] private float _iconMaxHeight = 72f;
 
         protected Image Icon => _icon;
+        protected int Amount { get; private set; }
+        protected int PreviousAmount { get; private set; }
+        public bool AmountChanged => Amount != PreviousAmount;
 
         public void Display(Sprite sprite, int amount)
         {
             _icon.sprite = sprite;
             FitIcon(sprite);
-            if (amount == 0) _amountText.gameObject.SetActive(false);
-            else
-            {
-                _amountText.text = AmountText.Label(amount);
-                _amountText.gameObject.SetActive(true);
-            }
+            PreviousAmount = gameObject.activeSelf ? Amount : 0;
+            Amount = amount;
+            ShowAmount(amount);
+        }
+
+        protected void ShowAmount(int amount)
+        {
+            _amountText.text = AmountText.Label(amount);
+            _amountText.gameObject.SetActive(amount != 0);
         }
 
         // Sizes the icon's rect to the sprite's own shape, so wide sprites aren't letterboxed
