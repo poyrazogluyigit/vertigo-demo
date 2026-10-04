@@ -37,6 +37,7 @@ namespace WheelSpin
 
         void DisplayScreen(EndScreen screen)
         {
+            Child<ScrollRect>("ui_scrollview_exit_rewards").verticalNormalizedPosition = 0;
             _title.text = screen.Title;
             _description.text = screen.Description;
             _buttonLabel.text = screen.ButtonLabel;
