@@ -27,6 +27,7 @@ namespace WheelSpin
         [SerializeField] private SpinItem[] _slots = new SpinItem[WheelContent.SliceCount];
 
         [SerializeField] private WheelAnimation _wheelAnimation;
+        [SerializeField] private Shake _shake;
 
 
         protected override void Subscribe()
@@ -84,8 +85,17 @@ namespace WheelSpin
             float landing = 360f / _slots.Length * position;
             _wheelAnimation.GetTween(landing, 360f / _slots.Length).SetLink(gameObject)
                 // SpinFinished waits for the landing effect: GameFlow opens the game-over screen on it
-                .OnComplete(() => _slots[position].PlayEffect()
-                    .OnComplete(() => Bus?.Publish(new SpinFinished())));
+                .OnComplete(() => Land(_slots[position]));
+        }
+
+        const float BombBeat = 0.3f;   // pause after the hit, before the game-over screen covers it
+
+        void Land(SpinItem slot)
+        {
+            float beat = slot.IsBomb ? BombBeat : 0f;
+            if (slot.IsBomb) _shake.PlayEffect().SetDelay(SpinItem.FuseDuration);
+            slot.PlayEffect().OnComplete(() =>
+                DOVirtual.DelayedCall(beat, () => Bus?.Publish(new SpinFinished())).SetLink(gameObject));
         }
     }
 }

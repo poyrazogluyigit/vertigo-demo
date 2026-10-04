@@ -16,6 +16,7 @@ namespace WheelSpin
 
         // Bomb fuse: each red blink (there and back) a little quicker than the last; the pop comes right after
         static readonly float[] BlinkDurations = { 0.5f, 0.36f, 0.26f, 0.2f };
+        public static readonly float FuseDuration = System.Linq.Enumerable.Sum(BlinkDurations);
 
         Image _glow;
 
