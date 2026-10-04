@@ -62,7 +62,9 @@ namespace WheelSpin
         {
             if (_glow == null)
             {
-                _glow = new GameObject("ui_image_slot_glow", typeof(RectTransform), typeof(Image)).GetComponent<Image>();
+                _glow = new GameObject("ui_image_slot_glow", typeof(RectTransform), typeof(Image), typeof(LayoutElement))
+                    .GetComponent<Image>();
+                _glow.GetComponent<LayoutElement>().ignoreLayout = true;
                 _glow.transform.SetParent(transform, false);
                 _glow.transform.SetAsFirstSibling();
                 _glow.rectTransform.sizeDelta = Vector2.one * _glowSize;

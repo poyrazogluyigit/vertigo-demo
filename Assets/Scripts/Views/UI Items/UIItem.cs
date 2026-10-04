@@ -23,7 +23,12 @@ namespace WheelSpin
         {
             _icon.sprite = sprite;
             FitIcon(sprite);
-            _amountText.text = AmountText.Label(amount);
+            if (amount == 0) _amountText.gameObject.SetActive(false);
+            else
+            {
+                _amountText.text = AmountText.Label(amount);
+                _amountText.gameObject.SetActive(true);
+            }
         }
 
         // Sizes the icon's rect to the sprite's own shape, so wide sprites aren't letterboxed
