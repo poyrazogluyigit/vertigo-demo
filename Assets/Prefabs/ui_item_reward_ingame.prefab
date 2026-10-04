@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1093725316888110821}
   - component: {fileID: 1093725316888110822}
   m_Layer: 0
-  m_Name: ui_item_reward
+  m_Name: ui_item_reward_ingame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -238,8 +238,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

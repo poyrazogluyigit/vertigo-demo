@@ -25,27 +25,23 @@ namespace WheelSpin
     #if UNITY_EDITOR
         void OnValidate()
         {
-            if (!CheckWheelsNotNull()) return;
-            foreach (var wheel in _normalWheels) 
-                IsWheelValid(wheel, ZoneType.Normal);
-            foreach (var wheel in _safeWheels)
-                IsWheelValid(wheel, ZoneType.Safe);
-            foreach (var wheel in _superWheels) 
-                IsWheelValid(wheel, ZoneType.Super);
-        }
-        public static void IsWheelValid(WheelContent wheel, ZoneType zone)
-        {
-            int expected = Zones.BombsPerWheel(zone);
-            if (wheel.BombCount != expected)
-                Debug.LogError($"{wheel.name} has {wheel.BombCount} bombs, a {zone} wheel needs {expected}");
+            ValidateWheels(_normalWheels, ZoneType.Normal);
+            ValidateWheels(_safeWheels, ZoneType.Safe);
+            ValidateWheels(_superWheels, ZoneType.Super);
         }
 
-        bool CheckWheelsNotNull()
+        void ValidateWheels(WheelContent[] wheels, ZoneType zone)
         {
-            if (_normalWheels == null) Debug.LogError($"{name}: needs at least one normal wheel", this);
-            if (_safeWheels == null) Debug.LogError($"{name}: needs at least one safe wheel", this);
-            if (_superWheels == null) Debug.LogError($"{name}: needs at least one super wheel", this);
-            return !(_normalWheels == null || _safeWheels == null || _superWheels == null);
+            if (wheels == null || wheels.Length == 0)
+            {
+                Debug.LogError($"{name}: needs at least one {zone} wheel", this);
+                return;
+            }
+            foreach (WheelContent wheel in wheels)
+            {
+                if (wheel == null) Debug.LogError($"{name}: has an empty {zone} wheel entry", this);
+                else wheel.ValidateBombs(zone);
+            }
         }
     #endif
     }

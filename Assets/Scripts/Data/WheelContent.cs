@@ -28,6 +28,13 @@ namespace WheelSpin
                 if (Slices[i] == null)
                     Debug.LogWarning($"{name}: slice {i} has no reward", this);
         }
+
+        public void ValidateBombs(ZoneType zone)
+        {
+            int expected = Zones.BombsPerWheel(zone);
+            if (BombCount != expected)
+                Debug.LogError($"{name}: has {BombCount} bombs, a {zone} wheel needs {expected}", this);
+        }
     #endif
     }
 }
