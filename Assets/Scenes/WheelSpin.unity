@@ -3408,7 +3408,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcf51dec0f0faa041ad8b7fbd76fa318, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _wheelPicker: {fileID: 11400000, guid: 8de14ed26ac34db5ae1b52d09f5a9371, type: 2}
+  _wheelPicker: {fileID: 11400000, guid: 10e9d0427c9b5244ba4417995d1541cd, type: 2}
   _rewardScaler: {fileID: 11400000, guid: debed3d578342304db363694ed0aeec4, type: 2}
   _inputManager: {fileID: 861563883}
   _views:
